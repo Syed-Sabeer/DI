@@ -43,13 +43,19 @@
     <link rel="stylesheet" href="../assets/libs/animate.css/animate.min.css">
 
     <script>
-        if(localStorage.Aexoradarktheme){
-            document.querySelector("html").setAttribute("data-theme-mode","dark")
-        }
-        if(localStorage.Aexorartl){
-            document.querySelector("html").setAttribute("dir","rtl")
-            document.querySelector("#style")?.setAttribute("href", "../assets/libs/bootstrap/css/bootstrap.rtl.min.css");
-        }
+      if (localStorage.Aexoradarktheme) {
+        document.documentElement.setAttribute("data-theme-mode", "dark");
+      }
+
+      if (localStorage.Aexorartl) {
+        document.documentElement.setAttribute("dir", "rtl");
+        document
+          .querySelector("#style")
+          ?.setAttribute(
+            "href",
+            "../assets/libs/bootstrap/css/bootstrap.rtl.min.css"
+          );
+      }
     </script>
 
 <!-- Swiper CSS-->
