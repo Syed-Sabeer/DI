@@ -6,6 +6,8 @@
 
 @section('content')
 
+     <div class="home02-spacer">
+                </div>
 
  <!-- start: banner Section -->
                 <section class="hero hero-banner-01 pb-0 overflow-hidden">
@@ -200,7 +202,7 @@
                         <span class="heading-subtitle mb-0 flex-wrap justify-content-center rounded-pill wow fadeInUp" data-wow-delay=".3s">
                           Partnering with
                           <span class="text-fixed-white fw-semibold px-3 py-1 bg-primary-gradient rounded-pill">
-                            60+
+                            50+
                           </span>
                           Organizations Across Various Sectors
                         </span>
@@ -211,22 +213,22 @@
                     <div class="swiper client-swiper">
                       <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/6.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/6.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/7.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/7.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/8.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/8.svg')}}" alt="Brand" class="brand02-image rounded">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/9.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/9.svg')}}" alt="Brand" class="brand02-image rounded">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/10.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/10.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/11.png')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/11.svg')}}" alt="Brand" class="brand02-image rounded">
                         </div>
                       </div>
                     </div>
@@ -263,7 +265,7 @@
                             <div>
                               <div class="experince-box">
                                 <div class="experince-number d-flex gap-2">
-                                  <span class="odometer metricCard__number mb-2" data-count="5">
+                                  <span class="odometer metricCard__number mb-2" data-count="10">
                                   </span>
                                   <span class="suffix">
                                     +

@@ -15,15 +15,21 @@
                 </a>
               </div>
               <!-- Start::header-element -->
-              <div class="header-element me-1">
-                <!-- Start::header-link -->
-                <a aria-label="anchor" href="javascript:void(0);" class="sidemenu-toggle1 header-link" data-bs-toggle="sidebar">
-                  <span class="open-toggle">
-                    <i class="ri-menu-3-line header-link-icon">
-                    </i>
-                  </span>
-                </a>
-                <!-- End::header-link -->
+              <div class="d-flex align-items-center gap-1">
+                <button type="button" class="header-theme-toggle header-link" aria-label="Switch to dark mode" title="Switch to dark mode">
+                  <i class="ri-moon-line header-link-icon theme-icon-dark" aria-hidden="true"></i>
+                  <i class="ri-sun-line header-link-icon theme-icon-light" aria-hidden="true"></i>
+                </button>
+                <div class="header-element me-1">
+                  <!-- Start::header-link -->
+                  <a aria-label="anchor" href="javascript:void(0);" class="sidemenu-toggle1 header-link" data-bs-toggle="sidebar">
+                    <span class="open-toggle">
+                      <i class="ri-menu-3-line header-link-icon">
+                      </i>
+                    </span>
+                  </a>
+                  <!-- End::header-link -->
+                </div>
               </div>
             </div>
           </div>
@@ -102,6 +108,16 @@
                   </li>
                   <!-- End::slide -->
 
+                        <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('about') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                        Careers
+                      </span>
+                    </a>
+                  </li>
+                  <!-- End::slide -->
+
                   <!-- Start::slide -->
                   <li class="slide d-xl-block d-none">
                     <a href="{{ route('contact') }}" class="side-menu__item">
@@ -113,8 +129,14 @@
                   <!-- End::slide -->
                 </ul>
                 <div>
-                  <ul class="list-unstyled d-flex align-items-center mb-0">
-                    <li class="text-lg-start text-center flex-grow-1">
+                  <ul class="header-actions list-unstyled d-flex align-items-center mb-0">
+                    <li class="d-flex align-items-center">
+                      <button type="button" class="header-theme-toggle header-link" aria-label="Switch to dark mode" title="Switch to dark mode">
+                        <i class="ri-moon-line header-link-icon theme-icon-dark" aria-hidden="true"></i>
+                        <i class="ri-sun-line header-link-icon theme-icon-light" aria-hidden="true"></i>
+                      </button>
+                    </li>
+                    <li class="d-flex align-items-center text-lg-start text-center">
                       <div class="btn-list">
                         <a href="contact-us.html" class="btn btn-primary-gradient landing-custom-button">
                           <span class="btn__text">

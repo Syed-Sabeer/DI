@@ -173,18 +173,18 @@
     </div>
     <!-- End Switcher -->
     <div class="">
-      <a class="cart-icon" href="cart.html">
+      {{-- <a class="cart-icon" href="cart.html">
         <i class="ri-shopping-cart-line">
         </i>
         <span class="cart-badge">
           5
         </span>
-      </a>
+      </a> --}}
       <!-- Start Switcher-Icon -->
-      <a aria-label="anchor" class="switcher-icon" data-bs-toggle="offcanvas" href="#switcher-canvas" aria-controls="switcher-canvas">
+      {{-- <a aria-label="anchor" class="switcher-icon" data-bs-toggle="offcanvas" href="#switcher-canvas" aria-controls="switcher-canvas">
         <i class="ri-settings-2-line">
         </i>
-      </a>
+      </a> --}}
       <!-- End Switcher-Icon -->
     </div>
     <!-- Start loader-Icon -->

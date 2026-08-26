@@ -21,8 +21,6 @@
           <div id="scroll-shell">
             <div id="scroll-stage">
  <main id="main-area" class="main-area">
-     <div class="home02-spacer">
-                </div>
  @yield('content')
   @include('layouts.frontend.footer')
    </main>
@@ -32,11 +30,11 @@
         </div>
       </div>
 </div>
-      
-         @include('layouts.frontend.postfooter')
-      
 
-         
+         @include('layouts.frontend.postfooter')
+
+
+
         @include('layouts.frontend.script')
 
         @yield('script')

@@ -9,13 +9,13 @@
 [Master Stylesheet]
 
 Project                            :   Aexora - Modern Corporate Service Template
-Author & Copyright Ownership       :   Spruko Technologies Private Limited 
+Author & Copyright Ownership       :   Spruko Technologies Private Limited
 Author URL                         :   https://themeforest.net/user/spruko
 Support	                           :   https://support.spruko.com/
 License Details                    :   https://spruko.com/licenses-details
 
 -------------------------------------------------------------------*/
-/* Table Of Content 
+/* Table Of Content
 variables
 accordion
 alerts
@@ -6950,7 +6950,7 @@ body.home-page1-body .cart-icon {
 .brand02-image {
   height: 6rem;
   width: 13.5rem;
-  padding: 2rem;
+  padding: 0.5rem;
   border: 1px solid var(--border);
   -o-object-fit: contain;
      object-fit: contain;
@@ -16867,6 +16867,97 @@ ul.blog-category-list li:last-child a {
   color: #000;
   fill: #000;
   transition: all ease 0.3s;
+}
+.header-theme-toggle {
+  display: inline-flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 3.5rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 50% !important;
+  background: #151d26 !important;
+  box-shadow: 0 0.35rem 1rem rgba(15, 23, 42, 0.2);
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.header-theme-toggle .header-link-icon {
+  color: #8baaa6 !important;
+  fill: #8baaa6 !important;
+  font-size: 1.45rem;
+}
+.header-theme-toggle:hover {
+  background: #202c38 !important;
+  border-color: rgba(var(--primary-rgb), 0.55) !important;
+  box-shadow: 0 0.4rem 1rem rgba(var(--primary-rgb), 0.28);
+  transform: translateY(-2px);
+}
+.header-theme-toggle:hover .header-link-icon {
+  color: var(--primary-color) !important;
+  fill: var(--primary-color) !important;
+  transform: rotate(12deg);
+}
+.header-theme-toggle:focus-visible {
+  outline: 3px solid rgba(var(--primary-rgb), 0.38);
+  outline-offset: 3px;
+}
+.header-theme-toggle .theme-icon-light {
+  display: none;
+}
+[data-theme-mode=dark] .header-theme-toggle {
+  background: #151d26 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 0.25rem 0.9rem rgba(0, 0, 0, 0.35);
+}
+[data-theme-mode=dark] .header-theme-toggle .theme-icon-dark {
+  display: none;
+}
+[data-theme-mode=dark] .header-theme-toggle .theme-icon-light {
+  display: inline-block;
+}
+[data-theme-mode=dark] .header-theme-toggle .header-link-icon {
+  color: #f4dc3f !important;
+  fill: #f4dc3f !important;
+}
+[data-theme-mode=dark] .header-theme-toggle:hover {
+  background: #202c38 !important;
+  border-color: rgba(var(--primary-rgb), 0.65) !important;
+}
+.header-actions {
+  gap: 0.75rem;
+}
+.header-actions .landing-custom-button {
+  min-height: 3.5rem;
+  padding: 0.75rem 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 0;
+  border-radius: 0.4rem;
+  box-shadow: 0 0.4rem 1rem rgba(var(--primary-rgb), 0.2);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+}
+.header-actions .landing-custom-button:hover {
+  box-shadow: 0 0.65rem 1.35rem rgba(var(--primary-rgb), 0.3);
+  filter: saturate(1.08);
+  transform: translateY(-2px);
+}
+.header-actions .landing-custom-button .btn__text {
+  white-space: nowrap;
+}
+@media (max-width: 575.98px) {
+  .header-theme-toggle {
+    width: 3rem;
+    height: 3rem;
+    flex-basis: 3rem;
+  }
+  .header-actions .landing-custom-button {
+    min-height: 3rem;
+    padding-inline: 1.1rem;
+  }
 }
 @media (min-width: 992px) {
   .slide-menu .side-menu__item {

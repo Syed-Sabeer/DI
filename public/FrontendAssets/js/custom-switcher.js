@@ -36,6 +36,7 @@ let mainContent;
     }
 
     switcherClick();
+    headerThemeToggle();
     checkOptions();
 
 })();
@@ -252,6 +253,7 @@ function lightFn() {
     localStorage.removeItem("bodyBgRGB");
     checkOptions();
     html.style.removeProperty('--body-bg-rgb');
+    syncHeaderThemeToggle();
 }
 
 function darkFn() {
@@ -264,6 +266,32 @@ function darkFn() {
     localStorage.removeItem("AexorabgColor");
     localStorage.removeItem("Aexorabgwhite");
     checkOptions();
+    syncHeaderThemeToggle();
+}
+
+function headerThemeToggle() {
+    document.querySelectorAll('.header-theme-toggle').forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme-mode') === 'dark') {
+                lightFn();
+            } else {
+                darkFn();
+            }
+        });
+    });
+
+    syncHeaderThemeToggle();
+}
+
+function syncHeaderThemeToggle() {
+    const isDark = document.documentElement.getAttribute('data-theme-mode') === 'dark';
+
+    document.querySelectorAll('.header-theme-toggle').forEach((toggle) => {
+        const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+        toggle.setAttribute('aria-label', label);
+        toggle.setAttribute('title', label);
+        toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    });
 }
 function ResetAllFn() {
     let html = document.querySelector('html');
