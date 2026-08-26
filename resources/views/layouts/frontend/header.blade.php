@@ -1,272 +1,139 @@
-   <div class="page-wrapper">
-        <!-- ================= PRELOADER (DISABLED) =================
-        <div id="preloader">
-            <div class="bracket tl"></div>
-            <div class="bracket tr"></div>
-            <div class="bracket bl"></div>
-            <div class="bracket br"></div>
-
-            <div class="pre-logo">
-                AVRIO GLOBAL
-                <div class="pre-logo-fill" id="logoFill">AVRIO GLOBAL </div>
+ <div class="head_menu_container header_default">
+        <header class="main-header" id="stickyHeader">
+          <!-- Start::main-brand-header -->
+          <div class="main-brand-header d-lg-none">
+            <div class="ms-4 me-3 brand-header-container">
+              <div>
+                <!-- End::header-element -->
+                <a href="index.html" class="brand-main">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
+                  <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
+                  <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color">
+                </a>
+              </div>
+              <!-- Start::header-element -->
+              <div class="header-element me-1">
+                <!-- Start::header-link -->
+                <a aria-label="anchor" href="javascript:void(0);" class="sidemenu-toggle1 header-link" data-bs-toggle="sidebar">
+                  <span class="open-toggle">
+                    <i class="ri-menu-3-line header-link-icon">
+                    </i>
+                  </span>
+                </a>
+                <!-- End::header-link -->
+              </div>
             </div>
-
-            <div class="loader-ring">
-                <svg viewBox="0 0 72 72">
-                    <circle class="ring-track" cx="36" cy="36" r="32" />
-                    <circle class="ring-arc a2" cx="36" cy="36" r="32" />
-                    <circle class="ring-arc a1" cx="36" cy="36" r="32" />
-                </svg>
-                <div class="ring-center-dot"></div>
+          </div>
+          <!-- End::main-brand-header -->
+        </header>
+        <div class="sticky">
+          <!-- Start::app-sidebar -->
+          <aside class="app-sidebar" id="sidebar">
+            <div class="app-toggle-header">
+              <a href="index.html" class="brand-main">
+                <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
+                <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
+              </a>
+              <div class="header-element">
+                <!-- Start::header-link -->
+                <a aria-label="anchor" href="javascript:void(0);" class="sidemenu-toggle header-link" data-bs-toggle="sidebar">
+                  <span class="close-toggle">
+                    <i class="bi bi-x header-link-icon">
+                    </i>
+                  </span>
+                </a>
+                <!-- End::header-link -->
+              </div>
+              <!-- End::header-element -->
             </div>
-
-            <div class="pre-count">Loading <span id="pct">0</span>%</div>
-        </div>
-        -->
-
-        <div id="page">
-            <header class="header-section header-1" id="sticky-header">
-                <div class="header-main">
-
-                    <!-- ===================== DESKTOP NAVBAR ===================== -->
-                    <nav class="navbar p-0 navbar-expand-xl d-none d-xl-flex">
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            <img style="width: 200px; height: auto;" src="{{ asset('FrontendAssets/img/white-file/avrio-logo.png')}}" alt="logo">
+            <!-- Start::main-sidebar -->
+            <div class="main-sidebar" id="sidebar-scroll">
+              <!-- Start::nav -->
+              <nav class="main-menu-container nav nav-pills sub-open align-items-center">
+                <!-- Start::main-brand-header -->
+                <div class="main-brand-header">
+                  <div class="container brand-header-container d-none d-lg-flex">
+                    <div class="d-flex align-items-center">
+                      <!-- Start::header-element -->
+                      <div class="header-element me-1">
+                        <!-- Start::header-link -->
+                        <a aria-label="anchor" href="javascript:void(0);" class="sidemenu-toggle1 header-link" data-bs-toggle="sidebar">
+                          <span class="open-toggle">
+                            <i class="bi bi-text-indent-left header-link-icon">
+                            </i>
+                          </span>
                         </a>
-
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                            <ul class="navbar-nav mx-auto mb-lg-0">
-
-                                <!-- HOME -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/') }}">Home</a>
-                                </li>
-
-                                <!-- ABOUT -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/about') }}">About Us</a>
-                                </li>
-
-                                <!-- SERVICES -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/service') }}">Services</a>
-                                </li>
-
-
-
-                                <!-- BLOG -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/blog') }}">Blog</a>
-                                </li>
-
-
-                                <!-- CONTACT -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="menu-right-info">
-                                {{-- <a href="#" class="main-header__search search-toggler">
-                                    <i class="fa-regular fa-magnifying-glass"></i>
-                                </a> --}}
-                                <div class="sidebar__toggle offcanvas-btn">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </nav>
-
-                </div>
-
-                <div class="offcanvas-overlay position-fixed top-0 start-0 w-100 h-100"></div>
-                <div class="offcanvas-menu position-fixed">
-                    <div class="header-top d-flex align-items-center justify-content-between gap-4">
-                        <div class="logo">
-                            <a href="{{ url('/') }}">
-                                <img  src="{{ asset('FrontendAssets/img/white-file/darklogo.png')}}" alt="logo">
-                            </a>
-                        </div>
-                        <button
-                            class="offcasvas-close black-bg border-0 text-white d-flex align-items-center justify-content-center rounded-pill">
-                            <i class="fa-regular fa-xmark"></i>
-                        </button>
+                        <!-- End::header-link -->
+                      </div>
+                      <!-- End::header-element -->
+                      <a href="index.html" class="brand-main">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
+                        <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
+                        <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color">
+                      </a>
                     </div>
-                    <span class="action-title">Happy You’re Here</span>
-                    <a href="{{ url('/contact') }}" class="news-btn">
-                        <span class="text">
-                            <span class="text-default">Know more us <i class="fa-regular fa-arrow-up-right"></i></span>
-                            <span class="text-hover">Know more us <i class="fa-regular fa-arrow-up-right"></i></span>
-                        </span>
+                  </div>
+                </div>
+                <!-- End::main-brand-header -->
+                <ul class="main-menu">
+     <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('home') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                       Home
+                      </span>
                     </a>
-                    <div class="offcanvas_gallery d-none d-lg-block">
-                        <img class="gallery_img" src="{{ asset('FrontendAssets/img/header/offcanvas1.jpg')}}" alt="gallery">
-                        <img class="gallery_img" src="{{ asset('FrontendAssets/img/header/offcanvas2.jpg')}}" alt="gallery">
-                        <img class="gallery_img" src="{{ asset('FrontendAssets/img/header/offcanvas3.jpg')}}" alt="gallery">
-                        <img class="gallery_img" src="{{ asset('FrontendAssets/img/header/offcanvas4.jpg')}}" alt="gallery">
-                    </div>
-                    <div class="off-contact-info">
-                        <span class="info-title">Contact Info</span>
-                        <div class="contact-details">
-                            <span class="sub-info">Phone</span>
-                            <p>
-                                <a href="tel:+15485732018">+1 (548) 573-2018</a>
-                            </p>
-                        </div>
-                        <div class="contact-details">
-                            <span class="sub-info">Email</span>
-                            <p>
-                                <a href="mailto:info@avrioglobal.io">info@avrioglobal.io</a>
-                            </p>
-                        </div>
-                        <div class="contact-details">
-                            <span class="sub-info">Location</span>
-                            <p>
-        349 Beechlawn Drive Waterloo
-ON N2L 5L8,
-CANADA
-                            </p>
-                        </div>
-                    </div>
-                    <div class="social-icon-list">
-                        <span class="follow-title">
-                            Follow us:
-                        </span>
-                        <div class="social-icon d-flex align-items-center">
-                            <a href="facebook.com"><i class="fab fa-facebook-f"></i></a>
-                                <a href="instagram.com"><i class="fab fa-instagram"></i></a>
-                                <a href="https://www.linkedin.com/company/avrio-global/"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
+                  </li>
+                  <!-- End::slide -->
 
-                    </div>
+                       <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('about') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                        About
+                      </span>
+                    </a>
+                  </li>
+                  <!-- End::slide -->
+
+                  <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('contact') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                        Contact Us
+                      </span>
+                    </a>
+                  </li>
+                  <!-- End::slide -->
+                </ul>
+                <div>
+                  <ul class="list-unstyled d-flex align-items-center mb-0">
+                    <li class="text-lg-start text-center flex-grow-1">
+                      <div class="btn-list">
+                        <a href="contact-us.html" class="btn btn-primary-gradient landing-custom-button">
+                          <span class="btn__text">
+                            Get In Touch
+                          </span>
+                          <span class="btn__icon">
+                            <i class="ri-arrow-right-long-line">
+                            </i>
+                          </span>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-
-                <!-- ===================== MOBILE MENU ===================== -->
-                <div class="mobile-menu-area d-block d-xl-none">
-
-                    <div class="container">
-                        <div class="mobile-topbar">
-                            <div class="d-flex justify-content-between align-items-center">
-
-                                <div class="logo">
-                                    <a href="{{ url('/') }}">
-                                        <img style="width: 80px; height: auto;" src="{{ asset('FrontendAssets/img/white-file/avrio-logo.png')}}" alt="logo">
-                                    </a>
-                                </div>
-
-                                <div class="menu-search d-flex align-items-center gap-4">
-                                    <a href="#" class="main-header__search search-toggler">
-                                        <i class="fa-regular fa-magnifying-glass"></i>
-                                    </a>
-                                    <div class="bars">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="mobile-menu-overlay"></div>
-
-                    <div class="mobile-menu-main">
-
-                        <div class="logo">
-                            <a href="{{ url('/') }}">
-                                <img style="width: 60px; height: auto;" src="{{ asset('FrontendAssets/img/white-file/avrio-logo.png')}}" alt="logo">
-                            </a>
-                        </div>
-
-                        <div class="close-mobile-menu">
-                            <i class="fas fa-times"></i>
-                        </div>
-
-                        <div class="menu-body">
-                            <div class="menu-list">
-                                <ul class="list-unstyled">
-
-                                   
-                                    <li><a href="{{ url('/') }}">Home</a></li>
-                                    <li><a href="{{ url('/about') }}">About Us</a></li>
-                                    <li><a href="{{ url('/service') }}">Services</a></li>
-                                    <li><a href="{{ url('/blog') }}">Blogs</a></li>
-
-                                
-                                    <li><a href="{{ url('/contact') }}">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="off-contact-area">
-                            <div class="off-contact-info">
-                                <span class="info-title">Contact Info</span>
-                                <div class="contact-details">
-                                    <span class="sub-info">Phone</span>
-                                    <p>
-                                        <a href="tel:+15485732018">+1 (548) 573-2018</a>
-                                    </p>
-                                </div>
-                                <div class="contact-details">
-                                    <span class="sub-info">Email</span>
-                                    <p>
-                                        <a href="mailto:info@avrioglobal.io">info@avrioglobal.io</a>
-                                    </p>
-                                </div>
-                                <div class="contact-details">
-                                    <span class="sub-info">Location</span>
-                                    <p>
-                                        Plot No. A-26/1, Block 8, K.A.E.C.H.S,
-Karachi - 75460,
-PAKISTAN
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="social-icon-list">
-                                <span class="follow-title">
-                                    Follow us:
-                                </span>
-                                <div class="social-icon d-flex align-items-center">
-                                        <a href="facebook.com"><i class="fab fa-facebook-f"></i></a>
-                                <a href="instagram.com"><i class="fab fa-instagram"></i></a>
-                                <a href="https://www.linkedin.com/company/avrio-global/"><i class="fab fa-linkedin-in"></i></a>
-                                    
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- ===================== MOBILE MENU END ===================== -->
-
-            </header>
-
-            <!-- Search Start -->
-            <div class="search-popup">
-                <div class="search-popup__overlay search-toggler"></div>
-                <div class="search-popup__content">
-                    <form role="search" method="get" class="search-popup__form" action="#">
-                        <input type="text" id="search" name="search" placeholder="Search Here...">
-                        <button type="submit" aria-label="search submit" class="search-btn">
-                            <span><i class="fa-regular fa-magnifying-glass"></i></span>
-                        </button>
-                    </form>
-                </div>
+              </nav>
+              <!-- End::nav -->
             </div>
-
-            <div id="smooth-wrapper">
-                <div id="smooth-content">
+            <!-- End::main-sidebar -->
+          </aside>
+          <!-- End::app-sidebar -->
+        </div>
+      </div>

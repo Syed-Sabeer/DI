@@ -54,8 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost/AvrioGlobal'),
-    'asset_url' => env('ASSET_URL', 'http://localhost/AvrioGlobal/public'),
+    'url' => env('APP_URL', 'http://localhost/Deveon'),
+    'asset_url' => env('ASSET_URL', 'http://localhost/Deveon/public'),
 
     /*
     |--------------------------------------------------------------------------
