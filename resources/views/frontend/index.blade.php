@@ -1124,90 +1124,38 @@
                       </div>
                     </div>
                     <div class="row gy-4">
-                      <div class="col-xl-4">
+                      @forelse($latestBlogs as $blog)
+                      <div class="col-xl-4 col-md-6">
                         <div class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".4s">
                           <div class="post-meta">
                             <span class="post-category">
-                              <a href="blog-details.html">
-                                Business
+                              <a href="{{ route('blog', ['category' => $blog->category]) }}">
+                                {{ $blog->category ?: 'News' }}
                               </a>
                             </span>
                           </div>
                           <div class="post-media clip-anim">
-                            <a href="blog-details.html">
-                              <img src="{{ asset('FrontendAssets/images/blog/blog1.png')}}" alt="Blog Image" class="anim-img" data-animate="true">
+                            <a href="{{ route('blog.detail', $blog->slug) }}">
+                              <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}" class="anim-img" data-animate="true">
                             </a>
                           </div>
                           <div class="post-overlay-content">
                             <h3 class="post-title mb-3">
-                              <a href="blog-details.html">
-                                SME Digital Transformation Hub 2026 Year End
+                              <a href="{{ route('blog.detail', $blog->slug) }}">
+                                {{ $blog->title }}
                               </a>
                             </h3>
                             <span class="posted-on">
-                              <time class="entry-date published ps-0 updated" datetime="2025-09-23T03:35:49+00:00">
-                                Jan 23, 2025
+                              <time class="entry-date published ps-0 updated" datetime="{{ optional($blog->created_at)->toDateString() }}">
+                                {{ optional($blog->created_at)->format('F d, Y') }}
                               </time>
                             </span>
                           </div>
                         </div>
                       </div>
-                      <div class="col-xl-4">
-                        <div class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".4s">
-                          <div class="post-meta">
-                            <span class="post-category">
-                              <a href="blog-details.html">
-                                Analytics
-                              </a>
-                            </span>
-                          </div>
-                          <div class="post-media clip-anim">
-                            <a href="blog-details.html">
-                              <img src="{{ asset('FrontendAssets/images/blog/blog2.png')}}" alt="Blog Image" class="anim-img" data-animate="true">
-                            </a>
-                          </div>
-                          <div class="post-overlay-content">
-                            <h3 class="post-title mb-3">
-                              <a href="blog-details.html">
-                                Complete SEO Guide for Small Businesses in 2025
-                              </a>
-                            </h3>
-                            <span class="posted-on">
-                              <time class="entry-date ps-0 published updated" datetime="2025-09-23T03:35:49+00:00">
-                                September 23, 2025
-                              </time>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-4">
-                        <div class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".4s">
-                          <div class="post-meta">
-                            <span class="post-category">
-                              <a href="blog-details.html">
-                                Development
-                              </a>
-                            </span>
-                          </div>
-                          <div class="post-media clip-anim">
-                            <a href="blog-details.html">
-                              <img src="{{ asset('FrontendAssets/images/blog/blog3.png')}}" alt="Blog Image" class="anim-img" data-animate="true">
-                            </a>
-                          </div>
-                          <div class="post-overlay-content">
-                            <h3 class="post-title mb-3">
-                              <a href="blog-details.html">
-                                Harnessing Digital Transform a Roadmap Businesses.
-                              </a>
-                            </h3>
-                            <span class="posted-on">
-                              <time class="entry-date ps-0 published updated" datetime="2025-09-23T03:35:49+00:00">
-                                September 23, 2025
-                              </time>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      @empty
+                        <div class="col-12 text-center"><p>No blog posts are available yet.</p></div>
+                      @endforelse
                     </div>
                   </div>
                 </section>

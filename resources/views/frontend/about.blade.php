@@ -167,6 +167,18 @@
             font-size: 1.4rem;
         }
     }
+
+    /*
+        --primary-color is a bright lime green that has very low contrast on
+        white/light backgrounds (it only "pops" against dark ones). Rather than
+        changing the color itself, give it a soft dark edge so it reads clearly
+        on light backgrounds too, the way the dark backdrop does for it elsewhere.
+    */
+    [data-theme-mode="light"] .heading-title .text-primary,
+    [data-theme-mode="light"] .founder-badge__number-wrap,
+    [data-theme-mode="light"] .founder-stat i {
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
+    }
 </style>
 @endsection
 
@@ -488,7 +500,7 @@
                                     <div class="col-xl-5">
                                         <div class="founder-photo-card">
                                             <div class="founder-photo-frame">
-                                                <img src="{{ asset('FrontendAssets/images/profile/founder.jpg')}}" alt="Syed Sabeer Faisal — Founder & CEO of Deveon Inc" class="founder-photo">
+                                                <img src="{{ asset('FrontendAssets/images/profile/founder.png')}}" alt="Syed Sabeer Faisal — Founder & CEO of Deveon Inc" class="founder-photo">
                                                 <div class="founder-badge">
                                                     <div class="founder-badge__number-wrap">
                                                         <span class="odometer" data-count="10"></span><span class="suffix">+</span>

@@ -56,7 +56,11 @@ $latestBlogs = \App\Models\Blog::where('visibility', 1)
             'comments_count' => 0
         ]);
 
-        $latestBlogs = Blog::where('visibility', 1)->latest()->take(5)->get();
+        $latestBlogs = Blog::where('visibility', 1)
+            ->where('id', '<>', $blog->id)
+            ->latest()
+            ->take(5)
+            ->get();
         $categories = Blog::where('visibility', 1)->whereNotNull('category')->where('category', '<>', '')
             ->select('category')->selectRaw('COUNT(*) as total')->groupBy('category')->orderByDesc('total')->get();
         $tags = Blog::where('visibility', 1)->pluck('tags')->filter()->flatMap(function ($value) {
