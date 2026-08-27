@@ -790,7 +790,7 @@
                             <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag">
                         </div>
                         <div>
-                            <span class="office-region">Head Office</span>
+                            <span class="office-region">Offshore Development Center</span>
                             <h3>Pakistan Office</h3>
                             <p>71A Street 3, Sindhi Muslim Cooperative Housing Society, Block A (SMCHS), Karachi, 75400, Pakistan</p>
                             <div><span class="office-hours"><i class="ri-time-line"></i> Mon - Sat, 9 AM - 11:30 PM</span></div>
@@ -806,7 +806,7 @@
                             <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag">
                         </div>
                         <div>
-                            <span class="office-region">Regional Office</span>
+                            <span class="office-region">Headquarters</span>
                             <h3>Canada Office</h3>
                             <p>Suite 391 - 1505 Laperriere Avenue, Ottawa, Ontario K1Z 7T1, Canada</p>
                             <div><span class="office-hours"><i class="ri-time-line"></i> Sun - Fri, 9 AM - 11:30 PM</span></div>

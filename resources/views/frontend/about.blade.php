@@ -188,6 +188,78 @@
         margin-bottom: 22px;
     }
 
+    .services-header .heading-subtitle {
+        gap: 8px;
+        font-size: 0.8rem;
+        letter-spacing: 0.14em;
+        background: var(--gray-100);
+    }
+
+    .services-header .heading-subtitle i {
+        font-size: 0.55rem;
+        color: var(--primary-color);
+    }
+
+    [data-theme-mode="light"] .services-header .heading-subtitle i {
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
+    }
+
+    .services-header .heading-title {
+        letter-spacing: -0.015em;
+    }
+
+    .services-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 8px 8px 28px;
+        border-radius: 999px;
+        background: rgb(var(--dark-rgb));
+        color: var(--custom-white);
+        font-weight: 700;
+        font-size: 0.92rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        transition: gap 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+
+    .services-cta:hover {
+        gap: 22px;
+        color: var(--custom-white);
+        box-shadow: 0 20px 40px -18px rgba(var(--dark-rgb), 0.5);
+    }
+
+    .services-cta__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: #111;
+        font-size: 1.2rem;
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .services-cta:hover .services-cta__icon {
+        transform: rotate(45deg);
+    }
+
+    @media (max-width: 575px) {
+        .services-cta {
+            padding: 7px 7px 7px 22px;
+            font-size: 0.85rem;
+        }
+
+        .services-cta__icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.05rem;
+        }
+    }
+
     .services-card {
         position: relative;
         height: 100%;
@@ -376,7 +448,7 @@
                                 <div class="row services-header align-items-end gy-4 mb-5">
                                     <div class="col-lg-6">
                                         <div class="heading-section text-start mb-0">
-                                            <span class="heading-subtitle d-inline-flex wow fadeInUp" data-wow-delay=".1s">
+                                            <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex wow fadeInUp" data-wow-delay=".1s">
                                                 <i class="ri-checkbox-blank-circle-fill"></i>
                                                 Service We Offer
                                             </span>
@@ -389,9 +461,9 @@
                                         <p>
                                             From the first line of code to the final launch, we cover every discipline your product needs under one roof.
                                         </p>
-                                        <a class="btn btn-primary-gradient landing-custom-button" href="servicesdetails-01.html" style="overflow: hidden;">
-                                            See All Services
-                                            <i class="ri-arrow-right-line"></i>
+                                        <a class="services-cta wow fadeInUp" data-wow-delay=".2s" href="{{ route('service') }}">
+                                            <span>See All Services</span>
+                                            <span class="services-cta__icon"><i class="ri-arrow-right-up-line"></i></span>
                                         </a>
                                     </div>
                                 </div>
@@ -406,7 +478,7 @@
                                             <p class="services-card__desc">
                                                 Custom business software and portal solutions designed for scalability and reliability, built around the way your team actually works.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'software-development') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>
@@ -421,7 +493,7 @@
                                             <p class="services-card__desc">
                                                 Deliver seamless and enjoyable digital experiences. Our designs prioritize clarity, ease of use, and attractive interfaces for both web and mobile platforms.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'ui-ux-design') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>
@@ -436,7 +508,7 @@
                                             <p class="services-card__desc">
                                                 Native and cross-platform app experiences with smooth performance and clean UX. We turn ideas into high-performing mobile apps tailored to your users' needs.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'mobile-app-development') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>
@@ -451,7 +523,7 @@
                                             <p class="services-card__desc">
                                                 Modern, responsive, and conversion-focused websites tailored to your business goals — from marketing sites to complex web platforms and e-commerce stores.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'web-development') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>
@@ -466,7 +538,7 @@
                                             <p class="services-card__desc">
                                                 Search visibility, content strategy, and growth campaigns that drive quality traffic and turn visitors into customers.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'seo-marketing') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>
@@ -481,7 +553,7 @@
                                             <p class="services-card__desc">
                                                 We build intelligent features — from automation and predictive models to AI-powered integrations — that give your product a competitive edge.
                                             </p>
-                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                            <a class="services-card__cta" href="{{ route('service.detail', 'ai-ml') }}">
                                                 Explore Service <i class="ri-arrow-right-up-line"></i>
                                             </a>
                                         </div>

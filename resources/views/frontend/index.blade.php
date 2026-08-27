@@ -372,7 +372,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'software-development') }}">
                                   Software Development
                                 </a>
                               </h3>
@@ -380,7 +380,7 @@
                                 Custom business software and portal solutions designed for scalability and reliability, built around the way your team actually works.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center text-gradient gap-1 btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center text-gradient gap-1 btn-double-effect" href="{{ route('service.detail', 'software-development') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -412,7 +412,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'ui-ux-design') }}">
                                   UI/UX Design
                                 </a>
                               </h3>
@@ -420,7 +420,7 @@
                                 Deliver seamless and enjoyable digital experiences. Our designs prioritize clarity, ease of use, and attractive interfaces for both web and mobile platforms.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="{{ route('service.detail', 'ui-ux-design') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -446,7 +446,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'mobile-app-development') }}">
                                   Mobile App Development
                                 </a>
                               </h3>
@@ -454,7 +454,7 @@
                                 Native and cross-platform app experiences with smooth performance and clean UX. We turn ideas into high-performing mobile apps tailored to your users’ needs.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="{{ route('service.detail', 'mobile-app-development') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -480,7 +480,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'web-development') }}">
                                   Website Development
                                 </a>
                               </h3>
@@ -488,7 +488,7 @@
                                 Modern, responsive, and conversion-focused websites tailored to your business goals — from marketing sites to complex web platforms and e-commerce stores.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="{{ route('service.detail', 'web-development') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -514,7 +514,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'seo-marketing') }}">
                                   SEO & Marketing
                                 </a>
                               </h3>
@@ -522,7 +522,7 @@
                                 Search visibility, content strategy, and growth campaigns that drive quality traffic and turn visitors into customers.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="{{ route('service.detail', 'seo-marketing') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -547,7 +547,7 @@
                             </div>
                             <div class="service-card-content">
                               <h3 class="service-card-title">
-                                <a href="servicesdetails-01.html">
+                                <a href="{{ route('service.detail', 'ai-ml') }}">
                                   AI/ML
                                 </a>
                               </h3>
@@ -555,7 +555,7 @@
                                 We build intelligent features — from automation and predictive models to AI-powered integrations — that give your product a competitive edge.
                               </p>
                               <div class="service-card__btn">
-                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
+                                <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="{{ route('service.detail', 'ai-ml') }}">
                                   <span class="btn__text">
                                     Read More
                                   </span>
@@ -571,7 +571,7 @@
                       </div>
                     </div>
                     <div class="text-center">
-                      <a class="btn btn-primary-gradient landing-custom-button me-3 mb-0 mt-2" href="servicesdetails-01.html" style="overflow: hidden;">
+                      <a class="btn btn-primary-gradient landing-custom-button me-3 mb-0 mt-2" href="{{ route('service') }}" style="overflow: hidden;">
                         See All Services
                         <i class="ri-arrow-right-line">
                         </i>

@@ -108,6 +108,16 @@
                   </li>
                   <!-- End::slide -->
 
+                       <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('service') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                        Services
+                      </span>
+                    </a>
+                  </li>
+                  <!-- End::slide -->
+
                         <!-- Start::slide -->
                   <li class="slide d-xl-block d-none">
                     <a href="{{ route('careers') }}" class="side-menu__item">

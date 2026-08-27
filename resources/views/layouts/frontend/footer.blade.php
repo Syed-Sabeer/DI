@@ -141,7 +141,7 @@
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('service') }}">
                               Services We Offer
                             </a>
                           </li>
