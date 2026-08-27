@@ -101,11 +101,7 @@
                               About Us
                             </a>
                           </li>
-                          <li>
-                            <a href="pricing.html">
-                              Pricing Plans
-                            </a>
-                          </li>
+                          
                           <li>
                             <a href="careers.html">
                               Careers

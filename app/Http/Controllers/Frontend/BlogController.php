@@ -15,23 +15,28 @@ public function index(Request $request)
 {
     $query = Blog::where('visibility', 1);
 
-
-
-    if ($request->has('search')) {
-        $search = $request->input('search');
-        $query->where('title', 'like', "%{$search}%")
-            //   ->orWhere('description', 'like', "%{$search}%")
-              ;
+    if ($request->filled('search')) {
+        $search = trim($request->input('search'));
+        $query->where(function ($query) use ($search) {
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%")
+                ->orWhere('tags', 'like', "%{$search}%");
+        });
     }
+
     if ($request->filled('category')) {
         $query->where('category', $request->input('category'));
     }
-$latestBlogs = \App\Models\Blog::where('visibility', 1)
-    ->latest()
-    ->take(5)
-    ->get();
 
-    $blogs = $query->latest()->paginate(6)->withQueryString();
+    if ($request->filled('tag')) {
+        $tag = trim($request->input('tag'));
+        $query->where('tags', 'like', "%{$tag}%");
+    }
+
+    $latestBlogs = Blog::where('visibility', 1)->latest()->take(5)->get();
+
+    $blogs = $query->latest()->paginate(10)->withQueryString();
     $categories = Blog::where('visibility', 1)->whereNotNull('category')->where('category', '<>', '')
         ->select('category')->selectRaw('COUNT(*) as total')->groupBy('category')->orderByDesc('total')->get();
     $tags = Blog::where('visibility', 1)->pluck('tags')->filter()->flatMap(function ($value) {

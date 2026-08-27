@@ -179,6 +179,41 @@
     [data-theme-mode="light"] .founder-stat i {
         text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
     }
+
+    /* Service card "Read More" — small pill button instead of the low-contrast gradient text link */
+    .service-card__btn a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1.5px solid var(--primary-color);
+        background: transparent;
+        color: rgb(var(--dark-rgb));
+        -webkit-text-fill-color: rgb(var(--dark-rgb));
+        -webkit-background-clip: border-box;
+        background-clip: border-box;
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .service-card__btn a .btn__icon {
+        display: inline-flex;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card__btn a:hover {
+        background: var(--primary-color);
+        color: #0b0b0b;
+        -webkit-text-fill-color: #0b0b0b;
+        box-shadow: 0 10px 24px -12px rgba(var(--primary-rgb), 0.6);
+        transform: translateY(-2px);
+    }
+
+    .service-card__btn a:hover .btn__icon {
+        transform: translateX(3px);
+    }
 </style>
 @endsection
 

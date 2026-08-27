@@ -1,152 +1,180 @@
 @extends('layouts.frontend.master')
 
-@section('title', 'Software Development Blog & Insights | Avrio Global Inc.')
-@section('meta_description', 'Software, product, and growth insights from Avrio Global Inc. — practical guidance on custom software development, mobile apps, AI, and digital strategy.')
-@section('meta_keywords', 'software development blog, software insights, custom software development articles')
-
-@push('schema')
-<script type="application/ld+json">
-{!! json_encode([
-    '@context' => 'https://schema.org',
-    '@type' => 'BreadcrumbList',
-    'itemListElement' => [
-        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => url('/blog')],
-    ],
-], JSON_UNESCAPED_SLASHES) !!}
-</script>
-@endpush
+@section('title', 'Blog & Insights')
+@section('meta_description', 'Explore insights on software development, mobile apps, design, and digital growth from Deveon Inc.')
+@section('meta_keywords', 'software development blog, mobile apps, design, digital growth')
 
 @section('css')
+<style>
+  .blog-archive .post-card .post-overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
+  .blog-archive .post-card .post-meta {
+    position: relative !important;
+    inset: auto !important;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .blog-archive .post-card .post-category {
+    margin-bottom: 0;
+  }
+
+  .blog-archive .post-card .post-title {
+    width: 100%;
+  }
+
+  .blog-archive .clear-filters-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.35rem;
+    background: rgb(1, 1, 4);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .blog-archive .clear-filters-button:hover,
+  .blog-archive .clear-filters-button:focus-visible {
+    background: var(--primary-color);
+    color: rgb(1, 1, 4);
+    transform: translateY(-1px);
+  }
+
+  .blog-archive .clear-filters-button:focus-visible {
+    outline: 3px solid rgba(var(--primary-rgb), 0.25);
+    outline-offset: 2px;
+  }
+</style>
 @endsection
 
 @section('content')
+<div class="section-spacer"></div>
 
+<section class="hero pages-banner overflow-hidden">
+  <div class="container">
+    <div class="row"><div class="col-12"><div class="hero-banner-content text-center">
+      <h1 class="hero__title text-dark text-center text-animated-slider">Blog & Insights</h1>
+      <div class="glow-border-container">
+        <ul class="pagebreadcrumb-list">
+          <li class="pagebreadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li><i class="ri-expand-horizontal-s-fill"></i></li>
+          <li class="active">Blog</li>
+        </ul>
+        <div class="glow-border-card"><div class="glow-border-inner"></div></div>
+      </div>
+    </div></div></div>
+  </div>
+  <div class="bg-image-shape">
+    <img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light">
+    <img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none">
+  </div>
+</section>
 
-    <!-- Breadcrumb Section Start -->
-                    <div class="breadcrumb-wrapper light-theme-breadcrumb bg-cover" style="background-image: url({{ asset('FrontendAssets/img/inner-page/bread-line.png') }});">
-                        <div class="light-bg">
-                            <img src="{{ asset('FrontendAssets/img/inner-page/light.png')}}" alt="img">
-                        </div>
-                        <div class="container">
-                            <div class="page-heading mb-0">
-                                <div class="breadcrumb-sub-title">
-                                    <h1 class="about-page-heading-title"><span>Software Insights</span>
-                                        For Building Better Digital Products
-                                    </h1>
-                                </div>
-                                <div class="breadcrumb-items">
-                                    <ul>
-                                        <li>
-                                           <span class="about-page-heading-meta">Software insights for businesses</span>
-                                        </li>
-                                        <li>
-    (&copy;2020 — {{ date('Y') }})
-</li>
-                                    </ul>
-                                    <h2 class="title wa_title_spilt_1">
-                                     Avrio Insights
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                   <!-- GT News-standard Section Start -->
-                    <section class="news-standard-section section-padding">
-                        <div class="container">
-                            <div class="gt-news-standard-wrapper">
-                                <div class="row g-4">
-                                    <div class="col-12 col-lg-8">
-                                        <div class="gt-news-standard-items">
-                                            @forelse($blogs as $blog)
-                                                <article class="gt-news-card-items-4">
-                                                    <div class="gt-news-image">
-                                                        <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/img/inner-page/blog-post-1.jpg') }}" alt="{{ $blog->title }}">
-                                                    </div>
-                                                    <div class="gt-news-content">
-                                                        <ul class="gt-date-list">
-                                                            <li><i class="fa-solid fa-calendar-days"></i> {{ optional($blog->created_at)->format('d F Y') }}</li>
-                                                            {{-- <li><i class="fa-solid fa-comments"></i> {{ $blog->comments_count ?? 0 }} Comments</li> --}}
-                                                        </ul>
-                                                        <h2 class="news-title"><a href="{{ route('blog.detail', $blog->slug) }}">{{ $blog->title }}</a></h2>
-                                                        <p>{{ \Illuminate\Support\Str::limit(strip_tags($blog->content), 220) }}</p>
-                                                        <a class="theme-btn-main style-2 bg-white-style" href="{{ route('blog.detail', $blog->slug) }}">
-                                                            <span class="theme-btn-arrow-left"><i class="fa-solid fa-arrow-up-right"></i></span>
-                                                            <span class="theme-btn">Read More</span>
-                                                            <span class="theme-btn-arrow-right"><i class="fa-solid fa-arrow-up-right"></i></span>
-                                                        </a>
-                                                    </div>
-                                                </article>
-                                            @empty
-                                                <div class="gt-news-card-items-4"><div class="gt-news-content"><h2 class="news-title">No articles published yet</h2><p>New software insights and company updates will appear here soon.</p></div></div>
-                                            @endforelse
-                                            @if($blogs->hasPages())
-                                                <div class="page-nav-wrap text-center">{{ $blogs->links() }}</div>
-                                            @endif
-                                       
-                                           <div class="page-nav-wrap text-center d-none">
-                                                <ul>
-                                                    <li class="active"><a class="page-numbers" href="#">01</a></li>
-                                                    <li><a class="page-numbers" href="#">02</a></li>
-                                                    <li><a class="page-numbers" href="#">03</a></li>
-                                                    <li><a class="page-numbers" href="#"><i class="fa-solid fa-arrow-up-right"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-12">
-                                        <aside class="blog-dynamic-sidebar gt-main-sideber sticky-style">
-                                            <div class="gt-single-sideber-widget">
-                                                <div class="gt-widget-title"><h3>Search</h3></div>
-                                                <div class="gt-search-widget">
-                                                    <form action="{{ route('blog') }}" method="GET">
-                                                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search here">
-                                                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="gt-single-sideber-widget">
-                                                <div class="gt-widget-title"><h3>All Categories</h3></div>
-                                                <ul class="gt-category-list">
-                                                    @forelse($categories as $category)
-                                                        <li><a href="{{ route('blog', ['category' => $category->category]) }}">{{ $category->category }}</a><span>({{ str_pad($category->total, 2, '0', STR_PAD_LEFT) }})</span></li>
-                                                    @empty
-                                                        <li><span>No categories yet</span></li>
-                                                    @endforelse
-                                                </ul>
-                                            </div>
-                                            <div class="gt-single-sideber-widget">
-                                                <div class="gt-widget-title"><h3>Recent Posts</h3></div>
-                                                <div class="gt-recent-post-area">
-                                                    @forelse($latestBlogs as $latest)
-                                                        <div class="gt-recent-items">
-                                                            <div class="gt-recent-thumb"><img src="{{ $latest->image ? asset('storage/' . $latest->image) : asset('FrontendAssets/img/inner-page/post-1.jpg') }}" alt="{{ $latest->title }}"></div>
-                                                            <div class="gt-recent-content"><h4 class="title"><a href="{{ route('blog.detail', $latest->slug) }}">{{ $latest->title }}</a></h4><ul><li>{{ optional($latest->created_at)->format('d M Y') }}</li></ul></div>
-                                                        </div>
-                                                    @empty
-                                                        <p>No recent posts yet.</p>
-                                                    @endforelse
-                                                </div>
-                                            </div>
-                                            <div class="gt-single-sideber-widget mb-0">
-                                                <div class="gt-widget-title"><h3>Popular Tags</h3></div>
-                                                <div class="tagcloud">
-                                                    @forelse($tags as $tag)<a href="{{ route('blog', ['search' => $tag]) }}">{{ $tag }}</a>@empty<span>No tags yet</span>@endforelse
-                                                </div>
-                                            </div>
-                                        </aside>
-                                  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                   
+<section class="section team-page-section section-gap blog-archive">
+  <div class="container"><div class="row gy-4">
+    <div class="col-xl-8">
+      @if(request()->filled('search') || request()->filled('category') || request()->filled('tag'))
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <p class="mb-0">Showing {{ $blogs->total() }} {{ \Illuminate\Support\Str::plural('result', $blogs->total()) }}</p>
+        <a class="clear-filters-button" href="{{ route('blog') }}">
+          <i class="ri-filter-off-line" aria-hidden="true"></i>
+          <span>Clear all filters</span>
+        </a>
+      </div>
+      @endif
 
-@endsection
+      <div class="row gy-4">
+        @forelse($blogs as $blog)
+        <div class="col-md-6">
+          <article class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".2s">
+            <div class="post-media">
+              <a href="{{ route('blog.detail', $blog->slug) }}">
+                <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}">
+              </a>
+            </div>
+            <div class="post-overlay-content">
+              <div class="post-meta"><span class="post-category">
+                <a href="{{ route('blog', ['category' => $blog->category]) }}">{{ $blog->category ?: 'News' }}</a>
+              </span></div>
+              <h2 class="post-title mb-3"><a href="{{ route('blog.detail', $blog->slug) }}">{{ $blog->title }}</a></h2>
+              <span class="posted-on"><time class="entry-date published ps-0 updated" datetime="{{ optional($blog->created_at)->toDateString() }}">{{ optional($blog->created_at)->format('M d, Y') }}</time></span>
+            </div>
+          </article>
+        </div>
+        @empty
+        <div class="col-12 text-center py-5">
+          <h3>No blog posts found</h3>
+          <p>Try another search, category, or tag.</p>
+          <a class="header-button d-inline-flex" href="{{ route('blog') }}"><span>View All Blogs</span></a>
+        </div>
+        @endforelse
+      </div>
 
-@section('script')
+      @if($blogs->hasPages())
+      <div class="mt-5 d-flex justify-content-center">{{ $blogs->onEachSide(1)->links() }}</div>
+      @endif
+    </div>
 
+    <div class="col-xl-4">
+      <aside class="aside-panel mb-4"><div class="side-card side-nav wow fadeInUp" data-wow-delay=".1s">
+        <form class="blog-search-input-group" action="{{ route('blog') }}" method="GET">
+          @if(request()->filled('category'))<input type="hidden" name="category" value="{{ request('category') }}">@endif
+          @if(request()->filled('tag'))<input type="hidden" name="tag" value="{{ request('tag') }}">@endif
+          <input class="form-control pe-5" name="search" value="{{ request('search') }}" placeholder="Search blogs..." type="search">
+          <button class="btn bg-transparent border-0" type="submit" aria-label="Search"><i class="fe fe-search text-dark"></i></button>
+        </form>
+      </div></aside>
+
+      <aside class="aside-panel mb-4"><div class="side-card side-nav wow fadeInUp" data-wow-delay=".2s">
+        <h2 class="side-title">Recent Posts</h2>
+        <div class="mini-posts" role="list">
+          @forelse($latestBlogs as $latest)
+          <article class="mini-post">
+            <a class="mini-post__media" href="{{ route('blog.detail', $latest->slug) }}" aria-label="Open: {{ $latest->title }}">
+              <img class="mini-post__img" src="{{ $latest->image ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
+            </a>
+            <div class="mini-post__body">
+              <h3 class="mini-post__heading"><a class="mini-post__link" href="{{ route('blog.detail', $latest->slug) }}">{{ \Illuminate\Support\Str::limit($latest->title, 48) }}</a></h3>
+              <time class="mini-post__date" datetime="{{ optional($latest->created_at)->toDateString() }}">{{ optional($latest->created_at)->format('d M, Y') }}</time>
+            </div>
+          </article>
+          @empty<p>No recent posts.</p>@endforelse
+        </div>
+      </div></aside>
+
+      @if($categories->isNotEmpty())
+      <aside class="aside-panel mb-4"><div class="side-card side-nav wow fadeInUp" data-wow-delay=".3s">
+        <h4 class="side-title">Category</h4>
+        <ul class="blog-category-list">
+          <li><a href="{{ route('blog', array_filter(['search' => request('search'), 'tag' => request('tag')])) }}" class="{{ request()->filled('category') ? '' : 'active' }}">All Categories <span class="blog-count">({{ $categories->sum('total') }})</span></a></li>
+          @foreach($categories as $category)
+          <li><a href="{{ route('blog', array_filter(['category' => $category->category, 'search' => request('search'), 'tag' => request('tag')])) }}" class="{{ request('category') === $category->category ? 'active' : '' }}">{{ $category->category }} <span class="blog-count">({{ str_pad($category->total, 2, '0', STR_PAD_LEFT) }})</span></a></li>
+          @endforeach
+        </ul>
+      </div></aside>
+      @endif
+
+      @if($tags->isNotEmpty())
+      <aside class="aside-panel mb-4"><div class="side-card side-nav wow fadeInUp" data-wow-delay=".4s">
+        <h4 class="side-title">Tags</h4>
+        <div class="tags-container">
+          @foreach($tags as $tag)
+          <a href="{{ route('blog', array_filter(['tag' => $tag, 'search' => request('search'), 'category' => request('category')])) }}" class="{{ request('tag') === $tag ? 'active' : '' }}">{{ $tag }}</a>
+          @endforeach
+        </div>
+      </div></aside>
+      @endif
+    </div>
+  </div></div>
+</section>
 @endsection

@@ -4,176 +4,623 @@
 
 
 @section('css')
+<style>
+    /* --primary-color is a bright lime green with low contrast on white/light
+       backgrounds. Give it a soft dark edge in light mode so headings stay
+       vivid without changing the color itself (same treatment as about.blade.php). */
+    [data-theme-mode="light"] .heading-title .text-primary {
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
+    }
 
+    /* ---------- Contact method cards (Call / Email / Visit) ---------- */
+    .contact-method-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 100%;
+        padding: 32px 28px;
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+        transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-method-card:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -28px rgba(var(--dark-rgb), 0.35);
+    }
+
+    .contact-method-card .contact-method-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: var(--primary-color);
+        color: #0b0b0b;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .contact-method-card h3 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: rgb(var(--dark-rgb));
+    }
+
+    .contact-method-card p {
+        font-size: 0.92rem;
+        opacity: 0.7;
+        margin-bottom: 18px;
+    }
+
+    .contact-method-card .contact-method-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+        color: rgb(var(--dark-rgb));
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.45);
+        margin-top: auto;
+        transition: gap 0.25s ease, color 0.25s ease;
+    }
+
+    [data-theme-mode="dark"] .contact-method-card .contact-method-link {
+        text-shadow: none;
+    }
+
+    .contact-method-card .contact-method-link i {
+        color: var(--primary-color);
+        transition: transform 0.25s ease;
+    }
+
+    .contact-method-card .contact-method-link:hover {
+        color: var(--primary-color);
+        gap: 10px;
+    }
+
+    .contact-method-card .contact-method-link:hover i {
+        transform: translateX(3px);
+    }
+
+    /* ---------- "Why Partner" value cards ---------- */
+    .value-card {
+        height: 100%;
+        padding: 30px 28px;
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+        transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .value-card:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-4px);
+    }
+
+    .value-card .value-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        font-size: 1.4rem;
+        color: #fff;
+        margin-bottom: 18px;
+    }
+
+    .value-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+        color: rgb(var(--dark-rgb));
+    }
+
+    .value-card .value-tag {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 12px;
+    }
+
+    .value-card p {
+        font-size: 0.92rem;
+        opacity: 0.7;
+        margin: 0;
+    }
+
+    /* ---------- Message form ---------- */
+    .message-card {
+        padding: 48px;
+        border-radius: 1.5rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+    }
+
+    @media (max-width: 575px) {
+        .message-card {
+            padding: 28px 22px;
+        }
+    }
+
+    .message-card .field-label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: rgb(var(--dark-rgb));
+        margin-bottom: 8px;
+    }
+
+    .message-card textarea.form-control {
+        resize: vertical;
+    }
+
+    .contact-agree {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9rem;
+        opacity: 0.85;
+    }
+
+    .contact-agree input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary-color);
+        flex-shrink: 0;
+    }
+
+    .contact-agree a {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .contact-agree a:hover {
+        text-decoration: underline;
+    }
+
+    .message-card-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 26px;
+        padding-top: 26px;
+        border-top: 1px solid var(--border);
+    }
+
+    .contact-submit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 30px;
+        border-radius: 999px;
+        border: none;
+        background: var(--primary-color);
+        color: #0b0b0b;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .contact-submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 28px -14px rgba(var(--primary-rgb), 0.6);
+    }
+
+    .message-card-social {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .message-card-social .footer-social-list {
+        display: flex;
+        gap: 10px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .message-card-social .footer-social-list a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        color: rgb(var(--dark-rgb));
+        transition: all 0.3s ease;
+    }
+
+    .message-card-social .footer-social-list a:hover {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #0b0b0b;
+    }
+
+    /* ---------- Offices ---------- */
+    .office-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        height: 100%;
+        padding: 28px;
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+    }
+
+    .office-card .office-flag {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--custom-white);
+        box-shadow: 0 6px 16px -8px rgba(var(--dark-rgb), 0.3);
+        overflow: hidden;
+    }
+
+    .office-card .office-flag img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .office-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: rgb(var(--dark-rgb));
+    }
+
+    .office-card p {
+        font-size: 0.92rem;
+        opacity: 0.75;
+        margin-bottom: 10px;
+    }
+
+    .office-card .office-hours {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0;
+        opacity: 1;
+    }
+
+    .office-card .office-hours i {
+        color: var(--primary-color);
+    }
+</style>
 @endsection
 
 @section('content')
 
     <div class="section-spacer"></div>
-            <!-- Hero -->
-            <section class="hero pages-banner overflow-hidden">
-              <div class="container">
-                <div class="row">
-                  <div class="col-12">
+    <!-- Hero -->
+    <section class="hero pages-banner overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
                     <div class="hero-banner-content text-center">
-                      <h1 class="hero__title text-dark text-center text-animated-slider">
-                        Contact Us
-                      </h1>
-                      <div class="glow-border-container">
-                        <ul class="pagebreadcrumb-list">
-                          <li class="pagebreadcrumb-item">
-                            <a href="javascript:void(0);">Pages</a>
-                          </li>
-                          <li>
-                            <i class="ri-expand-horizontal-s-fill"></i>
-                          </li>
-                          <li class="active">
+                        <h1 class="hero__title text-dark text-center text-animated-slider">
                             Contact Us
-                          </li>
-                        </ul>
-                        <div class="glow-border-card">
-                          <div class="glow-border-inner"></div>
+                        </h1>
+                        <div class="glow-border-container">
+                            <ul class="pagebreadcrumb-list">
+                                <li class="pagebreadcrumb-item">
+                                    <a href="javascript:void(0);">Pages</a>
+                                </li>
+                                <li>
+                                    <i class="ri-expand-horizontal-s-fill"></i>
+                                </li>
+                                <li class="active">
+                                    Contact Us
+                                </li>
+                            </ul>
+                            <div class="glow-border-card">
+                                <div class="glow-border-inner"></div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="bg-image-shape">
-                <img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light">
-                <img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none">
-              </div>
-            </section>
-            <!-- /Hero -->
+            </div>
+        </div>
+        <div class="bg-image-shape">
+            <img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light">
+            <img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none">
+        </div>
+    </section>
+    <!-- /Hero -->
 
-            <section class="section team-page-section section-gap">
-              <div class="container">
-                <div class="row gy-4">
-                  <div class="col-xl-6">
-                    <div class="heading-section mb-5 text-start">
-                      <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex wow fadeInUp"
-                        data-wow-delay=".3s">
-                        Let’s Collaborate
-                      </span>
-                      <h2 class="heading-title  split-title">
-                        Let’s Build Something Great Togather!
-                      </h2>
+    <!-- Intro -->
+    <section class="section pb-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-8">
+                    <div class="heading-section text-center mb-0">
+                        <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp" data-wow-delay=".1s">
+                            Let's Collaborate
+                        </span>
+                        <h2 class="heading-title mt-4">
+                            Get In Touch With <span class="text-primary">Deveon Inc</span>
+                        </h2>
+                        <p>
+                            Have a software development project in mind? Let's discuss how we can help you achieve your goals.
+                        </p>
                     </div>
-                    <ul class="contact-cards">
-                      <li class="contact-card">
-                        <div class="contact-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M29.9433 27.4831L27.9032 29.523L27.8549 29.5532C26.7825 30.225 25.452 30.5619 23.94 30.5619C22.5064 30.5619 20.9107 30.2594 19.2159 29.6544C15.7851 28.4287 12.182 26.0407 9.07006 22.9287C5.95843 19.8168 3.56987 16.2137 2.34487 12.7831C1.10112 9.30061 1.13712 6.23249 2.44593 4.14367L2.47581 4.09567L4.51612 2.05561C4.91412 1.65749 5.44481 1.43811 6.01087 1.43811C6.57668 1.43811 7.10762 1.65749 7.50562 2.05561L12.4034 6.95311C12.8014 7.35123 13.0205 7.88249 13.0205 8.44817C13.0205 9.0143 12.8014 9.54505 12.4034 9.94311L10.4579 11.8887C10.1291 12.5574 10.2008 13.5687 10.6627 14.7475C11.174 16.0531 12.1252 17.4418 13.3412 18.6575C14.5574 19.8737 15.9462 20.825 17.2514 21.3362C18.4305 21.798 19.442 21.8699 20.1106 21.5412L22.0558 19.5955C22.4538 19.1974 22.9854 18.9787 23.5509 18.9787C24.117 18.9787 24.6476 19.1975 25.0456 19.5955L29.9434 24.493C30.7674 25.3174 30.7674 26.6587 29.9433 27.4831Z">
-                            </path>
-                          </svg>
-                        </div>
-                        <div class="contact-content">
-                          <span class="contact-label">Contact Number</span>
-                          <a class="contact-link" href="tel:1234567890">+1 (234) 567-890</a>
-                        </div>
-                      </li>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Intro -->
 
-                      <li class="contact-card">
-                        <div class="contact-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <path
-                              d="M30.1738 3.70665L25.1605 27C25.0538 27.5066 24.7205 27.9333 24.2538 28.16C23.7872 28.3866 23.2538 28.3866 22.7738 28.16L19.0405 26.3466C19.0405 26.3466 14.2672 29.8 13.2938 30.2533C13.1072 30.3466 13.0272 30.3333 12.8938 30.3333C12.6307 30.334 12.3779 30.2307 12.1906 30.0459C12.0033 29.8611 11.8966 29.6098 11.8938 29.3466V22.2666C11.8805 22.12 11.8938 21.9733 11.9738 21.8266C12.0538 21.68 11.9872 21.8 12.0005 21.7866C12.0405 21.72 12.0805 21.6533 12.1338 21.5866L24.4138 8.14665L9.14716 20.7066C8.98293 20.8748 8.76503 20.9802 8.53125 21.0046C8.29746 21.0289 8.06252 20.9707 7.86716 20.84L2.73382 18.52C2.16049 18.24 1.80049 17.68 1.77382 17.04C1.76049 16.4133 2.09382 15.8266 2.65382 15.52L27.7205 1.87998C28.3072 1.55998 29.0005 1.61332 29.5472 2.01332C30.0805 2.41332 30.3205 3.06665 30.1872 3.70665H30.1738Z">
-                            </path>
-                          </svg>
+    <!-- Contact methods -->
+    <section class="section">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".1s">
+                        <div class="contact-method-icon">
+                            <i class="ri-phone-line"></i>
                         </div>
-                        <div class="contact-content">
-                          <span class="contact-label">Email Address</span>
-                          <a class="contact-link" href="mailto:info@aexoraexample.com">info@aexoraexample.com</a>
+                        <h3>Give us a Call</h3>
+                        <p>Speak with our team directly. We're available to assist you with any inquiries.</p>
+                        <a class="contact-method-link" href="tel:+19055148474">
+                            +1 (905) 514-8474 <i class="ri-arrow-right-line"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".2s">
+                        <div class="contact-method-icon">
+                            <i class="ri-mail-line"></i>
                         </div>
-                      </li>
-                    </ul>
-                    <div class="mb-4 contact-devider">
+                        <h3>Send us an Email</h3>
+                        <p>Drop us a line via email and we promise to get back to you within 24 hours.</p>
+                        <a class="contact-method-link" href="mailto:info@deveoninc.com">
+                            info@deveoninc.com <i class="ri-arrow-right-line"></i>
+                        </a>
                     </div>
-                    <div>
-                      <p>
-                        Address: 2750 Maplewood Avenue, San Jose
-                      </p>
-                      <p>
-                        CA 95112, United States
-                      </p>
-                      <h2 class="mb-2">
-                        <a class="text-dark fs-5" href="#"> 12:00 pm GMT+2</a>
-                      </h2>
-                      <p class="mb-0">
-                        <a class="text-dark text-decoration-underline"
-                          href="javascript:void(0);">hello@yourcompany.com</a>
-                      </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".3s">
+                        <div class="contact-method-icon">
+                            <i class="ri-map-pin-2-line"></i>
+                        </div>
+                        <h3>Visit an Office</h3>
+                        <p>We're remote-first with offices in Pakistan and Canada, serving clients worldwide.</p>
+                        <a class="contact-method-link" href="#offices">
+                            View Locations <i class="ri-arrow-right-line"></i>
+                        </a>
                     </div>
-                  </div>
-                  <div class="col-xl-6">
-                    <aside class="aside-panel">
-                      <div class="side-card mb-4 side-nav wow fadeInUp" data-wow-delay=".1s">
-                        <h2 class="side-title">Get In Touch</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Contact methods -->
+
+    <!-- Why Partner -->
+    <section class="section pt-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7">
+                    <div class="heading-section text-center">
+                        <h2 class="heading-title split-title">
+                            Why Partner With <span class="text-primary">Deveon Inc?</span>
+                        </h2>
+                        <p>
+                            Whether you're a startup building your first MVP or an established enterprise
+                            modernizing your tech stack, our team is here to help you succeed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gy-4">
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".1s">
+                        <div class="value-icon" style="background:#f2a90c;">
+                            <i class="ri-flashlight-line"></i>
+                        </div>
+                        <h3>Rapid Response Time</h3>
+                        <span class="value-tag">Quick Turnaround</span>
+                        <p>We typically respond to inquiries within 1-2 hours during business hours, keeping your project moving.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".2s">
+                        <div class="value-icon" style="background:#3b6fe0;">
+                            <i class="ri-team-line"></i>
+                        </div>
+                        <h3>Expert Team</h3>
+                        <span class="value-tag">Skilled Professionals</span>
+                        <p>Certified professionals with expertise across multiple technologies, from Laravel and React to Flutter.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".3s">
+                        <div class="value-icon" style="background:#1f9d63;">
+                            <i class="ri-eye-line"></i>
+                        </div>
+                        <h3>Transparent Process</h3>
+                        <span class="value-tag">Clear Communication</span>
+                        <p>Regular status reports and full visibility into project scope, timelines, and pricing every step of the way.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".1s">
+                        <div class="value-icon" style="background:#17a2a6;">
+                            <i class="ri-settings-3-line"></i>
+                        </div>
+                        <h3>Comprehensive Services</h3>
+                        <span class="value-tag">End-to-End Solutions</span>
+                        <p>From consultation and design to development, testing, and ongoing maintenance — one point of contact.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".2s">
+                        <div class="value-icon" style="background:#d1483f;">
+                            <i class="ri-global-line"></i>
+                        </div>
+                        <h3>Global Reach</h3>
+                        <span class="value-tag">International Experience</span>
+                        <p>Offices in Pakistan and Canada bring a global perspective with the personal touch of a boutique agency.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".3s">
+                        <div class="value-icon" style="background:#7b4fd1;">
+                            <i class="ri-trophy-line"></i>
+                        </div>
+                        <h3>Proven Track Record</h3>
+                        <span class="value-tag">Successful Projects</span>
+                        <p>Hundreds of successful projects delivered across industries, with measurable results and satisfied clients.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Why Partner -->
+
+    <!-- Message form -->
+    <section class="section pt-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="message-card wow fadeInUp" data-wow-delay=".1s">
+                        <div class="heading-section text-start mb-4">
+                            <h2 class="heading-title mb-2">
+                                Send us a <span class="text-primary">Message</span>
+                            </h2>
+                            <p class="mb-0">Fill out the form below and our team will get back to you shortly.</p>
+                        </div>
                         <form id="team-contact-form" method="POST">
-                          <div class="row gy-3">
-                            <div class="col-sm-6">
-                              <div class="field">
-                                <input type="text" class="form-control" name="conName" id="conName"
-                                  placeholder="Full Name*" required>
-                              </div>
-                            </div>
+                            <div class="row gy-3">
+                                <div class="col-sm-6">
+                                    <label class="field-label" for="conName">Full Name *</label>
+                                    <input type="text" class="form-control" name="conName" id="conName"
+                                        placeholder="John Doe" required>
+                                </div>
 
-                            <div class="col-sm-6">
-                              <div class="field">
-                                <input type="email" class="form-control" name="conEmail" id="conEmail"
-                                  placeholder="Email Address*" required>
-                              </div>
-                            </div>
+                                <div class="col-sm-6">
+                                    <label class="field-label" for="conEmail">Email Address *</label>
+                                    <input type="email" class="form-control" name="conEmail" id="conEmail"
+                                        placeholder="john@example.com" required>
+                                </div>
 
-                            <div class="col-sm-12">
-                              <div class="field">
-                                <input type="text" class="form-control" name="conSubject" id="conSubject"
-                                  placeholder="Subject*" required>
-                              </div>
-                            </div>
+                                <div class="col-sm-6">
+                                    <label class="field-label" for="conPhone">Phone Number *</label>
+                                    <input class="form-control" type="text" name="conPhone" id="conPhone"
+                                        placeholder="+1 (905) 514-8474" required>
+                                </div>
 
-                            <div class="col-sm-12">
-                              <div class="field">
-                                <input class="form-control" type="text" name="conPhone" placeholder="Subject*" required>
-                              </div>
-                            </div>
+                                <div class="col-sm-6">
+                                    <label class="field-label" for="conSubject">Subject *</label>
+                                    <input type="text" class="form-control" name="conSubject" id="conSubject"
+                                        placeholder="How can we help?" required>
+                                </div>
 
-                            <div class="col-sm-12">
-                              <div class="field field--message">
-                                <textarea class="form-control" rows="5" name="conMessage" id="message"
-                                  placeholder="Type message*"></textarea>
-                              </div>
-                            </div>
+                                <div class="col-sm-12">
+                                    <label class="field-label" for="message">Your Message *</label>
+                                    <textarea class="form-control" rows="5" name="conMessage" id="message"
+                                        placeholder="Tell us about your project..." required></textarea>
+                                </div>
 
-                            <div class="col-12">
-                              <button type="submit" class="header-button">
-                                <span class="resume-icon">
-                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                      d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
-                                    </path>
-                                  </svg>
-                                </span>
-                                <span>Submit Now</span>
-                              </button>
+                                <div class="col-12">
+                                    <label class="contact-agree">
+                                        <input type="checkbox" required>
+                                        <span>I agree to the <a href="javascript:void(0);">Terms &amp; Conditions</a> and <a href="javascript:void(0);">Privacy Policy</a></span>
+                                    </label>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="message-card-footer">
+                                        <button type="submit" class="contact-submit-btn">
+                                            <i class="ri-send-plane-2-line"></i>
+                                            <span>Send Message</span>
+                                        </button>
+                                        <div class="message-card-social">
+                                            <span>Connect with us:</span>
+                                            <ul class="footer-social-list">
+                                                <li><a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-fill"></i></a></li>
+                                                <li><a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ri-instagram-line"></i></a></li>
+                                                <li><a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
+                                                <li><a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter"><i class="ri-twitter-x-line"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </form>
-                      </div>
-                    </aside>
-                  </div>
-                  <div class="col-xl-12">
-                    <div class="map-frame wow fadeInUp" data-wow-delay=".3s">
-                      <iframe title="Google Map"
-                        src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d316440.5712687838!2d-74.01091796224334!3d40.67186885683901!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1745918398047!5m2!1sen!2sbd"
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </section>
+            </div>
+        </div>
+    </section>
+    <!-- /Message form -->
 
+    <!-- Offices -->
+    <section class="section pt-0" id="offices">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7">
+                    <div class="heading-section text-center">
+                        <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp" data-wow-delay=".1s">
+                            <i class="ri-map-pin-line"></i> Our Locations
+                        </span>
+                        <h2 class="heading-title mt-4">
+                            Find Our <span class="text-primary">Global Offices</span>
+                        </h2>
+                        <p>We're present across multiple regions to better serve our clients worldwide.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gy-4 justify-content-center">
+                <div class="col-md-6">
+                    <div class="office-card wow fadeInUp" data-wow-delay=".1s">
+                        <div class="office-flag">
+                            <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag">
+                        </div>
+                        <div>
+                            <h3>Pakistan Office</h3>
+                            <p>71A Street 3, Sindhi Muslim Cooperative Housing Society, Block A (SMCHS), Karachi, 75400, Pakistan</p>
+                            <p class="office-hours"><i class="ri-time-line"></i> Hours: Mon - Sat, 9 AM - 11:30 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="office-card wow fadeInUp" data-wow-delay=".2s">
+                        <div class="office-flag">
+                            <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag">
+                        </div>
+                        <div>
+                            <h3>Canada Office</h3>
+                            <p>Suite 391 - 1505 Laperriere Avenue, Ottawa, Ontario K1Z 7T1, Canada</p>
+                            <p class="office-hours"><i class="ri-time-line"></i> Hours: Sun - Fri, 9 AM - 11:30 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Offices -->
 
 @endsection
 

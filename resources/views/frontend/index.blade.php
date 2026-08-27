@@ -1,7 +1,24 @@
 @extends('layouts.frontend.master')
 
 @section('css')
+<style>
+  .home-blog-section .post-card .post-overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
+  .home-blog-section .post-card .post-meta {
+    position: relative !important;
+    inset: auto !important;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .home-blog-section .post-card .post-category {
+    margin-bottom: 0;
+  }
+ </style>
 @endsection
 
 @section('content')
@@ -1101,7 +1118,7 @@
               </section>
 
 
-                <section class="section">
+                <section class="section home-blog-section">
                   <div class="container">
                     <div class="row mb-5 justify-content-between">
                       <div class="col-xl-5">
@@ -1127,19 +1144,19 @@
                       @forelse($latestBlogs as $blog)
                       <div class="col-xl-4 col-md-6">
                         <div class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".4s">
-                          <div class="post-meta">
-                            <span class="post-category">
-                              <a href="{{ route('blog', ['category' => $blog->category]) }}">
-                                {{ $blog->category ?: 'News' }}
-                              </a>
-                            </span>
-                          </div>
                           <div class="post-media clip-anim">
                             <a href="{{ route('blog.detail', $blog->slug) }}">
                               <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}" class="anim-img" data-animate="true">
                             </a>
                           </div>
                           <div class="post-overlay-content">
+                            <div class="post-meta">
+                              <span class="post-category">
+                                <a href="{{ route('blog', ['category' => $blog->category]) }}">
+                                  {{ $blog->category ?: 'News' }}
+                                </a>
+                              </span>
+                            </div>
                             <h3 class="post-title mb-3">
                               <a href="{{ route('blog.detail', $blog->slug) }}">
                                 {{ $blog->title }}
@@ -1157,6 +1174,14 @@
                         <div class="col-12 text-center"><p>No blog posts are available yet.</p></div>
                       @endforelse
                     </div>
+                    @if($latestBlogs->isNotEmpty())
+                    <div class="text-center mt-5">
+                      <a class="header-button d-inline-flex" href="{{ route('blog') }}">
+                        <span>View All Blogs</span>
+                        <span class="resume-icon"><i class="ri-arrow-right-line"></i></span>
+                      </a>
+                    </div>
+                    @endif
                   </div>
                 </section>
 
