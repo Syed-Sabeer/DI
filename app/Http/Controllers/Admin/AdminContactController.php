@@ -9,7 +9,7 @@ class AdminContactController extends Controller
 {
     public function index()
     {
-        $contacts = \App\Models\ContactSubmission::all();
+        $contacts = \App\Models\ContactSubmission::latest()->paginate(20);
 
         return view('admin.submissions.contact.index', compact('contacts'));
     }

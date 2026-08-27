@@ -60,7 +60,7 @@ Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
 Route::get('/about', [WebsiteController::class, 'about'])->name('about');
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
-Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.submit');
+Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:3,1')->name('contact.submit');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('/careers', [CareerController::class, 'index'])->name('careers');

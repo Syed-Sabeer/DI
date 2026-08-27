@@ -180,39 +180,122 @@
         text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
     }
 
-    /* Service card "Read More" — small pill button instead of the low-contrast gradient text link */
-    .service-card__btn a {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 18px;
-        border-radius: 999px;
-        border: 1.5px solid var(--primary-color);
-        background: transparent;
-        color: rgb(var(--dark-rgb));
-        -webkit-text-fill-color: rgb(var(--dark-rgb));
-        -webkit-background-clip: border-box;
-        background-clip: border-box;
-        font-size: 0.8rem;
-        letter-spacing: 0.02em;
-        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    /* ---------- Services section ---------- */
+    .services-header p {
+        font-size: 1.02rem;
+        line-height: 1.7;
+        opacity: 0.72;
+        margin-bottom: 22px;
     }
 
-    .service-card__btn a .btn__icon {
-        display: inline-flex;
+    .services-card {
+        position: relative;
+        height: 100%;
+        padding: 40px 34px 32px;
+        border-radius: 1.5rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .services-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(140px 140px at 88% -8%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+    }
+
+    .services-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 34px 64px -32px rgba(var(--dark-rgb), 0.4);
+        border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+    }
+
+    .services-card:hover::before {
+        opacity: 1;
+    }
+
+    .services-card__index {
+        position: absolute;
+        top: 24px;
+        right: 28px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: rgb(var(--dark-rgb));
+        opacity: 0.28;
+    }
+
+    .services-card__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        margin-bottom: 24px;
+        font-size: 1.6rem;
+        background: color-mix(in srgb, var(--accent) 14%, transparent);
+        color: var(--accent);
+        transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
+    }
+
+    .services-card:hover .services-card__icon {
+        background: var(--accent);
+        color: #fff;
+        transform: scale(1.06) rotate(-3deg);
+    }
+
+    .services-card__title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: rgb(var(--dark-rgb));
+    }
+
+    .services-card__desc {
+        font-size: 0.94rem;
+        line-height: 1.65;
+        opacity: 0.7;
+        margin-bottom: 24px;
+        min-height: 4.8em;
+    }
+
+    .services-card__cta {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: rgb(var(--dark-rgb));
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.4);
+        transition: color 0.3s ease, gap 0.3s ease, border-color 0.3s ease;
+    }
+
+    [data-theme-mode="dark"] .services-card__cta {
+        text-shadow: none;
+    }
+
+    .services-card__cta i {
+        color: var(--accent);
         transition: transform 0.3s ease;
     }
 
-    .service-card__btn a:hover {
-        background: var(--primary-color);
-        color: #0b0b0b;
-        -webkit-text-fill-color: #0b0b0b;
-        box-shadow: 0 10px 24px -12px rgba(var(--primary-rgb), 0.6);
-        transform: translateY(-2px);
+    .services-card:hover .services-card__cta {
+        color: var(--accent);
+        gap: 10px;
+        border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
     }
 
-    .service-card__btn a:hover .btn__icon {
-        transform: translateX(3px);
+    .services-card:hover .services-card__cta i {
+        transform: translate(2px, -2px);
     }
 </style>
 @endsection
@@ -288,233 +371,121 @@
                                 </div>
                             </div>
                         </div>
-                        <section class="section">
+                        <section class="section services-section">
                             <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-xl-6">
-                                        <div class="heading-section text-center">
-                                            <span class="heading-subtitle mx-auto justify-content-center border-0 text-gradient wow fadeInUp" data-wow-delay=".3s">
+                                <div class="row services-header align-items-end gy-4 mb-5">
+                                    <div class="col-lg-6">
+                                        <div class="heading-section text-start mb-0">
+                                            <span class="heading-subtitle d-inline-flex wow fadeInUp" data-wow-delay=".1s">
                                                 <i class="ri-checkbox-blank-circle-fill"></i>
                                                 Service We Offer
                                             </span>
-                                            <h2 class="heading-title  split-title">
-                                                End-to-End Digital Solutions For Every Idea
+                                            <h2 class="heading-title mt-4 split-title">
+                                                End-to-End <span class="text-primary">Digital Solutions</span> For Every Idea
                                             </h2>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row gy-4 mb-5 rightSwipeWrap">
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M512 301.2m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="var(--primary-color)" />
-                                                        <path d="M400.3 744.5c2.1-0.7 4.1-1.4 6.2-2-2 0.6-4.1 1.3-6.2 2z m0 0c2.1-0.7 4.1-1.4 6.2-2-2 0.6-4.1 1.3-6.2 2z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M511.8 256.6c24.4 0 44.2 19.8 44.2 44.2S536.2 345 511.8 345s-44.2-19.8-44.2-44.2 19.9-44.2 44.2-44.2m0-20c-35.5 0-64.2 28.7-64.2 64.2s28.7 64.2 64.2 64.2 64.2-28.7 64.2-64.2-28.7-64.2-64.2-64.2z" fill="var(--primary-color)" />
-                                                        <path d="M730.7 529.5c0.4-8.7 0.6-17.4 0.6-26.2 0-179.6-86.1-339.1-219.3-439.5-133.1 100.4-219.2 259.9-219.2 439.5 0 8.8 0.2 17.5 0.6 26.1-56 56-90.6 133.3-90.6 218.7 0 61.7 18 119.1 49.1 167.3 30.3-49.8 74.7-90.1 127.7-115.3 39-18.6 82.7-29 128.8-29 48.3 0 93.9 11.4 134.3 31.7 52.5 26.3 96.3 67.7 125.6 118.4 33.4-49.4 52.9-108.9 52.9-173.1 0-85.4-34.6-162.6-90.5-218.6zM351.1 383.4c9.2-37.9 22.9-74.7 40.6-109.5a502.1 502.1 0 0 1 63.6-95.9c17.4-20.6 36.4-39.9 56.8-57.5 20.4 17.6 39.4 36.9 56.8 57.5 24.8 29.5 46.2 61.8 63.6 95.9 17.7 34.8 31.4 71.6 40.6 109.5 8.7 35.8 13.5 72.7 14.2 109.9C637.4 459 577 438.9 512 438.9c-65 0-125.3 20.1-175.1 54.4 0.7-37.2 5.5-74.1 14.2-109.9z m-90.6 449.2c-9.1-27-13.7-55.5-13.7-84.4 0-35.8 7-70.6 20.8-103.2 8.4-19.8 19-38.4 31.9-55.5 9.7 61.5 29.5 119.7 57.8 172.6-36.4 17.8-69 41.6-96.8 70.5z m364.2-85.3c-0.7-0.3-1.5-0.5-2.2-0.8-0.4-0.2-0.9-0.3-1.3-0.5-0.6-0.2-1.3-0.5-1.9-0.7-0.8-0.3-1.5-0.5-2.3-0.8-0.8-0.3-1.5-0.5-2.3-0.7l-0.9-0.3c-1-0.3-2.1-0.7-3.1-1-1.2-0.4-2.4-0.7-3.5-1.1l-3-0.9c-0.2-0.1-0.4-0.1-0.7-0.2-1.1-0.3-2.3-0.7-3.4-1-1.2-0.3-2.4-0.6-3.5-0.9l-3.6-0.9-3.6-0.9c-1-0.3-2.1-0.5-3.1-0.7-1.2-0.3-2.4-0.5-3.6-0.8-1.3-0.3-2.5-0.6-3.8-0.8h-0.3c-0.9-0.2-1.9-0.4-2.8-0.6-0.4-0.1-0.7-0.1-1.1-0.2-1.1-0.2-2.2-0.4-3.4-0.6-1.2-0.2-2.4-0.4-3.6-0.7l-5.4-0.9c-0.9-0.1-1.9-0.3-2.8-0.4-0.8-0.1-1.6-0.3-2.5-0.4-2.6-0.4-5.1-0.7-7.7-1-1.2-0.1-2.3-0.3-3.5-0.4h-0.4c-0.9-0.1-1.8-0.2-2.8-0.3-1.1-0.1-2.1-0.2-3.2-0.3-1.7-0.2-3.4-0.3-5.1-0.4-0.8-0.1-1.5-0.1-2.3-0.2-0.9-0.1-1.9-0.1-2.8-0.2-0.4 0-0.8 0-1.2-0.1-1.1-0.1-2.1-0.1-3.2-0.2-0.5 0-1-0.1-1.5-0.1-1.3-0.1-2.6-0.1-3.9-0.1-0.8 0-1.5-0.1-2.3-0.1-1.2 0-2.4 0-3.5-0.1h-13.9c-2.3 0-4.6 0.1-6.9 0.2-0.9 0-1.9 0.1-2.8 0.1-0.8 0-1.5 0.1-2.3 0.1-1.4 0.1-2.8 0.2-4.1 0.3-1.4 0.1-2.7 0.2-4.1 0.3-1.4 0.1-2.7 0.2-4.1 0.4-0.6 0-1.2 0.1-1.8 0.2l-7.8 0.9c-1.1 0.1-2.1 0.3-3.2 0.4-1 0.1-2.1 0.3-3.1 0.4-3.2 0.5-6.4 0.9-9.5 1.5-0.7 0.1-1.4 0.2-2.1 0.4-0.9 0.1-1.7 0.3-2.6 0.5-1.1 0.2-2.3 0.4-3.4 0.6-0.9 0.2-1.7 0.3-2.6 0.5-0.4 0.1-0.8 0.1-1.1 0.2-0.7 0.1-1.4 0.3-2.1 0.4-1.2 0.3-2.4 0.5-3.6 0.8-1.2 0.3-2.4 0.5-3.6 0.8-0.2 0-0.4 0.1-0.6 0.1-0.5 0.1-1 0.2-1.5 0.4-1.1 0.3-2.3 0.6-3.5 0.9-1.3 0.3-2.5 0.6-3.8 1-0.4 0.1-0.9 0.2-1.4 0.4-1.3 0.4-2.7 0.7-4 1.1-1.5 0.4-3 0.9-4.6 1.3-1 0.3-2.1 0.6-3.1 1-2.1 0.6-4.1 1.3-6.2 2-0.7 0.2-1.4 0.5-2.1 0.7-15-27.5-27.4-56.4-37-86.2-11.7-36.1-19.2-73.6-22.5-111.6-0.6-6.7-1-13.3-1.3-20-0.1-1.2-0.1-2.4-0.1-3.6-0.1-1.2-0.1-2.4-0.1-3.6 0-1.2-0.1-2.4-0.1-3.6 0-1.2-0.1-2.4-0.1-3.7 18.8-14 39.2-25.8 61-35 36.1-15.3 74.5-23 114.1-23 39.6 0 78 7.8 114.1 23 21.8 9.2 42.2 20.9 61 35v0.1c0 1 0 1.9-0.1 2.9 0 1.4-0.1 2.8-0.1 4.3 0 0.7 0 1.3-0.1 2-0.1 1.8-0.1 3.5-0.2 5.3-0.3 6.7-0.8 13.3-1.3 20-3.3 38.5-11 76.5-23 113-9.7 30.3-22.3 59.4-37.6 87.1z m136.8 90.9a342.27 342.27 0 0 0-96.3-73.2c29.1-53.7 49.5-112.8 59.4-175.5 12.8 17.1 23.4 35.6 31.8 55.5 13.8 32.7 20.8 67.4 20.8 103.2 0 31-5.3 61.3-15.7 90z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M512 819.3c8.7 0 24.7 22.9 24.7 60.4s-16 60.4-24.7 60.4-24.7-22.9-24.7-60.4 16-60.4 24.7-60.4m0-20c-24.7 0-44.7 36-44.7 80.4 0 44.4 20 80.4 44.7 80.4s44.7-36 44.7-80.4c0-44.4-20-80.4-44.7-80.4z" fill="var(--primary-color)" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            Software Development
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        Custom business software and portal solutions designed for scalability and reliability, built around the way your team actually works.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center text-gradient gap-1 btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M393.3 768H392h1.3z" fill="#202020" />
-                                                        <path d="M511.9 199.6C355.7 199.6 229 326.2 229 482.5c0 103.8 55.9 194.6 139.3 243.8v89.8c0 1.3 0 2.5 0.1 3.8 0.1 3.2 0.3 6.4 0.6 9.6 6.8 72.8 68.6 130.3 143.1 130.3 39.5 0 75.4-16.2 101.5-42.2 23-23 38.3-53.8 41.6-87.9 0.3-3.2 0.5-6.4 0.6-9.6 0-1.3 0.1-2.7 0.1-4v-90l0.6-0.3C739.4 676.5 795 586 795 482.5c-0.2-156.3-126.8-282.9-283.1-282.9zM391.9 768h1.3-1.3z m219.8 48.1c0 5.8-0.5 11.5-1.5 17-1.1 6.5-2.9 12.8-5.3 18.9-5 12.7-12.6 24.5-22.6 34.5-18.9 18.9-43.9 29.3-70.4 29.3-26.5 0-51.5-10.4-70.4-29.3-10-10-17.7-21.8-22.7-34.6-2.4-6.1-4.1-12.4-5.2-18.9-1-5.5-1.4-11.2-1.4-16.9v-8.8h199.4v8.8z m0-24.8H412.3v-47.7h199.4v47.7z m69.1-139.9c-7.8 7.8-15.9 14.9-24.5 21.4-13.7 10.4-28.4 19.3-44 26.5l-0.6 0.3v0.1H412.3c-15.4-7.1-29.9-15.7-43.4-25.8-9.1-6.8-17.7-14.3-25.9-22.5-22-22-39.2-47.5-51.2-75.9-12.5-29.4-18.8-60.7-18.8-93s6.3-63.5 18.8-93c12-28.4 29.3-54 51.2-76 22-22 47.5-39.2 76-51.2 29.4-12.4 60.7-18.7 93-18.7s63.6 6.3 93 18.7c28.4 12 54 29.3 76 51.2 22 22 39.2 47.5 51.2 76 12.4 29.4 18.8 60.7 18.8 93s-6.3 63.5-18.8 93c-12.2 28.4-29.4 53.9-51.4 75.9z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M391.9 768h1.3-1.3z" fill="#343535" />
-                                                        <path d="M511.9 432.3c-39.7 0-72 32.3-72 72 0 37.3 28.6 68.1 65 71.7v123.7h14V576c36.4-3.5 65-34.3 65-71.7 0-39.7-32.3-72-72-72z m0 128c-30.9 0-56-25.1-56-56s25.1-56 56-56 56 25.1 56 56-25.1 56-56 56z" fill="var(--primary-color)" />
-                                                        <path d="M512 103.6m-39.4 0a39.4 39.4 0 1 0 78.8 0 39.4 39.4 0 1 0-78.8 0Z" fill="var(--primary-color)" />
-                                                        <path d="M244.2 214.5m-39.4 0a39.4 39.4 0 1 0 78.8 0 39.4 39.4 0 1 0-78.8 0Z" fill="var(--primary-color)" />
-                                                        <path d="M133.3 482.2m-39.4 0a39.4 39.4 0 1 0 78.8 0 39.4 39.4 0 1 0-78.8 0Z" fill="var(--primary-color)" />
-                                                        <path d="M890.7 482.2m-39.4 0a39.4 39.4 0 1 0 78.8 0 39.4 39.4 0 1 0-78.8 0Z" fill="var(--primary-color)" />
-                                                        <path d="M779.8 214.5m-39.4 0a39.4 39.4 0 1 0 78.8 0 39.4 39.4 0 1 0-78.8 0Z" fill="var(--primary-color)" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            UI/UX Design
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        Deliver seamless and enjoyable digital experiences. Our designs prioritize clarity, ease of use, and attractive interfaces for both web and mobile platforms.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M511.3 676.9m-10 0a10 10 0 1 0 20 0 10 10 0 1 0-20 0Z" fill="var(--primary-color)" />
-                                                        <path d="M960 756V138.5H64V756h320.1v85.5H256.2v44h511.9v-44h-128V756H960zM108 182.5h808v427.1H108V182.5z m488.1 659h-168V756h168v85.5zM108 712v-82.5h808V712H108z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M167.536 327.703l90.72-90.721 14.143 14.142-90.721 90.72zM172.959 423.469l181.159-181.16 14.142 14.143L187.1 437.61z" fill="var(--primary-color)" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            Mobile App Development
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        Native and cross-platform app experiences with smooth performance and clean UX. We turn ideas into high-performing mobile apps tailored to your users’ needs.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M960.1 258.4H245.8l-36.1-169H63.9v44h110.2l26.7 125 100.3 469.9 530 0.4v-44l-494.4-0.3-22.6-105.9H832l128.1-320.1z m-65 44L855.6 401H276.3l-21.1-98.6h639.9zM304.8 534.5L279.7 417h569.5l-47 117.5H304.8z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M375.6 810.6c28.7 0 52 23.3 52 52s-23.3 52-52 52-52-23.3-52-52 23.3-52 52-52m0-20c-39.7 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.3-72-72-72zM732 810.6c28.7 0 52 23.3 52 52s-23.3 52-52 52-52-23.3-52-52 23.3-52 52-52m0-20c-39.7 0-72 32.2-72 72s32.2 72 72 72c39.7 0 72-32.2 72-72s-32.3-72-72-72zM447.5 302.4h16v232.1h-16zM652 302.4h16v232.1h-16z" fill="var(--primary-color)" />
-                                                        <path d="M276.3 401l3.4 16-3.4-16z" fill="#343535" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            Website Development
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        Modern, responsive, and conversion-focused websites tailored to your business goals — from marketing sites to complex web platforms and e-commerce stores.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M844.1 211.4c-3.6-4-7.3-7.9-11-11.7-53.8-55.4-121.9-96.9-198.2-118.7-15.1-4.3-30.5-7.8-46.2-10.5-25-4.3-50.6-6.5-76.7-6.5-126 0-239.9 52-321.3 135.8-3.7 3.8-7.4 7.7-11 11.7C107.8 290.9 64 396.4 64 512s43.8 220.9 115.6 300.4c3.6 4 7.2 7.9 11 11.7 53.9 55.5 122.1 97.1 198.6 118.9 15.1 4.3 30.5 7.8 46.2 10.5 24.9 4.3 50.5 6.5 76.6 6.5s51.7-2.2 76.7-6.5c15.7-2.7 31.1-6.2 46.2-10.5 76.5-21.7 144.6-63.3 198.5-118.8 3.7-3.9 7.4-7.7 11-11.7C916.2 733 960 627.6 960 512c0-115.7-43.9-221.1-115.9-300.6z m71.8 308.8c-1 51.7-11.6 101.8-31.6 149.1-17.4 41.2-41.3 78.8-71.1 112-3.5 4-7.2 7.9-10.9 11.7-1.5 1.6-3.1 3.1-4.6 4.7-37.1 37.1-80.3 66.3-128.4 86.6-35.8 15.1-73.1 24.9-111.6 29.2-12.5 1.4-25 2.2-37.7 2.4-2.6 0.1-5.3 0.1-8 0.1s-5.3 0-8-0.1c-12.6-0.2-25.2-1-37.7-2.4-38.4-4.3-75.8-14.1-111.6-29.2-48.1-20.4-91.3-49.5-128.4-86.6-1.6-1.6-3.2-3.2-4.7-4.8-3.7-3.8-7.4-7.8-10.9-11.7-29.8-33.2-53.6-70.8-71-111.9-20-47.3-30.6-97.4-31.6-149.1h109.3c0-2.7-0.1-5.4-0.1-8.2 0-2.6 0-5.2 0.1-7.8H108.1c1-51.8 11.6-102 31.7-149.4 17.4-41.2 41.3-78.9 71.2-112.1 3.5-4 7.2-7.9 10.9-11.7 1.5-1.5 3-3.1 4.5-4.6 37.1-37.1 80.3-66.3 128.4-86.6 35.8-15.1 73.1-24.9 111.6-29.2 12.5-1.4 25-2.2 37.7-2.5 2.7-0.1 5.3-0.1 8-0.1s5.3 0 8 0.1c12.7 0.2 25.2 1.1 37.7 2.5 38.4 4.3 75.8 14.1 111.5 29.2 48.1 20.3 91.3 49.5 128.4 86.6 1.5 1.5 3 3 4.4 4.5 3.7 3.8 7.4 7.7 10.9 11.7 29.9 33.3 53.8 70.9 71.3 112.2 20 47.4 30.7 97.6 31.6 149.4H806.6c0 2.6 0.1 5.2 0.1 7.8 0 2.7 0 5.4-0.1 8.2h109.3z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M790.7 512c0 2.7 0 5.4-0.1 8.2H520v144.7c-2.7-0.1-5.4-0.1-8.1-0.1-2.6 0-5.3 0-7.9 0.1V520.2H233.4c-0.1-2.7-0.1-5.4-0.1-8.2 0-2.6 0-5.2 0.1-7.8H504V358.8c2.6 0 5.3 0.1 7.9 0.1 2.7 0 5.4 0 8.1-0.1v145.4h270.6c0 2.6 0.1 5.2 0.1 7.8zM520 111.1v231.6c-2.7 0.1-5.4 0.1-8.1 0.1-2.6 0-5.3 0-7.9-0.1V111.1c2.7-1.1 5.3-2.1 8-3.1 2.7 1 5.3 2.1 8 3.1zM512 916zM520 680.9v232c-2.7 1.1-5.3 2.1-8 3.1-2.7-1-5.3-2.1-8-3.1v-232c2.6-0.1 5.3-0.1 7.9-0.1 2.7 0 5.4 0 8.1 0.1z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M512 916zM512 916zM748.7 732.5c35.6-62.9 56.5-135.2 57.8-212.3 0-2.7 0.1-5.4 0.1-8.2 0-2.6 0-5.2-0.1-7.8-1.3-77.3-22.2-149.9-58-212.9 23-14.3 44.5-30.6 64.4-48.7-3.6-4-7.2-7.9-10.9-11.7-19.2 17.5-39.8 33.1-61.7 46.7-43.9-71.4-107.3-129.5-182.8-167-12.5-1.4-25-2.2-37.7-2.5-2.7-0.1-5.3-0.1-8-0.1 2.7 1 5.3 2.1 8 3.1 2.3 0.9 4.5 1.9 6.8 2.8 51.4 21.8 97.6 52.9 137.3 92.6 24.1 24.1 45 50.6 62.7 79.2-15 8.6-30.6 16.4-46.7 23.2-50.8 21.5-104.6 32.9-160 33.9-2.7 0.1-5.4 0.1-8.1 0.1-2.6 0-5.3 0-7.9-0.1-55.5-1-109.4-12.4-160.3-33.9-16-6.8-31.6-14.5-46.6-23.1 17.6-28.6 38.6-55.2 62.7-79.3 39.7-39.7 85.9-70.8 137.3-92.6 2.3-0.9 4.5-1.9 6.8-2.8 2.7-1.1 5.3-2.1 8-3.1-2.7 0-5.3 0-8 0.1-12.7 0.2-25.2 1.1-37.7 2.5-75.5 37.5-138.9 95.6-182.8 167.1-21.9-13.6-42.5-29.2-61.7-46.7-3.7 3.8-7.4 7.8-10.9 11.7 19.9 18.1 41.5 34.4 64.5 48.7-35.7 63-56.6 135.5-57.9 212.8 0 2.6-0.1 5.2-0.1 7.8 0 2.7 0 5.4 0.1 8.2 1.4 77 22.2 149.3 57.8 212.2-23 14.3-44.6 30.7-64.5 48.8 3.5 4 7.2 7.9 10.9 11.7 19.2-17.5 39.8-33.1 61.7-46.8 43.9 71.6 107.4 129.8 183 167.4 12.5 1.4 25 2.2 37.7 2.4 2.7 0.1 5.3 0.1 8 0.1-2.7-1-5.3-2.1-8-3.1-2.3-0.9-4.5-1.9-6.8-2.8-51.4-21.8-97.6-52.9-137.3-92.6-24.2-24.2-45.2-50.8-62.8-79.5 15-8.6 30.6-16.4 46.7-23.2 50.8-21.5 104.7-32.9 160.3-33.9 2.6-0.1 5.3-0.1 7.9-0.1 2.7 0 5.4 0 8.1 0.1 55.5 1 109.3 12.4 160 33.9 16.2 6.8 31.8 14.6 46.9 23.3-17.6 28.7-38.6 55.3-62.8 79.5-39.7 39.7-85.9 70.8-137.3 92.6-2.3 1-4.5 1.9-6.8 2.8-2.7 1.1-5.3 2.1-8 3.1 2.7 0 5.3 0 8-0.1 12.7-0.2 25.2-1 37.7-2.4 75.6-37.5 139-95.7 182.9-167.3 21.8 13.6 42.5 29.3 61.7 46.8 3.7-3.8 7.3-7.7 10.9-11.7-19.9-18.3-41.5-34.6-64.5-48.9zM520 664.9c-2.7-0.1-5.4-0.1-8.1-0.1-2.6 0-5.3 0-7.9 0.1-78.2 1.4-151.5 22.8-215.1 59.3-8-14.2-15.2-28.9-21.6-44-21.5-50.8-32.9-104.5-33.9-160-0.1-2.7-0.1-5.4-0.1-8.2 0-2.6 0-5.2 0.1-7.8 1-55.6 12.4-109.5 33.9-160.3 6.4-15.2 13.7-30 21.8-44.3 63.5 36.5 136.8 57.9 214.9 59.2 2.6 0 5.3 0.1 7.9 0.1 2.7 0 5.4 0 8.1-0.1 78.1-1.4 151.4-22.8 214.9-59.3 8.1 14.3 15.4 29.1 21.8 44.4 21.5 50.9 32.9 104.8 33.9 160.3 0 2.6 0.1 5.2 0.1 7.8 0 2.7 0 5.4-0.1 8.2-1 55.4-12.4 109.2-33.9 160-6.4 15.2-13.6 29.9-21.7 44.1-63.5-36.6-136.8-58-215-59.4z" fill="var(--primary-color)" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            SEO & Marketing
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        Search visibility, content strategy, and growth campaigns that drive quality traffic and turn visitors into customers.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4">
-                                        <div class="service-card variant2 right-swipe">
-                                            <div class="service-card-sub">
-                                                <div class="service-card-icon">
-                                                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M828.5 180.1h-9.9v-54.7h23.5v-44H182v44h23v54.7h-9.5C123.2 180.1 64 239.2 64 311.5v0.1c0 72.3 59.2 131.5 131.5 131.5h9.6c0 1.3 0.1 2.5 0.1 3.7 0.5 17.7 2.7 35.4 6.2 52.5 17.8 85.7 71.8 160 148.3 204 4.8 2.8 9.8 5.4 14.7 7.9 15.3 7.7 31.2 14.1 47.4 19.2 3.4 1 6.8 2 10.2 2.9v165.2H250.4v44h511.9v-44H591.9V733.4c3.7-1 7.3-2.1 10.9-3.2 16.2-5.1 32.2-11.6 47.4-19.4 5-2.5 10-5.3 14.8-8.1 75.6-43.9 129.2-117.8 147-202.7 3.6-17.2 5.8-34.9 6.3-52.4 0.1-1.5 0.1-3 0.1-4.5h10c72.3 0 131.5-59.2 131.5-131.5v-0.1c0.1-72.3-59.1-131.4-131.4-131.4zM205 399.2h-9.5c-23.2 0-45.1-9.1-61.7-25.7s-25.7-38.5-25.7-61.7v-0.1c0-23.2 9.1-45.2 25.7-61.7 16.6-16.6 38.5-25.7 61.7-25.7h9.5v174.9z m370.9 499.4h-128V737.3c20.9 4.5 42.3 6.8 63.9 6.8 21.7 0 43.1-2.3 64.1-6.8v161.3z m198.7-461.4c0 2.9 0 5.9-0.2 8.9-0.5 15-2.3 30.1-5.4 44.9-15.3 72.7-61.2 136-126.1 173.7-4.1 2.4-8.4 4.7-12.7 6.9-13 6.6-26.7 12.2-40.6 16.6-25.2 7.9-51.4 11.9-77.9 11.9-26.2 0-52.2-3.9-77.1-11.6-13.9-4.3-27.5-9.8-40.6-16.4-4.2-2.1-8.5-4.4-12.6-6.8-65.4-37.8-111.7-101.5-126.9-174.8-3.1-14.7-4.9-29.8-5.3-45-0.1-2.7-0.1-5.5-0.1-8.2v-312h525.6v311.9zM916 311.7c0 23.2-9.1 45.2-25.7 61.7-16.6 16.6-38.5 25.7-61.7 25.7h-9.9v-175h9.9c23.2 0 45.1 9.1 61.7 25.7s25.7 38.5 25.7 61.7v0.2z" fill="rgb(var(--dark-rgb))" />
-                                                        <path d="M317.428 274.917l70.145-70.144 14.142 14.142-70.145 70.144zM316.055 351.98L456.13 211.904l14.142 14.142-140.076 140.076zM555.4 659.6l-4.8-19.4c0.3-0.1 26.5-6.8 55.4-23.5 37.8-21.9 62-49.7 72-82.7l19.1 5.8c-11.4 37.6-39.6 70.3-81.6 94.5-31.2 18-58.9 25-60.1 25.3z" fill="var(--primary-color)" />
-                                                    </svg>
-                                                </div>
-                                                <div class="service-card-content">
-                                                    <h3 class="service-card-title">
-                                                        <a href="servicesdetails-01.html">
-                                                            AI/ML
-                                                        </a>
-                                                    </h3>
-                                                    <p class="service-card-description">
-                                                        We build intelligent features — from automation and predictive models to AI-powered integrations — that give your product a competitive edge.
-                                                    </p>
-                                                    <div class="service-card__btn">
-                                                        <a class="btn-anim d-flex align-items-center gap-1 text-gradient btn-double-effect" href="services-01.html">
-                                                            <span class="btn__text">
-                                                                Read More
-                                                            </span>
-                                                            <span class="btn__icon">
-                                                                <i class="ri-arrow-right-line"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="col-lg-6">
+                                        <p>
+                                            From the first line of code to the final launch, we cover every discipline your product needs under one roof.
+                                        </p>
+                                        <a class="btn btn-primary-gradient landing-custom-button" href="servicesdetails-01.html" style="overflow: hidden;">
+                                            See All Services
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <a class="btn btn-primary-gradient landing-custom-button me-3 mb-0 mt-2" href="servicesdetails-01.html" style="overflow: hidden;">
-                                        See All Services
-                                        <i class="ri-arrow-right-line"></i>
-                                    </a>
+                                <div class="row gy-4 mb-0">
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#f2a90c;">
+                                            <span class="services-card__index">01</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-terminal-box-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">Software Development</h3>
+                                            <p class="services-card__desc">
+                                                Custom business software and portal solutions designed for scalability and reliability, built around the way your team actually works.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#3b6fe0;">
+                                            <span class="services-card__index">02</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-palette-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">UI/UX Design</h3>
+                                            <p class="services-card__desc">
+                                                Deliver seamless and enjoyable digital experiences. Our designs prioritize clarity, ease of use, and attractive interfaces for both web and mobile platforms.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#1f9d63;">
+                                            <span class="services-card__index">03</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-smartphone-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">Mobile App Development</h3>
+                                            <p class="services-card__desc">
+                                                Native and cross-platform app experiences with smooth performance and clean UX. We turn ideas into high-performing mobile apps tailored to your users' needs.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#17a2a6;">
+                                            <span class="services-card__index">04</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-global-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">Website Development</h3>
+                                            <p class="services-card__desc">
+                                                Modern, responsive, and conversion-focused websites tailored to your business goals — from marketing sites to complex web platforms and e-commerce stores.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d1483f;">
+                                            <span class="services-card__index">05</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-line-chart-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">SEO & Marketing</h3>
+                                            <p class="services-card__desc">
+                                                Search visibility, content strategy, and growth campaigns that drive quality traffic and turn visitors into customers.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="services-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#7b4fd1;">
+                                            <span class="services-card__index">06</span>
+                                            <div class="services-card__icon">
+                                                <i class="ri-robot-2-line"></i>
+                                            </div>
+                                            <h3 class="services-card__title">AI/ML</h3>
+                                            <p class="services-card__desc">
+                                                We build intelligent features — from automation and predictive models to AI-powered integrations — that give your product a competitive edge.
+                                            </p>
+                                            <a class="services-card__cta" href="servicesdetails-01.html">
+                                                Explore Service <i class="ri-arrow-right-up-line"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </section> <!-- top / primary band -->

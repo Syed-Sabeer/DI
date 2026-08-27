@@ -110,7 +110,7 @@
 
                         <!-- Start::slide -->
                   <li class="slide d-xl-block d-none">
-                    <a href="{{ route('about') }}" class="side-menu__item">
+                    <a href="{{ route('careers') }}" class="side-menu__item">
                       <span class="side-menu__label">
                         Careers
                       </span>

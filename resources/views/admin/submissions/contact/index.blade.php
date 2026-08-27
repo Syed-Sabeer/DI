@@ -92,6 +92,8 @@
             <p><strong>Name:</strong> {{ $contact->fullname }}</p>
             <p><strong>Email:</strong> {{ $contact->email }}</p>
             <p><strong>Phone:</strong> {{ $contact->phone }}</p>  
+            <p><strong>Country:</strong> {{ $contact->country ?: 'Unknown' }}</p>
+            <p><strong>IP Address:</strong> {{ $contact->ip_address ?: 'Unavailable' }}</p>
             
 <br>
             <p><strong>Subject:</strong> {{ $contact->subject }}</p>
@@ -117,6 +119,7 @@
 
                         </table>
                       </div>
+                      <div class="px-4 pt-3">{{ $contacts->links() }}</div>
                     </div>
                   </div>
                 </div>
@@ -135,4 +138,3 @@
 
 @section('script')
 @endsection
-

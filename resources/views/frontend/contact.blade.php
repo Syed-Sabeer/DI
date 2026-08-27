@@ -4,6 +4,7 @@
 
 
 @section('css')
+<link rel="stylesheet" href="{{ asset('AdminAssets/css/vendors/sweetalert2.css') }}">
 <style>
     /* --primary-color is a bright lime green with low contrast on white/light
        backgrounds. Give it a soft dark edge in light mode so headings stay
@@ -473,6 +474,11 @@
     .office-card .office-directions:hover i {
         transform: translate(2px, -2px);
     }
+    .contact-submit-btn:disabled { opacity: .72; cursor: wait; transform: none; }
+    .contact-submit-btn .contact-spinner { animation: contact-spin .75s linear infinite; }
+    @keyframes contact-spin { to { transform: rotate(360deg); } }
+    .contact-swal-popup { border: 1px solid rgba(184, 233, 0, .32); border-radius: 18px; }
+    .contact-swal-confirm { border-radius: 8px !important; padding: .75rem 1.5rem !important; color: #080b09 !important; font-weight: 700 !important; }
 </style>
 @endsection
 
@@ -683,13 +689,14 @@
                             </h2>
                             <p class="mb-0">Fill out the form below and our team will get back to you shortly.</p>
                         </div>
-                        <form id="team-contact-form" method="POST">
+                        <form id="team-contact-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
+                            @csrf
                             <div class="row gy-3">
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conName">Full Name *</label>
                                     <div class="input-icon-group">
                                         <i class="ri-user-3-line"></i>
-                                        <input type="text" class="form-control" name="conName" id="conName"
+                                        <input type="text" class="form-control" name="fullname" id="conName"
                                             placeholder="John Doe" required>
                                     </div>
                                 </div>
@@ -698,7 +705,7 @@
                                     <label class="field-label" for="conEmail">Email Address *</label>
                                     <div class="input-icon-group">
                                         <i class="ri-mail-line"></i>
-                                        <input type="email" class="form-control" name="conEmail" id="conEmail"
+                                        <input type="email" class="form-control" name="email" id="conEmail"
                                             placeholder="john@example.com" required>
                                     </div>
                                 </div>
@@ -707,7 +714,7 @@
                                     <label class="field-label" for="conPhone">Phone Number *</label>
                                     <div class="input-icon-group">
                                         <i class="ri-phone-line"></i>
-                                        <input class="form-control" type="text" name="conPhone" id="conPhone"
+                                        <input class="form-control" type="text" name="phone" id="conPhone"
                                             placeholder="+1 (905) 514-8474" required>
                                     </div>
                                 </div>
@@ -716,29 +723,29 @@
                                     <label class="field-label" for="conSubject">Subject *</label>
                                     <div class="input-icon-group">
                                         <i class="ri-chat-3-line"></i>
-                                        <input type="text" class="form-control" name="conSubject" id="conSubject"
-                                            placeholder="How can we help?" required>
+                                        <input type="text" class="form-control" name="subject" id="conSubject"
+                                            value="{{ request('subject') }}" placeholder="How can we help?" required>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-12">
                                     <label class="field-label" for="message">Your Message *</label>
-                                    <textarea class="form-control" rows="5" name="conMessage" id="message"
+                                    <textarea class="form-control" rows="5" name="message" id="message"
                                         placeholder="Tell us about your project..." required></textarea>
                                 </div>
 
                                 <div class="col-12">
                                     <label class="contact-agree">
-                                        <input type="checkbox" required>
+                                        <input type="checkbox" name="privacy" value="1" required>
                                         <span>I agree to the <a href="javascript:void(0);">Terms &amp; Conditions</a> and <a href="javascript:void(0);">Privacy Policy</a></span>
                                     </label>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="message-card-footer">
-                                        <button type="submit" class="contact-submit-btn">
-                                            <i class="ri-send-plane-2-line"></i>
-                                            <span>Send Message</span>
+                                        <button type="submit" class="contact-submit-btn" data-contact-submit>
+                                            <i class="ri-send-plane-2-line" data-submit-icon></i>
+                                            <span data-submit-text>Send Message</span>
                                         </button>
                                         <div class="message-card-social">
                                             <span>Connect with us:</span>
@@ -817,5 +824,70 @@
 @endsection
 
 @section('script')
+<script src="{{ asset('AdminAssets/js/sweet-alert/sweetalert.min.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('team-contact-form');
+    if (!form || typeof Swal === 'undefined') return;
 
+    const button = form.querySelector('[data-contact-submit]');
+    const icon = form.querySelector('[data-submit-icon]');
+    const text = form.querySelector('[data-submit-text]');
+
+    const alertTheme = () => {
+        const dark = document.documentElement.getAttribute('data-theme-mode') === 'dark';
+        return {
+            background: dark ? '#101311' : '#ffffff',
+            color: dark ? '#f5f7f5' : '#161816',
+            confirmButtonColor: '#b8e900',
+            customClass: { popup: 'contact-swal-popup', confirmButton: 'contact-swal-confirm' }
+        };
+    };
+
+    const setLoading = (loading) => {
+        button.disabled = loading;
+        text.textContent = loading ? 'Sending message...' : 'Send Message';
+        icon.className = loading ? 'ri-loader-4-line contact-spinner' : 'ri-send-plane-2-line';
+    };
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        form.querySelectorAll('.is-invalid').forEach(field => field.classList.remove('is-invalid'));
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        setLoading(true);
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                body: new FormData(form)
+            });
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                Object.keys(data.errors || {}).forEach(name => form.querySelector(`[name="${name}"]`)?.classList.add('is-invalid'));
+                const throttled = response.status === 429;
+                await Swal.fire({
+                    ...alertTheme(),
+                    icon: throttled ? 'warning' : (data.icon || 'error'),
+                    title: throttled ? 'Please slow down' : (data.title || 'Unable to send'),
+                    text: throttled ? 'Too many messages were sent. Please wait one minute and try again.' : (data.message || 'Please check your details and try again.'),
+                    confirmButtonText: 'Got it'
+                });
+                return;
+            }
+
+            form.reset();
+            await Swal.fire({
+                ...alertTheme(), icon: 'success', title: data.title, text: data.message,
+                confirmButtonText: 'Done', timer: 6500, timerProgressBar: true
+            });
+        } catch (error) {
+            await Swal.fire({ ...alertTheme(), icon: 'error', title: 'Connection problem', text: 'We could not reach the server. Please check your connection and try again.', confirmButtonText: 'Try again' });
+        } finally {
+            setLoading(false);
+        }
+    });
+});
+</script>
 @endsection
