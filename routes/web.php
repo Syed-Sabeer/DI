@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminPrivacyPolicyController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminPartnerController;
 use App\Http\Controllers\Admin\AdminBlogController;
+use App\Http\Controllers\Admin\AdminCareerController;
 
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Admin\AdminAboutController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Common\DashboardController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\ContactController;
@@ -61,6 +63,8 @@ Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
 Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.submit');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
+Route::get('/careers', [CareerController::class, 'index'])->name('careers');
+Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
 Route::get('/service', [WebsiteController::class, 'service'])->name('service');
 Route::get('/portfolio', [WebsiteController::class, 'portfolio'])->name('portfolio');
 Route::get('/service-detail/{slug?}', [WebsiteController::class, 'serviceDetail'])->name('service.detail');
@@ -140,6 +144,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('blog/categories', [AdminBlogController::class, 'categoryStore'])->name('blog.categories.store');
     Route::delete('blog/categories/{id}', [AdminBlogController::class, 'categoryDestroy'])->name('blog.categories.destroy');
 
+    Route::get('careers', [AdminCareerController::class, 'index'])->name('careers.index');
+    Route::get('careers/add', [AdminCareerController::class, 'create'])->name('careers.create');
+    Route::post('careers', [AdminCareerController::class, 'store'])->name('careers.store');
+    Route::get('careers/{career}/edit', [AdminCareerController::class, 'edit'])->name('careers.edit');
+    Route::put('careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
+    Route::delete('careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
+    Route::post('careers/{career}/toggle-visibility', [AdminCareerController::class, 'toggleVisibility'])->name('careers.toggle-visibility');
+
 
 
 
@@ -185,4 +197,3 @@ Route::delete('contacts/{id}', [AdminContactController::class, 'destroy'])->name
 
 
 });
-

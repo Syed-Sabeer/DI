@@ -55,7 +55,8 @@
                     <ul class="sidebar-submenu">
                       
                       
-                      <li><a class="lan-5" href="{{route('admin.blog.index')}}">Blog</a></li> 
+                      <li><a class="lan-5" href="{{route('admin.blog.index')}}">Blog</a></li>
+                      <li><a class="lan-5" href="{{ route('admin.careers.index') }}">Careers</a></li>
                       
                    
 

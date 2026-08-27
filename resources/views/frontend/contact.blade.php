@@ -88,33 +88,71 @@
 
     /* ---------- "Why Partner" value cards ---------- */
     .value-card {
+        position: relative;
         height: 100%;
-        padding: 30px 28px;
-        border-radius: 1rem;
+        padding: 32px 28px;
+        border-radius: 1.25rem;
         border: 1px solid var(--border);
         background: var(--gray-100);
-        transition: border-color 0.3s ease, transform 0.3s ease;
+        overflow: hidden;
+        transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .value-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(135deg, var(--accent, var(--primary-color)), transparent 45%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
     }
 
     .value-card:hover {
-        border-color: var(--primary-color);
-        transform: translateY(-4px);
+        transform: translateY(-6px);
+        box-shadow: 0 24px 48px -30px rgba(var(--dark-rgb), 0.4);
+    }
+
+    .value-card:hover::after {
+        opacity: 1;
+    }
+
+    .value-card .value-number {
+        position: absolute;
+        top: 18px;
+        right: 22px;
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1;
+        color: rgb(var(--dark-rgb));
+        opacity: 0.06;
     }
 
     .value-card .value-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 52px;
-        height: 52px;
-        border-radius: 12px;
-        font-size: 1.4rem;
-        color: #fff;
-        margin-bottom: 18px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        background: color-mix(in srgb, var(--accent) 14%, transparent);
+        color: var(--accent);
+        margin-bottom: 20px;
+        transition: transform 0.35s ease;
+    }
+
+    .value-card:hover .value-icon {
+        transform: scale(1.08) rotate(-4deg);
     }
 
     .value-card h3 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         font-weight: 700;
         margin-bottom: 2px;
         color: rgb(var(--dark-rgb));
@@ -124,7 +162,7 @@
         display: block;
         font-size: 0.8rem;
         font-weight: 600;
-        color: var(--primary-color);
+        color: var(--accent);
         margin-bottom: 12px;
     }
 
@@ -136,16 +174,46 @@
 
     /* ---------- Message form ---------- */
     .message-card {
-        padding: 48px;
-        border-radius: 1.5rem;
+        position: relative;
+        padding: 52px;
+        border-radius: 1.75rem;
         border: 1px solid var(--border);
         background: var(--gray-100);
+        box-shadow: 0 40px 80px -45px rgba(var(--dark-rgb), 0.4);
+        overflow: hidden;
+    }
+
+    .message-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color) 0%, rgb(var(--secondary-rgb)) 100%);
     }
 
     @media (max-width: 575px) {
         .message-card {
-            padding: 28px 22px;
+            padding: 30px 22px;
         }
+    }
+
+    .message-card-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--primary-color) 14%, transparent);
+        color: rgb(var(--dark-rgb));
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .message-card-badge i {
+        color: var(--primary-color);
     }
 
     .message-card .field-label {
@@ -154,6 +222,42 @@
         font-weight: 600;
         color: rgb(var(--dark-rgb));
         margin-bottom: 8px;
+    }
+
+    .input-icon-group {
+        position: relative;
+    }
+
+    .input-icon-group i {
+        position: absolute;
+        top: 50%;
+        inset-inline-start: 16px;
+        transform: translateY(-50%);
+        font-size: 1.05rem;
+        color: rgb(var(--dark-rgb));
+        opacity: 0.35;
+        pointer-events: none;
+        transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .input-icon-group .form-control {
+        padding-inline-start: 44px;
+    }
+
+    .input-icon-group:focus-within i {
+        color: var(--primary-color);
+        opacity: 1;
+    }
+
+    .message-card .form-control {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        border-radius: 0.75rem;
+    }
+
+    .message-card .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary-color) 18%, transparent);
     }
 
     .message-card textarea.form-control {
@@ -251,14 +355,33 @@
 
     /* ---------- Offices ---------- */
     .office-card {
+        position: relative;
         display: flex;
         align-items: flex-start;
-        gap: 18px;
+        gap: 20px;
         height: 100%;
-        padding: 28px;
-        border-radius: 1rem;
+        padding: 30px 30px 30px 34px;
+        border-radius: 1.25rem;
         border: 1px solid var(--border);
         background: var(--gray-100);
+        overflow: hidden;
+        transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .office-card::before {
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+        top: 0;
+        bottom: 0;
+        width: 6px;
+        background: var(--accent, var(--primary-color));
+    }
+
+    .office-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 48px -30px rgba(var(--dark-rgb), 0.4);
+        border-color: var(--accent, var(--primary-color));
     }
 
     .office-card .office-flag {
@@ -266,11 +389,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 48px;
-        height: 48px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         background: var(--custom-white);
-        box-shadow: 0 6px 16px -8px rgba(var(--dark-rgb), 0.3);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent), 0 10px 22px -12px rgba(var(--dark-rgb), 0.4);
         overflow: hidden;
     }
 
@@ -282,31 +405,73 @@
         border-radius: 50%;
     }
 
-    .office-card h3 {
-        font-size: 1.1rem;
+    .office-card .office-region {
+        display: block;
+        font-size: 0.78rem;
         font-weight: 700;
-        margin-bottom: 8px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 4px;
+    }
+
+    .office-card h3 {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 10px;
         color: rgb(var(--dark-rgb));
     }
 
     .office-card p {
         font-size: 0.92rem;
         opacity: 0.75;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
 
     .office-card .office-hours {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 6px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 600;
-        margin: 0;
-        opacity: 1;
+        margin: 0 0 16px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+        color: rgb(var(--dark-rgb));
     }
 
     .office-card .office-hours i {
-        color: var(--primary-color);
+        color: var(--accent);
+    }
+
+    .office-card .office-directions {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: rgb(var(--dark-rgb));
+        text-shadow: 0 0 1px rgba(17, 17, 17, 0.4);
+        transition: gap 0.25s ease;
+    }
+
+    [data-theme-mode="dark"] .office-card .office-directions {
+        text-shadow: none;
+    }
+
+    .office-card .office-directions i {
+        color: var(--accent);
+        transition: transform 0.25s ease;
+    }
+
+    .office-card .office-directions:hover {
+        gap: 10px;
+        color: var(--accent);
+    }
+
+    .office-card .office-directions:hover i {
+        transform: translate(2px, -2px);
     }
 </style>
 @endsection
@@ -435,8 +600,9 @@
             </div>
             <div class="row gy-4">
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".1s">
-                        <div class="value-icon" style="background:#f2a90c;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#f2a90c;">
+                        <span class="value-number">01</span>
+                        <div class="value-icon">
                             <i class="ri-flashlight-line"></i>
                         </div>
                         <h3>Rapid Response Time</h3>
@@ -445,8 +611,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".2s">
-                        <div class="value-icon" style="background:#3b6fe0;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#3b6fe0;">
+                        <span class="value-number">02</span>
+                        <div class="value-icon">
                             <i class="ri-team-line"></i>
                         </div>
                         <h3>Expert Team</h3>
@@ -455,8 +622,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".3s">
-                        <div class="value-icon" style="background:#1f9d63;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#1f9d63;">
+                        <span class="value-number">03</span>
+                        <div class="value-icon">
                             <i class="ri-eye-line"></i>
                         </div>
                         <h3>Transparent Process</h3>
@@ -465,8 +633,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".1s">
-                        <div class="value-icon" style="background:#17a2a6;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#17a2a6;">
+                        <span class="value-number">04</span>
+                        <div class="value-icon">
                             <i class="ri-settings-3-line"></i>
                         </div>
                         <h3>Comprehensive Services</h3>
@@ -475,8 +644,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".2s">
-                        <div class="value-icon" style="background:#d1483f;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d1483f;">
+                        <span class="value-number">05</span>
+                        <div class="value-icon">
                             <i class="ri-global-line"></i>
                         </div>
                         <h3>Global Reach</h3>
@@ -485,8 +655,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".3s">
-                        <div class="value-icon" style="background:#7b4fd1;">
+                    <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#7b4fd1;">
+                        <span class="value-number">06</span>
+                        <div class="value-icon">
                             <i class="ri-trophy-line"></i>
                         </div>
                         <h3>Proven Track Record</h3>
@@ -506,6 +677,7 @@
                 <div class="col-xl-10">
                     <div class="message-card wow fadeInUp" data-wow-delay=".1s">
                         <div class="heading-section text-start mb-4">
+                            <span class="message-card-badge"><i class="ri-time-line"></i> We typically respond within 24 hours</span>
                             <h2 class="heading-title mb-2">
                                 Send us a <span class="text-primary">Message</span>
                             </h2>
@@ -515,26 +687,38 @@
                             <div class="row gy-3">
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conName">Full Name *</label>
-                                    <input type="text" class="form-control" name="conName" id="conName"
-                                        placeholder="John Doe" required>
+                                    <div class="input-icon-group">
+                                        <i class="ri-user-3-line"></i>
+                                        <input type="text" class="form-control" name="conName" id="conName"
+                                            placeholder="John Doe" required>
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conEmail">Email Address *</label>
-                                    <input type="email" class="form-control" name="conEmail" id="conEmail"
-                                        placeholder="john@example.com" required>
+                                    <div class="input-icon-group">
+                                        <i class="ri-mail-line"></i>
+                                        <input type="email" class="form-control" name="conEmail" id="conEmail"
+                                            placeholder="john@example.com" required>
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conPhone">Phone Number *</label>
-                                    <input class="form-control" type="text" name="conPhone" id="conPhone"
-                                        placeholder="+1 (905) 514-8474" required>
+                                    <div class="input-icon-group">
+                                        <i class="ri-phone-line"></i>
+                                        <input class="form-control" type="text" name="conPhone" id="conPhone"
+                                            placeholder="+1 (905) 514-8474" required>
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conSubject">Subject *</label>
-                                    <input type="text" class="form-control" name="conSubject" id="conSubject"
-                                        placeholder="How can we help?" required>
+                                    <div class="input-icon-group">
+                                        <i class="ri-chat-3-line"></i>
+                                        <input type="text" class="form-control" name="conSubject" id="conSubject"
+                                            placeholder="How can we help?" required>
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-12">
@@ -594,26 +778,34 @@
             </div>
             <div class="row gy-4 justify-content-center">
                 <div class="col-md-6">
-                    <div class="office-card wow fadeInUp" data-wow-delay=".1s">
+                    <div class="office-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#016937;">
                         <div class="office-flag">
                             <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag">
                         </div>
                         <div>
+                            <span class="office-region">Head Office</span>
                             <h3>Pakistan Office</h3>
                             <p>71A Street 3, Sindhi Muslim Cooperative Housing Society, Block A (SMCHS), Karachi, 75400, Pakistan</p>
-                            <p class="office-hours"><i class="ri-time-line"></i> Hours: Mon - Sat, 9 AM - 11:30 PM</p>
+                            <div><span class="office-hours"><i class="ri-time-line"></i> Mon - Sat, 9 AM - 11:30 PM</span></div>
+                            <a class="office-directions" href="https://www.google.com/maps/search/?api=1&query=71A%20Street%203%2C%20Sindhi%20Muslim%20Cooperative%20Housing%20Society%2C%20Block%20A%20%28SMCHS%29%2C%20Karachi%2C%2075400%2C%20Pakistan" target="_blank" rel="noopener">
+                                Get Directions <i class="ri-arrow-right-up-line"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="office-card wow fadeInUp" data-wow-delay=".2s">
+                    <div class="office-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d52b1e;">
                         <div class="office-flag">
                             <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag">
                         </div>
                         <div>
+                            <span class="office-region">Regional Office</span>
                             <h3>Canada Office</h3>
                             <p>Suite 391 - 1505 Laperriere Avenue, Ottawa, Ontario K1Z 7T1, Canada</p>
-                            <p class="office-hours"><i class="ri-time-line"></i> Hours: Sun - Fri, 9 AM - 11:30 PM</p>
+                            <div><span class="office-hours"><i class="ri-time-line"></i> Sun - Fri, 9 AM - 11:30 PM</span></div>
+                            <a class="office-directions" href="https://www.google.com/maps/search/?api=1&query=Suite%20391%20-%201505%20Laperriere%20Avenue%2C%20Ottawa%2C%20Ontario%20K1Z%207T1%2C%20Canada" target="_blank" rel="noopener">
+                                Get Directions <i class="ri-arrow-right-up-line"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
