@@ -162,11 +162,12 @@
                         <h3 class="newsletter-title">
                           Subscribe to our newsletter
                         </h3>
-                        <form class="newsletter-form mb-5" method="post">
-                          <input type="email" name="user_email" class="newsletter-input" placeholder="Enter email" required>
-                          <button type="button" class="btn newsletter-btn">
-                            <i class="ri-send-plane-2-line">
-                            </i>
+                        <form class="newsletter-form mb-5" id="footer-newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}" novalidate>
+                          @csrf
+                          <label class="visually-hidden" for="footer-newsletter-email">Email address</label>
+                          <input type="email" name="email" id="footer-newsletter-email" class="newsletter-input" placeholder="Enter email" autocomplete="email" required>
+                          <button type="submit" class="btn newsletter-btn" data-newsletter-submit aria-label="Subscribe to newsletter">
+                            <i class="ri-send-plane-2-line" data-newsletter-icon></i>
                           </button>
                         </form>
                         <h3 class="footer-title mb-3">
@@ -218,3 +219,65 @@
                   </div>
                 </div>
                 <!-- End::footer -->
+<style>
+  #footer-newsletter-form .newsletter-btn:disabled { cursor: wait; opacity: .72; }
+  #footer-newsletter-form .newsletter-spinner { animation: newsletter-spin .75s linear infinite; }
+  #footer-newsletter-form .newsletter-input.is-invalid { border-color: #ff5b5b !important; box-shadow: 0 0 0 3px rgba(255,91,91,.12); }
+  .newsletter-swal-popup { border: 1px solid rgba(184,233,0,.32); border-radius: 18px; }
+  .newsletter-swal-confirm { border-radius: 8px !important; padding: .75rem 1.5rem !important; color: #080b09 !important; font-weight: 700 !important; }
+  @keyframes newsletter-spin { to { transform: rotate(360deg); } }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('footer-newsletter-form');
+  if (!form) return;
+  const button = form.querySelector('[data-newsletter-submit]');
+  const icon = form.querySelector('[data-newsletter-icon]');
+  const email = form.querySelector('[name="email"]');
+
+  const swalTheme = () => {
+    const dark = document.documentElement.getAttribute('data-theme-mode') === 'dark';
+    return {
+      background: dark ? '#101311' : '#ffffff',
+      color: dark ? '#f5f7f5' : '#161816',
+      confirmButtonColor: '#b8e900',
+      customClass: { popup: 'newsletter-swal-popup', confirmButton: 'newsletter-swal-confirm' }
+    };
+  };
+
+  const loading = state => {
+    button.disabled = state;
+    email.readOnly = state;
+    icon.className = state ? 'ri-loader-4-line newsletter-spinner' : 'ri-send-plane-2-line';
+    button.setAttribute('aria-label', state ? 'Subscribing, please wait' : 'Subscribe to newsletter');
+  };
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    email.classList.remove('is-invalid');
+    if (!form.checkValidity()) { email.classList.add('is-invalid'); form.reportValidity(); return; }
+    loading(true);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: new FormData(form)
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        email.classList.add('is-invalid');
+        const throttled = response.status === 429;
+        await Swal.fire({ ...swalTheme(), icon: throttled ? 'warning' : (data.icon || 'error'), title: throttled ? 'Please slow down' : (data.title || 'Unable to subscribe'), text: throttled ? 'Too many attempts were made. Please wait one minute and try again.' : (data.message || 'Please enter a valid email address.'), confirmButtonText: 'Got it' });
+        return;
+      }
+      form.reset();
+      await Swal.fire({ ...swalTheme(), icon: data.icon || 'success', title: data.title, text: data.message, confirmButtonText: 'Done', timer: 6000, timerProgressBar: true });
+    } catch (error) {
+      await Swal.fire({ ...swalTheme(), icon: 'error', title: 'Connection problem', text: 'We could not reach the server. Please check your connection and try again.', confirmButtonText: 'Try again' });
+    } finally {
+      loading(false);
+    }
+  });
+});
+</script>

@@ -4,7 +4,6 @@
 
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('AdminAssets/css/vendors/sweetalert2.css') }}">
 <style>
     /* --primary-color is a bright lime green with low contrast on white/light
        backgrounds. Give it a soft dark edge in light mode so headings stay
@@ -824,7 +823,6 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('AdminAssets/js/sweet-alert/sweetalert.min.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('team-contact-form');

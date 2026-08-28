@@ -15,6 +15,7 @@ class SitemapController extends Controller
         $urls[] = ['loc' => url('/'), 'lastmod' => now(), 'priority' => '1.0'];
         $urls[] = ['loc' => url('/about'), 'lastmod' => now(), 'priority' => '0.8'];
         $urls[] = ['loc' => url('/service'), 'lastmod' => now(), 'priority' => '0.8'];
+        $urls[] = ['loc' => url('/portfolio'), 'lastmod' => now(), 'priority' => '0.8'];
         $urls[] = ['loc' => url('/blog'), 'lastmod' => now(), 'priority' => '0.8'];
         $urls[] = ['loc' => url('/contact'), 'lastmod' => now(), 'priority' => '0.8'];
 
@@ -22,6 +23,15 @@ class SitemapController extends Controller
         foreach ($services as $service) {
             $urls[] = [
                 'loc' => url('/service-detail/'.$service['slug']),
+                'lastmod' => now(),
+                'priority' => '0.7',
+            ];
+        }
+
+        $portfolios = (new WebsiteController)->portfoliosForSitemap();
+        foreach ($portfolios as $portfolio) {
+            $urls[] = [
+                'loc' => url('/portfolio/'.$portfolio['slug']),
                 'lastmod' => now(),
                 'priority' => '0.7',
             ];

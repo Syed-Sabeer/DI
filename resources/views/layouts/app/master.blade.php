@@ -50,6 +50,8 @@
 
     <!-- js -->
     @include('layouts.app.script')
+    @yield('script')
+    @yield('js')
 
 </body>
 

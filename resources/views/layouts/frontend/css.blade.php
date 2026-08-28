@@ -39,4 +39,5 @@
     <link rel="stylesheet" href="{{ asset('FrontendAssets/libs/odometer/themes/odometer-theme-default.css')}}">
 
 
+<link rel="stylesheet" href="{{ asset('AdminAssets/css/vendors/sweetalert2.css') }}">
 @yield('css')

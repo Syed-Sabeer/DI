@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
+    private const LOCATION_LEVELS = ['state', 'city', 'area'];
+
     public function index(Request $request)
     {
         $totalVisitors = Visitor::count();
@@ -51,6 +53,51 @@ class AdminDashboardController extends Controller
         ));
     }
 
+    public function locationBreakdown(Request $request)
+    {
+        $validated = $request->validate([
+            'level' => 'required|in:state,city,area',
+            'period' => 'nullable|in:today,week,all',
+            'country' => 'required|string|max:150',
+            'state' => 'nullable|string|max:150',
+            'city' => 'nullable|string|max:150',
+        ]);
+
+        $level = $validated['level'];
+        if ($level === 'city' && empty($validated['state'])) {
+            return response()->json(['message' => 'A state is required for city details.'], 422);
+        }
+        if ($level === 'area' && (empty($validated['state']) || empty($validated['city']))) {
+            return response()->json(['message' => 'A state and city are required for area details.'], 422);
+        }
+
+        $query = Visitor::query();
+        $this->applyPeriod($query, $validated['period'] ?? 'all');
+        $this->whereNormalized($query, 'country', $validated['country']);
+        if ($level !== 'state') $this->whereNormalized($query, 'state', $validated['state']);
+        if ($level === 'area') $this->whereNormalized($query, 'city', $validated['city']);
+
+        $parentTotal = (clone $query)->count();
+        $column = self::LOCATION_LEVELS[array_search($level, self::LOCATION_LEVELS, true)];
+        $rows = (clone $query)
+            ->selectRaw("COALESCE(NULLIF({$column}, ''), 'Unknown') as name, COUNT(*) as total")
+            ->groupBy('name')
+            ->orderByDesc('total')
+            ->limit(50)
+            ->get()
+            ->map(fn ($row) => [
+                'name' => $row->name,
+                'total' => (int) $row->total,
+                'percentage' => $parentTotal > 0 ? round(($row->total / $parentTotal) * 100, 1) : 0,
+            ]);
+
+        return response()->json([
+            'level' => $level,
+            'parent_total' => $parentTotal,
+            'rows' => $rows,
+        ]);
+    }
+
     private function topCountries(Builder $query, int $total)
     {
         $countries = (clone $query)->selectRaw(
@@ -68,5 +115,19 @@ class AdminDashboardController extends Controller
                 $row->percentage = $total > 0 ? round(($row->total / $total) * 100, 1) : 0;
                 return $row;
             });
+    }
+
+    private function applyPeriod(Builder $query, string $period): void
+    {
+        if ($period === 'today') {
+            $query->whereDate('visit_date', today());
+        } elseif ($period === 'week') {
+            $query->whereDate('visit_date', '>=', today()->subDays(6));
+        }
+    }
+
+    private function whereNormalized(Builder $query, string $column, string $value): void
+    {
+        $query->whereRaw("COALESCE(NULLIF({$column}, ''), 'Unknown') = ?", [$value]);
     }
 }

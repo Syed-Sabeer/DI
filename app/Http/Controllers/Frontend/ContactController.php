@@ -50,6 +50,9 @@ class ContactController extends Controller
                 'message' => $validated['message'],
                 'ip_address' => $location['ip'],
                 'country' => $location['country'],
+                'state' => $location['state'],
+                'city' => $location['city'],
+                'area' => $location['area'],
             ]));
 
             try {

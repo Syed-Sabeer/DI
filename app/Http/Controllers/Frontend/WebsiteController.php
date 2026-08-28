@@ -19,14 +19,30 @@ class WebsiteController extends Controller
 		$visitor = Visitor::firstOrCreate([
 			'ip_address' => $location['ip'],
 			'visit_date' => Carbon::today()->toDateString(),
-		], ['country' => $location['country']]);
+		], [
+			'country' => $location['country'],
+			'state' => $location['state'],
+			'city' => $location['city'],
+			'area' => $location['area'],
+		]);
 
-		if ((! $visitor->country || $visitor->country === 'Unknown') && $location['country'] !== 'Unknown') {
-			$visitor->update(['country' => $location['country']]);
+		$needsLocationDetails = ! $visitor->country || $visitor->country === 'Unknown'
+			|| ! $visitor->state || $visitor->state === 'Unknown'
+			|| ! $visitor->city || $visitor->city === 'Unknown'
+			|| ! $visitor->area || $visitor->area === 'Unknown';
+
+		if ($needsLocationDetails && $location['country'] !== 'Unknown') {
+			$visitor->update([
+				'country' => $location['country'],
+				'state' => $location['state'],
+				'city' => $location['city'],
+				'area' => $location['area'],
+			]);
 		}
 
 		$latestBlogs = Blog::where('visibility', 1)->latest()->take(3)->get();
-		return view('frontend.index', compact('latestBlogs'));
+		$portfolios = array_slice($this->portfolios(), 0, 5);
+		return view('frontend.index', compact('latestBlogs', 'portfolios'));
 	}
 
 	public function about()
@@ -53,7 +69,14 @@ class WebsiteController extends Controller
 
 	public function portfolio()
 	{
-		return view('frontend.portfolio');
+		return view('frontend.portfolio', ['portfolios' => $this->portfolios()]);
+	}
+
+	public function portfolioDetail(?string $slug = null)
+	{
+		$portfolios = $this->portfolios();
+		$portfolio = collect($portfolios)->firstWhere('slug', $slug) ?: $portfolios[0];
+		return view('frontend.portfolio-detail', compact('portfolio', 'portfolios'));
 	}
 
 	public function serviceDetail(?string $slug = null)
@@ -243,6 +266,179 @@ class WebsiteController extends Controller
 	public function servicesForSitemap(): array
 	{
 		return $this->services();
+	}
+
+	public function portfoliosForSitemap(): array
+	{
+		return $this->portfolios();
+	}
+
+	private function portfolios(): array
+	{
+		return [
+			[
+				'slug' => 'saas-platform-scaling',
+				'title' => 'Scaling a SaaS Platform for Growth',
+				'category' => 'SaaS Platform',
+				'accent' => '#3b6fe0',
+				'image' => 'FrontendAssets/images/projects/18.png',
+				'short' => 'A cloud-native platform re-architected to support 10x user growth without sacrificing speed or reliability.',
+				'client' => 'Northwind Analytics',
+				'year' => '2026',
+				'timeline' => '4 Months',
+				'team' => ['Software Development', 'Cloud Architecture'],
+				'overview' => "Northwind Analytics came to us with a platform that had outgrown its own foundations — response times were climbing, deploys were risky, and the team was afraid to touch the codebase. We rebuilt the core around a cloud-native, service-oriented architecture so the product could keep growing without breaking.",
+				'challenge' => "The existing monolith couldn't handle concurrent load beyond a few thousand users, and every new feature meant weeks of regression testing across a tightly coupled codebase.",
+				'solution' => "We split the platform into focused services behind a unified API gateway, introduced horizontal auto-scaling, and rebuilt the data layer around read replicas and caching — all rolled out gradually behind feature flags with zero downtime.",
+				'highlights' => [
+					['title' => 'Service-Oriented Architecture', 'desc' => 'Decoupled the monolith into independently deployable services.'],
+					['title' => 'Auto-Scaling Infrastructure', 'desc' => 'Elastic compute that absorbs traffic spikes without manual intervention.'],
+					['title' => 'Zero-Downtime Migration', 'desc' => 'Phased rollout behind feature flags with instant rollback capability.'],
+					['title' => 'Observability Built In', 'desc' => 'End-to-end tracing and alerting across every service boundary.'],
+				],
+				'results' => [
+					['value' => '10x', 'label' => 'User Capacity'],
+					['value' => '65%', 'label' => 'Faster Response Time'],
+					['value' => '99.98%', 'label' => 'Uptime Post-Launch'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+			[
+				'slug' => 'mobile-app-redesign-launch',
+				'title' => 'Mobile App Redesign & Launch',
+				'category' => 'Mobile App',
+				'accent' => '#1f9d63',
+				'image' => 'FrontendAssets/images/projects/19.png',
+				'short' => 'A ground-up redesign that made everyday tasks faster, clearer, and genuinely enjoyable to use.',
+				'client' => 'Fielda Logistics',
+				'year' => '2026',
+				'timeline' => '3 Months',
+				'team' => ['UI/UX Design', 'Mobile App Development'],
+				'overview' => "Fielda's field-service app worked, but drivers were abandoning tasks halfway through and support tickets were piling up. We rebuilt the experience around the three things a driver actually needs mid-shift: speed, clarity, and confidence that an action went through.",
+				'challenge' => "Task completion rates were dropping and support was fielding the same confusion-driven tickets every week, all pointing back to a cluttered, inconsistent interface.",
+				'solution' => "We redesigned the core flows around a single-thumb interaction model, simplified navigation from five tabs to three, and rebuilt the app in React Native for consistent behavior across iOS and Android.",
+				'highlights' => [
+					['title' => 'Single-Thumb Navigation', 'desc' => 'Every core action reachable without repositioning the hand.'],
+					['title' => 'Offline-First Sync', 'desc' => 'Field updates queue locally and sync the moment signal returns.'],
+					['title' => 'Cross-Platform Consistency', 'desc' => 'One React Native codebase, identical behavior on iOS and Android.'],
+					['title' => 'In-App Guidance', 'desc' => 'Contextual tips that replaced most first-week support tickets.'],
+				],
+				'results' => [
+					['value' => '48%', 'label' => 'Faster Task Completion'],
+					['value' => '-62%', 'label' => 'Support Tickets'],
+					['value' => '4.8★', 'label' => 'App Store Rating'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+			[
+				'slug' => 'ecommerce-platform-development',
+				'title' => 'E-Commerce Platform Development',
+				'category' => 'E-Commerce',
+				'accent' => '#7b4fd1',
+				'image' => 'FrontendAssets/images/projects/20.png',
+				'short' => 'A conversion-focused storefront built to handle scale without slowing shoppers down.',
+				'client' => 'Aurelle Home Goods',
+				'year' => '2025',
+				'timeline' => '5 Months',
+				'team' => ['Web Development', 'UI/UX Design', 'SEO & Marketing'],
+				'overview' => "Aurelle needed a storefront that could handle seasonal traffic spikes without sacrificing the speed and polish their brand is known for. We built a headless commerce platform tuned for both performance and conversion.",
+				'challenge' => "The previous store slowed to a crawl during sale events and the checkout flow lost nearly a third of shoppers before payment.",
+				'solution' => "We moved to a headless architecture with edge caching, redesigned checkout down to three steps, and instrumented every step of the funnel so the team could keep optimizing after launch.",
+				'highlights' => [
+					['title' => 'Headless Storefront', 'desc' => 'Decoupled frontend served from the edge for near-instant loads.'],
+					['title' => 'Three-Step Checkout', 'desc' => 'Streamlined flow with saved details and one-click reorder.'],
+					['title' => 'Inventory-Aware UX', 'desc' => 'Real-time stock signals that reduce cart abandonment.'],
+					['title' => 'Funnel Analytics', 'desc' => 'Instrumented checkout so every drop-off point is measurable.'],
+				],
+				'results' => [
+					['value' => '3.1x', 'label' => 'Conversion Rate'],
+					['value' => '1.2s', 'label' => 'Avg. Page Load'],
+					['value' => '-38%', 'label' => 'Cart Abandonment'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+			[
+				'slug' => 'legacy-enterprise-modernization',
+				'title' => 'Modernizing a Legacy Enterprise System',
+				'category' => 'Enterprise Software',
+				'accent' => '#d1483f',
+				'image' => 'FrontendAssets/images/projects/21.png',
+				'short' => "Migrating a decade-old monolith into a modular, cloud-ready architecture with zero downtime.",
+				'client' => 'Harlow Manufacturing Group',
+				'year' => '2025',
+				'timeline' => '8 Months',
+				'team' => ['Software Development', 'Cloud Architecture', 'Security & Compliance'],
+				'overview' => "Harlow's operations ran on a decade-old on-premise system that no one fully trusted to touch. We modernized it in place — module by module — onto a cloud-ready stack without ever pausing daily operations.",
+				'challenge' => "The system was too critical to replace outright, too fragile to modify quickly, and increasingly expensive to keep alive on aging infrastructure.",
+				'solution' => "We wrapped legacy modules behind clean APIs, migrated data incrementally with continuous validation, and moved workloads to the cloud in stages — each one verified in parallel with the old system before cutover.",
+				'highlights' => [
+					['title' => 'Incremental Migration', 'desc' => 'Legacy modules replaced in stages, never all at once.'],
+					['title' => 'Parallel Verification', 'desc' => 'Every stage validated against the old system before cutover.'],
+					['title' => 'Modern API Layer', 'desc' => 'Clean interfaces that decouple new work from legacy internals.'],
+					['title' => 'Compliance Preserved', 'desc' => 'Full audit trails maintained throughout the transition.'],
+				],
+				'results' => [
+					['value' => '0', 'label' => 'Hours of Downtime'],
+					['value' => '45%', 'label' => 'Lower Infra Cost'],
+					['value' => '5x', 'label' => 'Faster Release Cycle'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+			[
+				'slug' => 'fintech-dashboard-real-time-insights',
+				'title' => 'Building a Fintech Dashboard for Real-Time Insights',
+				'category' => 'FinTech',
+				'accent' => '#c98a12',
+				'image' => 'FrontendAssets/images/projects/14.png',
+				'short' => 'A real-time analytics dashboard that turns raw transaction data into decisions teams can act on.',
+				'client' => 'Ledgerly Financial',
+				'year' => '2026',
+				'timeline' => '4 Months',
+				'team' => ['Software Development', 'AI/ML', 'UI/UX Design'],
+				'overview' => "Ledgerly's analysts were exporting spreadsheets to answer questions that should have taken seconds. We built a real-time dashboard that streams transaction data straight into the visualizations decision-makers actually use.",
+				'challenge' => "Reporting relied on nightly batch exports, so decisions were always working from data that was already a day old.",
+				'solution' => "We built a streaming data pipeline with anomaly-detection models running alongside it, surfaced through a dashboard that updates live and lets analysts drill from a trend line straight down to the source transaction.",
+				'highlights' => [
+					['title' => 'Real-Time Data Pipeline', 'desc' => 'Streaming ingestion replaces overnight batch exports.'],
+					['title' => 'Anomaly Detection', 'desc' => 'ML models flag unusual activity as it happens.'],
+					['title' => 'Drill-Down Analytics', 'desc' => 'From trend line to source transaction in two clicks.'],
+					['title' => 'Role-Based Views', 'desc' => 'Tailored dashboards for analysts, managers, and execs.'],
+				],
+				'results' => [
+					['value' => 'Live', 'label' => 'Data Latency'],
+					['value' => '70%', 'label' => 'Faster Reporting'],
+					['value' => '3x', 'label' => 'Anomalies Caught'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+			[
+				'slug' => 'product-launch-marketing-website',
+				'title' => 'Launching a Marketing Website for a Product Debut',
+				'category' => 'Marketing Website',
+				'accent' => '#17a2a6',
+				'image' => 'FrontendAssets/images/projects/16.png',
+				'short' => 'A high-converting launch site built to turn day-one traffic into a waitlist that actually converts.',
+				'client' => 'Orbital Devices',
+				'year' => '2025',
+				'timeline' => '6 Weeks',
+				'team' => ['Web Development', 'Content Writing', 'SEO & Marketing'],
+				'overview' => "Orbital needed a launch site live before their embargo lifted, with no room to slip the date. We designed, wrote, and shipped a fast, SEO-ready marketing site built to convert cold traffic into waitlist signups from day one.",
+				'challenge' => "A hard embargo date left no room for delay, and the site needed to hold up under a sudden traffic spike the moment coverage went live.",
+				'solution' => "We built on a static-first stack for near-instant loads, wrote conversion-focused copy around the product's core value prop, and load-tested the signup flow well ahead of launch day.",
+				'highlights' => [
+					['title' => 'Static-First Build', 'desc' => 'Pre-rendered pages that stay fast under any traffic spike.'],
+					['title' => 'Conversion Copywriting', 'desc' => 'Messaging built around the product\'s single strongest hook.'],
+					['title' => 'SEO Foundation', 'desc' => 'Technical SEO in place before the first press mention landed.'],
+					['title' => 'Launch-Day Load Testing', 'desc' => 'Signup flow verified against a simulated traffic surge.'],
+				],
+				'results' => [
+					['value' => '12K+', 'label' => 'Waitlist Signups (Week 1)'],
+					['value' => '0.6s', 'label' => 'Avg. Page Load'],
+					['value' => '100%', 'label' => 'Uptime on Launch Day'],
+				],
+				'gallery' => ['FrontendAssets/images/services/s-2.png', 'FrontendAssets/images/services/s-3.png'],
+			],
+		];
 	}
 
 	public function blogDetail()

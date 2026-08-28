@@ -74,8 +74,9 @@
                         <use href="{{asset('AdminAssets/svg/icon-sprite.svg#fill-knowledgebase')}}"></use>
                       </svg><span class="lan-3">Submission</span></a>
                     <ul class="sidebar-submenu">
-                      {{-- <li><a class="lan-4" href="{{route('admin.newsletterlist')}}">Newsletter</a></li> --}}
+                      <li><a class="lan-4" href="{{ route('admin.newsletterlist') }}">Newsletter</a></li>
                       <li><a class="lan-4" href="{{route('admin.contactlist')}}">Contact</a></li>
+                      <li><a class="lan-4" href="{{ route('admin.career-applications.index') }}">Career Applications</a></li>
 
 
 

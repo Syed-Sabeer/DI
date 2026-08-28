@@ -35,8 +35,17 @@
             <div class="row">
 
               <div class="col-12">
-                <div class="card">
-           
+                <div class="card" data-live-submissions>
+                  <div class="card-header card-no-border pb-3">
+                    <form method="GET" action="{{ route('admin.contactlist') }}" class="row g-3 align-items-end" data-live-filter-form>
+                      <div class="col-xl-4 col-md-6"><label class="form-label" for="contact-search">Search</label><input class="form-control" id="contact-search" type="search" name="search" value="{{ request('search') }}" placeholder="Name, email, phone, subject, country..."></div>
+                      <div class="col-xl-2 col-md-3"><label class="form-label" for="contact-from">From</label><input class="form-control" id="contact-from" type="date" name="date_from" value="{{ request('date_from') }}"></div>
+                      <div class="col-xl-2 col-md-3"><label class="form-label" for="contact-to">To</label><input class="form-control" id="contact-to" type="date" name="date_to" value="{{ request('date_to') }}"></div>
+                      <div class="col-xl-2 col-md-4"><label class="form-label" for="contact-sort">Sort</label><select class="form-select" id="contact-sort" name="sort"><option value="newest" @selected(request('sort', 'newest') === 'newest')>Newest first</option><option value="oldest" @selected(request('sort') === 'oldest')>Oldest first</option></select></div>
+                      <div class="col-xl-2 col-md-8 d-flex gap-2"><button class="btn btn-primary flex-fill" type="submit"><i class="fa fa-search me-1"></i>Filter</button><a class="btn btn-light" href="{{ route('admin.contactlist') }}" title="Clear filters"><i class="fa fa-times"></i></a></div>
+                    </form>
+                    <p class="text-muted mb-0 mt-3"><span>{{ number_format($contacts->total()) }} {{ \Illuminate\Support\Str::plural('submission', $contacts->total()) }} found</span><span class="ms-2" data-live-status aria-live="polite"></span></p>
+                  </div>
                   <div class="card-body px-0 pt-0">
                     <div class="list-product">
                       <div class="recent-table table-responsive custom-scrollbar product-list-table">
@@ -53,10 +62,10 @@
                             </tr>
                           </thead>
                         <tbody>
-  @foreach ($contacts as $contact)
+  @forelse ($contacts as $contact)
     <tr class="product-removes">
       <td></td>
-      <td>{{ $loop->iteration }}</td>
+      <td>{{ $contacts->firstItem() + $loop->index }}</td>
       <td><p class="c-o-light">{{ $contact->fullname }}</p></td>
       <td><p class="c-o-light">{{ $contact->email }}</p></td>
       <td><p class="c-o-light">{{ $contact->phone }}</p></td>
@@ -112,7 +121,9 @@
         </div>
       </div>
     </div>
-  @endforeach
+  @empty
+    <tr><td colspan="6" class="text-center py-5"><h6 class="mb-1">No contact submissions found</h6><p class="text-muted mb-0">Try changing or clearing the filters.</p></td></tr>
+  @endforelse
 </tbody>
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -137,4 +148,5 @@
         @endsection
 
 @section('script')
+@include('admin.submissions.partials.live-filter-script')
 @endsection

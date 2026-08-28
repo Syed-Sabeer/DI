@@ -50,7 +50,7 @@
     </script>
 
     
+<script src="{{ asset('AdminAssets/js/sweet-alert/sweetalert.min.js') }}"></script>
 @yield('script')
 @yield('js')
-
 

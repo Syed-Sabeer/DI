@@ -17,6 +17,9 @@ class ContactSubmission extends Model
         'message',
         'ip_address',
         'country',
+        'state',
+        'city',
+        'area',
     ];
 
     public $timestamps = true;

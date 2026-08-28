@@ -40,4 +40,9 @@ class Career extends Model
             }
         });
     }
+
+    public function applications()
+    {
+        return $this->hasMany(CareerApplication::class);
+    }
 }
