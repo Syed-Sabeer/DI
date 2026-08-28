@@ -1,3 +1,7 @@
+<style>
+  .footer-career-link{display:inline-flex!important;align-items:center;gap:9px;flex-wrap:wrap}
+  .footer-career-badge{display:inline-flex;align-items:center;justify-content:center;min-height:22px;padding:3px 8px;border-radius:5px;background:linear-gradient(to right, var(--primary-color) 0%, rgb(var(--secondary-rgb)) 100%);color:black;font-size:11px;font-weight:bold;line-height:1;letter-spacing:.01em;box-shadow:0 5px 14px rgba(103,70,245,.28);white-space:nowrap}
+</style>
 <!-- Start::footer -->
                 <div class="cta-section-3">
                   <div class="container">
@@ -46,7 +50,7 @@
                       <!-- Footer Logo + Description + Social -->
                       <div class="footer-column footer-about">
                         <div class="footer-logo">
-                          <a href="contact-us.html" class="logo-link">
+                          <a href="{{ route('contact') }}" class="logo-link">
                             <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc Logo">
                           </a>
                         </div>
@@ -92,31 +96,34 @@
                         </h3>
                         <ul class="menu-list">
                           <li>
-                            <a href="contact-us.html">
+                            <a href="{{ route('contact') }}">
                               Contact us
                             </a>
                           </li>
                           <li>
-                            <a href="about.html">
+                            <a href="{{ route('about') }}">
                               About Us
                             </a>
                           </li>
                           
                           <li>
-                            <a href="careers.html">
+                            <a href="{{ route('careers') }}" class="footer-career-link">
                               Careers
+                              @if($activeCareerCount > 0)
+                                <span class="footer-career-badge">{{ $activeCareerCount }} {{ \Illuminate\Support\Str::plural('job', $activeCareerCount) }}</span>
+                              @endif
                             </a>
                           </li>
                           <li>
-                            <a href="team.html">
+                            <a href="{{ route('about') }}">
                               Team
                             </a>
                           </li>
-                          <li>
-                            <a href="blog01.html">
-                              Blog
+                          {{-- <li>
+                            <a href="{{ route('blog') }}">
+                              Blog & News
                             </a>
-                          </li>
+                          </li> --}}
                         </ul>
                       </div>
                       <!-- Footer Services Menu -->
@@ -125,33 +132,33 @@
                           Quick Links
                         </h3>
                         <ul class="menu-list">
-                          <li>
+                          {{-- <li>
                             <a href="javascript:void(0);">
                               How It Works
                             </a>
-                          </li>
+                          </li> --}}
                           <li>
-                            <a href="javascript:void(0);">
-                              Get to know us
+                            <a href="{{ route('careers') }}">
+                             Join Our Team
                             </a>
                           </li>
-                          <li>
+                          {{-- <li>
                             <a href="javascript:void(0);">
                               Pricing Plans
                             </a>
-                          </li>
+                          </li> --}}
                           <li>
                             <a href="{{ route('service') }}">
                               Services We Offer
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('portfolio') }}">
                               Our Recent Work
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('blog') }}">
                               Our Blog & News
                             </a>
                           </li>

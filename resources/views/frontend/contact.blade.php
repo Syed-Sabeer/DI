@@ -478,6 +478,252 @@
     @keyframes contact-spin { to { transform: rotate(360deg); } }
     .contact-swal-popup { border: 1px solid rgba(184, 233, 0, .32); border-radius: 18px; }
     .contact-swal-confirm { border-radius: 8px !important; padding: .75rem 1.5rem !important; color: #080b09 !important; font-weight: 700 !important; }
+
+    /* ---------- Contact hero: dark, glowing, wave-divided ----------
+       Always dark regardless of site theme, with a soft grid + radial glow,
+       a large faint watermark icon, an eyebrow tag above the title, a pill
+       breadcrumb, and a curved wave transitioning into the page below.
+       Scoped to this page only. */
+    .contact-hero-dark {
+        position: relative;
+        overflow: hidden;
+        padding: 132px 0 130px;
+        background: linear-gradient(180deg, #121218 0%, #0a0a0d 100%);
+    }
+
+    .contact-hero-dark::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.5;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 42px 42px;
+        -webkit-mask-image: radial-gradient(60% 70% at 50% 30%, #000 0%, transparent 75%);
+        mask-image: radial-gradient(60% 70% at 50% 30%, #000 0%, transparent 75%);
+    }
+
+    .contact-hero-dark::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: radial-gradient(45% 60% at 50% 20%, color-mix(in srgb, var(--primary-color) 20%, transparent), transparent 70%);
+        pointer-events: none;
+    }
+
+    .contact-hero-dark__watermark {
+        position: absolute;
+        top: 50%;
+        inset-inline-end: -60px;
+        z-index: 0;
+        transform: translateY(-50%) rotate(-18deg);
+        font-size: 22rem;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.035);
+        pointer-events: none;
+    }
+
+    .contact-hero-dark__content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-hero-dark__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        padding: 9px 22px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-hero-dark__eyebrow .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        animation: careersPulse 1.8s ease-out infinite;
+    }
+
+    @keyframes careersPulse {
+        0% {
+            box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 55%, transparent);
+        }
+
+        70% {
+            box-shadow: 0 0 0 6px transparent;
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 transparent;
+        }
+    }
+
+    .contact-hero-dark__title {
+        margin: 0 0 28px;
+        font-size: 3.4rem;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    .contact-hero-dark__title span {
+        color: var(--primary-color);
+    }
+
+    /* Terminal-style breadcrumb chip — same idea as the portfolio page's path
+       bar, refined to sit inside this hero's richer dark/glow treatment
+       (bigger, panel-toned to match the eyebrow pill, deeper shadow). */
+    .contact-hero-dark__crumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 22px 11px 18px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.6);
+    }
+
+    .contact-hero-dark__crumb-dots {
+        display: flex;
+        gap: 6px;
+    }
+
+    .contact-hero-dark__crumb-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+    }
+
+    .contact-hero-dark__crumb-dots span:first-child {
+        background: var(--primary-color);
+    }
+
+    .contact-hero-dark__crumb-path {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 0.9rem;
+        letter-spacing: 0.01em;
+        color: rgba(255, 255, 255, 0.45);
+    }
+
+    .contact-hero-dark__crumb-path a {
+        color: rgba(255, 255, 255, 0.85);
+        transition: color 0.25s ease;
+    }
+
+    .contact-hero-dark__crumb-path a:hover {
+        color: var(--primary-color);
+    }
+
+    .contact-hero-dark__crumb-path .current {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: bottom;
+        width: 7ch;
+        color: var(--primary-color);
+        font-weight: 600;
+        animation: contactCrumbType 6s steps(1, end) infinite;
+    }
+
+    /* Pure-CSS typewriter loop: type "contact" out character by character,
+       hold it fully typed for ~3s, erase it, pause briefly, then repeat.
+       Per-keyframe timing-functions do the discrete stepping. */
+    @keyframes contactCrumbType {
+        0% {
+            width: 0;
+            animation-timing-function: steps(7, end);
+        }
+
+        20% {
+            width: 7ch;
+            animation-timing-function: steps(1, end);
+        }
+
+        70% {
+            width: 7ch;
+            animation-timing-function: steps(7, end);
+        }
+
+        87% {
+            width: 0;
+            animation-timing-function: steps(1, end);
+        }
+
+        100% {
+            width: 0;
+        }
+    }
+
+    .contact-hero-dark__crumb-cursor {
+        display: inline-block;
+        width: 7px;
+        height: 16px;
+        margin-inline-start: 3px;
+        background: var(--primary-color);
+        animation: contactCrumbBlink 1.1s step-end infinite;
+    }
+
+    @keyframes contactCrumbBlink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .contact-hero-dark__wave {
+        position: absolute;
+        z-index: 1;
+        inset-inline: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 96px;
+        display: block;
+    }
+
+    .contact-hero-dark__wave .contact-hero-dark__wave-fill {
+        fill: var(--default-body-bg-color);
+        stroke: none;
+    }
+
+    /* On dark theme the fill barely differs from the hero's own background,
+       so the curve needs its own definition rather than relying on contrast —
+       a soft lime edge traces the arc so it still reads as a deliberate
+       shape instead of disappearing into a flat dark page. */
+    .contact-hero-dark__wave .contact-hero-dark__wave-edge {
+        fill: none;
+        stroke: var(--primary-color);
+        stroke-width: 2;
+        stroke-linecap: round;
+        opacity: 0.35;
+    }
+
+    @media (max-width: 767px) {
+        .contact-hero-dark {
+            padding: 96px 0 100px;
+        }
+
+        .contact-hero-dark__title {
+            font-size: 2.2rem;
+        }
+
+        .contact-hero-dark__watermark {
+            font-size: 14rem;
+        }
+    }
 </style>
 @endsection
 
@@ -485,38 +731,35 @@
 
     <div class="section-spacer"></div>
     <!-- Hero -->
-    <section class="hero pages-banner overflow-hidden">
+    <section class="contact-hero-dark">
+        <i class="ri-send-plane-fill contact-hero-dark__watermark"></i>
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="hero-banner-content text-center">
-                        <h1 class="hero__title text-dark text-center text-animated-slider">
-                            Contact Us
+                    <div class="contact-hero-dark__content text-center">
+                        <span class="contact-hero-dark__eyebrow">
+                            <span class="dot"></span>
+                            Let's Start a Conversation
+                        </span>
+                        <h1 class="contact-hero-dark__title">
+                            Contact <span>Us</span>
                         </h1>
-                        <div class="glow-border-container">
-                            <ul class="pagebreadcrumb-list">
-                                <li class="pagebreadcrumb-item">
-                                    <a href="javascript:void(0);">Pages</a>
-                                </li>
-                                <li>
-                                    <i class="ri-expand-horizontal-s-fill"></i>
-                                </li>
-                                <li class="active">
-                                    Contact Us
-                                </li>
-                            </ul>
-                            <div class="glow-border-card">
-                                <div class="glow-border-inner"></div>
-                            </div>
+                        <div class="contact-hero-dark__crumb">
+                            <span class="contact-hero-dark__crumb-dots">
+                                <span></span><span></span><span></span>
+                            </span>
+                            <span class="contact-hero-dark__crumb-path">
+                                <a href="{{ route('home') }}">~</a><span>/</span><span class="current">contact</span><span class="contact-hero-dark__crumb-cursor"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="bg-image-shape">
-            <img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light">
-            <img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none">
-        </div>
+        <svg class="contact-hero-dark__wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="contact-hero-dark__wave-fill" d="M0,100 C150,0 1290,0 1440,100 L1440,100 L0,100 Z"></path>
+            <path class="contact-hero-dark__wave-edge" d="M0,100 C150,0 1290,0 1440,100"></path>
+        </svg>
     </section>
     <!-- /Hero -->
 

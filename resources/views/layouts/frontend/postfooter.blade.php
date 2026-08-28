@@ -5,7 +5,7 @@
             <i class="ri-close-large-line">
             </i>
           </button>
-          <a href="index.html">
+          <a href="{{ route('home') }}">
             <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="">
           </a>
           <div class="offcanvas-text">

@@ -7,27 +7,13 @@
 @section('content')
 <div class="section-spacer"></div>
 
-<section class="hero pages-banner overflow-hidden">
-  <div class="container">
-    <div class="row"><div class="col-12"><div class="hero-banner-content text-center">
-      <h1 class="hero__title text-dark text-center text-animated-slider">{{ $blog->title }}</h1>
-      <div class="glow-border-container">
-        <ul class="pagebreadcrumb-list">
-          <li class="pagebreadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-          <li><i class="ri-expand-horizontal-s-fill"></i></li>
-          <li class="pagebreadcrumb-item"><a href="{{ route('blog') }}">Blog</a></li>
-          <li><i class="ri-expand-horizontal-s-fill"></i></li>
-          <li class="active">{{ \Illuminate\Support\Str::limit($blog->title, 35) }}</li>
-        </ul>
-        <div class="glow-border-card"><div class="glow-border-inner"></div></div>
-      </div>
-    </div></div></div>
-  </div>
-  <div class="bg-image-shape">
-    <img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light">
-    <img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none">
-  </div>
-</section>
+@include('frontend.partials.page-hero', [
+    'heroEyebrow' => $blog->category ?: 'Article',
+    'heroTitle' => e($blog->title),
+    'heroWatermarkIcon' => 'ri-quill-pen-line',
+    'heroCrumbMiddle' => ['label' => 'blog', 'route' => route('blog')],
+    'heroCrumbCurrent' => \Illuminate\Support\Str::limit($blog->slug, 28, ''),
+])
 
 <section class="section team-page-section section-gap">
   <div class="container"><div class="row gy-4">

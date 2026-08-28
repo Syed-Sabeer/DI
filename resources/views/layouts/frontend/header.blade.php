@@ -5,7 +5,7 @@
             <div class="ms-4 me-3 brand-header-container">
               <div>
                 <!-- End::header-element -->
-                <a href="index.html" class="brand-main">
+                <a href="{{ route('home') }}" class="brand-main">
                   <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
                   <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
                   <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
@@ -39,7 +39,7 @@
           <!-- Start::app-sidebar -->
           <aside class="app-sidebar" id="sidebar">
             <div class="app-toggle-header">
-              <a href="index.html" class="brand-main">
+              <a href="{{ route('home') }}" class="brand-main">
                 <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
                 <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
               </a>
@@ -75,7 +75,7 @@
                         <!-- End::header-link -->
                       </div>
                       <!-- End::header-element -->
-                      <a href="index.html" class="brand-main">
+                      <a href="{{ route('home') }}" class="brand-main">
                         <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
                         <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
                         <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
@@ -118,6 +118,16 @@
                   </li>
                   <!-- End::slide -->
 
+                       <!-- Start::slide -->
+                  <li class="slide d-xl-block d-none">
+                    <a href="{{ route('portfolio') }}" class="side-menu__item">
+                      <span class="side-menu__label">
+                        Portfolio
+                      </span>
+                    </a>
+                  </li>
+                  <!-- End::slide -->
+
                         <!-- Start::slide -->
                   <li class="slide d-xl-block d-none">
                     <a href="{{ route('careers') }}" class="side-menu__item">
@@ -148,7 +158,7 @@
                     </li>
                     <li class="d-flex align-items-center text-lg-start text-center">
                       <div class="btn-list">
-                        <a href="contact-us.html" class="btn btn-primary-gradient landing-custom-button">
+                        <a href="{{ route('contact') }}" class="btn btn-primary-gradient landing-custom-button">
                           <span class="btn__text">
                             Get In Touch
                           </span>

@@ -7,8 +7,25 @@
 <style>
   .career-points .feature-list-item>i{color:var(--primary-color);font-size:1.25rem;line-height:1.4;flex:0 0 auto}
   .career-points .feature-list-item{display:flex;align-items:flex-start;gap:.6rem}
-  .career-apply-trigger{border:0;cursor:pointer;width:100%;justify-content:center}
-  .career-apply-trigger .resume-icon{display:inline-grid;place-items:center}
+
+  /* ---------- Job meta chips (hero of the article) ---------- */
+  .job-meta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:2rem;padding:0;border-bottom:none}
+  .job-meta__item{display:flex;align-items:center;gap:14px;flex:1 1 200px;padding:18px 20px;border:1px solid var(--border);border-radius:14px;background:var(--gray-100)}
+  .job-meta__icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;border-radius:12px;font-size:1.2rem;background:color-mix(in srgb, var(--primary-color) 16%, transparent);color:var(--primary-color)}
+  [data-theme-mode="light"] .job-meta__icon{text-shadow:0 0 1px rgba(17,17,17,.35)}
+  .job-meta__label{display:block;margin-bottom:2px;font-size:.78rem;opacity:.65}
+  .job-meta__value{margin:0;font-size:1rem;font-weight:700;letter-spacing:0;color:rgb(var(--dark-rgb))}
+
+  /* ---------- Job overview sidebar rows ---------- */
+  .career-overview-item{display:flex;align-items:flex-start;gap:12px}
+  .career-overview-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;width:34px;height:34px;border-radius:10px;font-size:.95rem;background:color-mix(in srgb, var(--primary-color) 14%, transparent);color:var(--primary-color)}
+  [data-theme-mode="light"] .career-overview-icon{text-shadow:0 0 1px rgba(17,17,17,.3)}
+
+  /* ---------- Apply CTA (pill + circular arrow, matches site-wide services-cta) ---------- */
+  .career-apply-cta{display:inline-flex;align-items:center;justify-content:center;gap:16px;width:auto;max-width:100%;padding:8px 8px 8px 26px;border:0;border-radius:999px;background:rgb(var(--dark-rgb));color:var(--custom-white);font-weight:700;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;cursor:pointer;transition:gap .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease}
+  .career-apply-cta:hover{gap:22px;color:var(--custom-white);box-shadow:0 20px 40px -20px rgba(var(--dark-rgb),.5)}
+  .career-apply-cta__icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--primary-color);color:#111;font-size:1.1rem;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+  .career-apply-cta:hover .career-apply-cta__icon{transform:rotate(45deg)}
   .career-apply-modal{--apply-bg:#fff;--apply-soft:#f6f7f3;--apply-text:#151815;--apply-muted:#6b716c;--apply-border:#dfe3dc;z-index:20000}
   .modal-backdrop{z-index:19990}
   [data-theme-mode="dark"] .career-apply-modal{--apply-bg:#111411;--apply-soft:#191d19;--apply-text:#f3f5f2;--apply-muted:#aab0aa;--apply-border:#303630}
@@ -47,20 +64,20 @@
 
 @section('content')
 <div class="section-spacer"></div>
-<section class="hero pages-banner overflow-hidden">
-  <div class="container"><div class="row"><div class="col-12"><div class="hero-banner-content text-center">
-    <h1 class="hero__title text-dark text-center text-animated-slider">{{ $career->job_title }}</h1>
-    <div class="glow-border-container"><ul class="pagebreadcrumb-list"><li><a href="{{ route('home') }}">Home</a></li><li><i class="ri-expand-horizontal-s-fill"></i></li><li><a href="{{ route('careers') }}">Careers</a></li><li><i class="ri-expand-horizontal-s-fill"></i></li><li class="active">Job Details</li></ul><div class="glow-border-card"><div class="glow-border-inner"></div></div></div>
-  </div></div></div></div>
-  <div class="bg-image-shape"><img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light"><img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none"></div>
-</section>
+@include('frontend.partials.page-hero', [
+    'heroEyebrow' => $career->job_type ?: 'Open Position',
+    'heroTitle' => e($career->job_title),
+    'heroWatermarkIcon' => 'ri-briefcase-4-line',
+    'heroCrumbMiddle' => ['label' => 'careers', 'route' => route('careers')],
+    'heroCrumbCurrent' => \Illuminate\Support\Str::limit($career->slug, 28, ''),
+])
 
 <section class="section service-article section-gap"><div class="container"><div class="row g-5">
   <div class="col-lg-8"><article class="article-shell"><header class="article-head"><h2 class="article-title split-title">{{ $career->job_title }}</h2></header><div class="article-body">
     <div class="job-meta">
-      @if($career->location)<div class="job-meta__item"><span class="job-meta__label">Work Location</span><h3 class="job-meta__value">{{ $career->location }}</h3></div>@endif
-      <div class="job-meta__item"><span class="job-meta__label">Posted On</span><h3 class="job-meta__value">{{ $career->created_at->format('d F Y') }}</h3></div>
-      @if($career->job_type)<div class="job-meta__item"><span class="job-meta__label">Employment Type</span><h3 class="job-meta__value">{{ $career->job_type }}</h3></div>@endif
+      @if($career->location)<div class="job-meta__item"><span class="job-meta__icon"><i class="ri-map-pin-line"></i></span><div><span class="job-meta__label">Work Location</span><h3 class="job-meta__value">{{ $career->location }}</h3></div></div>@endif
+      <div class="job-meta__item"><span class="job-meta__icon"><i class="ri-calendar-line"></i></span><div><span class="job-meta__label">Posted On</span><h3 class="job-meta__value">{{ $career->created_at->format('d F Y') }}</h3></div></div>
+      @if($career->job_type)<div class="job-meta__item"><span class="job-meta__icon"><i class="ri-briefcase-line"></i></span><div><span class="job-meta__label">Employment Type</span><h3 class="job-meta__value">{{ $career->job_type }}</h3></div></div>@endif
     </div>
 
     <h3 class="section-title wow fadeInUp">Job Description</h3><div class="wow fadeInUp">{!! nl2br(e($career->description)) !!}</div>
@@ -80,17 +97,20 @@
 
   <div class="col-lg-4"><aside class="aside-panel"><div class="side-card mb-4 side-nav wow fadeInUp"><h4 class="side-title">Job Overview</h4>
     @foreach([
-      'Salary Range' => $career->salary_range,
-      'Experience' => $career->experience,
-      'Education' => $career->education,
-      'Work Schedule' => $career->work_schedule,
-      'Position' => $career->position,
-      'Workweek' => $career->workweek,
-      'Application Deadline' => optional($career->application_deadline)->format('d M Y')
-    ] as $label => $value)
-      @if($value)<div class="project-info-item"><div class="text"><span>{{ $label }}:</span><h5 class="title">{{ $value }}</h5></div></div>@endif
+      ['Salary Range', $career->salary_range, 'ri-money-dollar-circle-line'],
+      ['Experience', $career->experience, 'ri-user-star-line'],
+      ['Education', $career->education, 'ri-graduation-cap-line'],
+      ['Work Schedule', $career->work_schedule, 'ri-time-line'],
+      ['Position', $career->position, 'ri-briefcase-line'],
+      ['Workweek', $career->workweek, 'ri-calendar-check-line'],
+      ['Application Deadline', optional($career->application_deadline)->format('d M Y'), 'ri-calendar-close-line']
+    ] as [$label, $value, $icon])
+      @if($value)<div class="project-info-item career-overview-item"><span class="career-overview-icon"><i class="{{ $icon }}"></i></span><div class="text"><span>{{ $label }}:</span><h5 class="title">{{ $value }}</h5></div></div>@endif
     @endforeach
-    <button type="button" class="header-button career-apply-trigger" data-bs-toggle="modal" data-bs-target="#careerApplyModal"><span class="resume-icon"><i class="ri-arrow-right-line"></i></span><span>Apply For This Job</span></button>
+    <button type="button" class="career-apply-cta career-apply-trigger" data-bs-toggle="modal" data-bs-target="#careerApplyModal">
+      <span>Apply For This Job</span>
+      <span class="career-apply-cta__icon"><i class="ri-arrow-right-up-line"></i></span>
+    </button>
   </div></aside></div>
 </div></div></section>
 
@@ -168,15 +188,25 @@ document.addEventListener('DOMContentLoaded', function () {
   const submit = form.querySelector('[data-apply-submit]');
   const icon = form.querySelector('[data-apply-icon]');
   const text = form.querySelector('[data-apply-text]');
+  const closeControls = modalElement.querySelectorAll('[data-bs-dismiss="modal"]');
   const alertTheme = () => {
     const dark = document.documentElement.getAttribute('data-theme-mode') === 'dark';
     return {background:dark?'#101311':'#fff',color:dark?'#f5f7f5':'#161816',confirmButtonColor:'#b8e900',customClass:{popup:'contact-swal-popup',confirmButton:'contact-swal-confirm'}};
   };
   const loading = state => {
     submit.disabled = state;
+    closeControls.forEach(control => {
+      control.disabled = state;
+      control.setAttribute('aria-disabled', state ? 'true' : 'false');
+    });
     text.textContent = state ? 'Submitting application...' : 'Submit application';
     icon.className = state ? 'ri-loader-4-line apply-spinner' : 'ri-send-plane-2-line';
   };
+  modalElement.addEventListener('hide.bs.modal', event => {
+    if (form.dataset.submitting === 'true' && form.dataset.allowClose !== 'true') {
+      event.preventDefault();
+    }
+  });
   form.addEventListener('submit', async event => {
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -194,7 +224,9 @@ document.addEventListener('DOMContentLoaded', function () {
         await Swal.fire({...alertTheme(),icon:throttled?'warning':(data.icon||'error'),title:throttled?'Please slow down':(data.title||'Unable to submit'),text:throttled?'Too many attempts were made. Please wait a few minutes and try again.':(data.message||'Please check your details and try again.'),confirmButtonText:'Got it'});
         return;
       }
+      form.dataset.allowClose = 'true';
       bootstrap.Modal.getOrCreateInstance(modalElement).hide();
+      form.dataset.allowClose = 'false';
       form.reset();
       const token = form.querySelector('[name="submission_token"]');
       if (token && window.crypto?.randomUUID) token.value = window.crypto.randomUUID();

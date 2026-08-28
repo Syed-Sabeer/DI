@@ -5,30 +5,6 @@
 
 @section('css')
 <style>
-    /* ---------- Hero category badge ---------- */
-    .portfolio-hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 18px;
-        border-radius: 999px;
-        margin-bottom: 20px;
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        background: color-mix(in srgb, var(--accent) 16%, transparent);
-        color: var(--accent);
-    }
-
-    [data-theme-mode="light"] .portfolio-hero-badge {
-        text-shadow: 0 0 1px rgba(17, 17, 17, 0.35);
-    }
-
-    .portfolio-hero-badge i {
-        font-size: 0.55rem;
-    }
-
     /* ---------- Article intro ---------- */
     .service-eyebrow {
         display: inline-flex;
@@ -264,34 +240,14 @@
 @section('content')
 <div class="section-spacer"></div>
 <!-- Hero -->
-<section class="hero pages-banner overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="hero-banner-content text-center">
-                    <span class="portfolio-hero-badge" style="--accent:{{ $portfolio['accent'] }};">
-                        <i class="ri-checkbox-blank-circle-fill"></i>
-                        {{ $portfolio['category'] }}
-                    </span>
-                    <h1 class="hero__title text-dark text-center text-animated-slider">{{ $portfolio['title'] }}</h1>
-                    <div class="glow-border-container">
-                        <ul class="pagebreadcrumb-list">
-                            <li class="pagebreadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li><i class="ri-expand-horizontal-s-fill"></i></li>
-                            <li class="pagebreadcrumb-item"><a href="{{ route('portfolio') }}">Portfolio</a></li>
-                            <li><i class="ri-expand-horizontal-s-fill"></i></li>
-                            <li class="active">{{ $portfolio['title'] }}</li>
-                        </ul>
-                        <div class="glow-border-card">
-                            <div class="glow-border-inner"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bg-image-shape"><img src="{{ asset('FrontendAssets/images/shapes/33.png') }}" alt="" class="banner-light"><img src="{{ asset('FrontendAssets/images/shapes/7.png') }}" alt="" class="banner-dark d-none"></div>
-</section>
+@include('frontend.partials.page-hero', [
+    'heroEyebrow' => $portfolio['category'],
+    'heroTitle' => e($portfolio['title']),
+    'heroWatermarkIcon' => 'ri-window-line',
+    'heroAccent' => $portfolio['accent'],
+    'heroCrumbMiddle' => ['label' => 'portfolio', 'route' => route('portfolio')],
+    'heroCrumbCurrent' => $portfolio['slug'],
+])
 <!-- /Hero -->
 
 <section class="section service-article section-gap">

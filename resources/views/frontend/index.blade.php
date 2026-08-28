@@ -263,7 +263,7 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      background: var(--primary-color);
+      background: linear-gradient(to right, var(--primary-color) 0%, rgb(var(--secondary-rgb)) 100%);
       color: #111;
       box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.4);
       transition: transform 0.3s ease;
@@ -539,40 +539,268 @@
       transform: translate(2px, -2px);
   }
 
-  /* ---------- Process / "How We Deliver" section (refined colors) ---------- */
-  .proccess-section {
+  /* ---------- Process / "How We Deliver" section ----------
+     Intentionally hard-coded dark palette: this section is designed to always
+     read as a dark surface, in both light and dark site themes — it does not
+     invert like other sections. Only the lime accent uses the theme token,
+     since --primary-color is identical across both themes anyway.
+     It's full-bleed (background on the section itself, not an inset card), with
+     its own border + grid texture so it reads as a distinct band even when the
+     page itself is already dark. */
+  .process-dark-section {
       position: relative;
       overflow: hidden;
+      background:
+          radial-gradient(60% 70% at 50% -10%, rgba(184, 235, 0, 0.12), transparent 60%),
+          linear-gradient(180deg, #121218 0%, #08080b 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(184, 235, 0, 0.08);
   }
 
-  .proccess-section::before {
+  .process-dark-section::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(55% 55% at 50% 0%, color-mix(in srgb, var(--primary-color) 12%, transparent), transparent 70%);
+      z-index: 0;
+      opacity: 0.5;
+      background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 42px 42px;
+      -webkit-mask-image: radial-gradient(70% 70% at 50% 30%, #000 0%, transparent 75%);
+      mask-image: radial-gradient(70% 70% at 50% 30%, #000 0%, transparent 75%);
       pointer-events: none;
   }
 
-  .proccess-section .container {
+  .process-dark-section .container {
       position: relative;
       z-index: 1;
   }
 
-  .proccess-section .workflow-step__badge {
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 45px -24px rgba(var(--dark-rgb), 0.3);
+  .process-dark-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
   }
 
-  .proccess-section .workflow-step__badge svg path {
-      fill: var(--accent, var(--primary-color));
+  .process-dark-eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary-color);
   }
 
-  .proccess-section .workflow-step__badge::before {
-      background-color: var(--accent, var(--primary-color));
+  .process-dark-title {
+      margin: 0 0 16px;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #fff;
   }
 
-  .proccess-section .workflow-step:hover .workflow-step__badge {
-      border-color: transparent;
+  .process-dark-title span {
+      color: var(--primary-color);
+  }
+
+  @media (max-width: 767px) {
+      .process-dark-title {
+          font-size: 1.7rem;
+      }
+  }
+
+  .process-dark-desc {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.6);
+  }
+
+  .process-dark-steps {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+  }
+
+  .process-dark-step {
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+      padding: 0 8px;
+  }
+
+  .process-dark-step__badge {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid color-mix(in srgb, var(--primary-color) 30%, transparent);
+      font-size: 1.7rem;
+      color: var(--primary-color);
+      transition: transform 0.35s ease, background 0.35s ease;
+  }
+
+  .process-dark-step:hover .process-dark-step__badge {
+      transform: translateY(-4px);
+      background: color-mix(in srgb, var(--primary-color) 14%, transparent);
+  }
+
+  .process-dark-step__num {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      border: 3px solid #0c0c11;
+      color: #0a0a0d;
+      font-size: 0.7rem;
+      font-weight: 800;
+  }
+
+  .process-dark-step__title {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+  }
+
+  .process-dark-step__text {
+      margin: 0 auto;
+      max-width: 230px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.55);
+  }
+
+  .process-dark-connector {
+      flex: 0 0 auto;
+      width: 70px;
+      padding-top: 24px;
+  }
+
+  .process-dark-connector svg {
+      display: block;
+      width: 100%;
+      height: 30px;
+      overflow: visible;
+  }
+
+  .process-dark-connector path {
+      fill: none;
+      stroke: var(--primary-color);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 5 6;
+      opacity: 0.6;
+      marker-end: url(#processArrowHead);
+  }
+
+  @media (max-width: 991px) {
+      .process-dark-steps {
+          flex-direction: column;
+          align-items: center;
+          gap: 40px;
+      }
+
+      .process-dark-step {
+          padding: 0;
+      }
+
+      .process-dark-connector {
+          display: none;
+      }
+  }
+
+  /* ---------- Testimonials section ---------- */
+  .home-testimonials-header .heading-subtitle i {
+      font-size: 0.55rem;
+      color: var(--primary-color);
+  }
+
+  [data-theme-mode="light"] .home-testimonials-header .heading-subtitle i {
+      text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
+  }
+
+  .home-testimonials-header p {
+      font-size: 1.02rem;
+      opacity: 0.72;
+  }
+
+  .testimonial-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem !important;
+      gap: 24px !important;
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  }
+
+  .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 34px 64px -32px rgba(var(--dark-rgb), 0.35);
+  }
+
+  .testimonial-card .testimonial-content,
+  .testimonial-card .testimonial-author {
+      position: relative;
+      z-index: 1;
+  }
+
+  .testimonial-quote-icon {
+      position: absolute;
+      top: 26px;
+      inset-inline-end: 30px;
+      z-index: 0;
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--primary-color);
+      opacity: 0.16;
+  }
+
+  .testimonial-stars {
+      display: flex;
+      gap: 4px;
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+  }
+
+  .testimonial-stars i {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+  }
+
+  [data-theme-mode="light"] .testimonial-stars i {
+      text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
+  }
+
+  .testimonial-card .author-avatar img {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 35%, transparent);
+  }
+
+  .testimonial-divider {
+      margin: 0;
+      border-top: 1px solid color-mix(in srgb, rgb(var(--dark-rgb)) 12%, transparent);
+  }
+
+  .testimonial-card.dark .testimonial-divider {
+      border-top-color: color-mix(in srgb, var(--custom-white) 18%, transparent);
   }
  </style>
 @endsection
@@ -676,7 +904,7 @@
                                   Happy Clients
                                 </div>
                               </div>
-                              <a href="about.html" class="btn btn-white-bg landing-custom-button btn-anim">
+                              <a href="{{ route('about') }}" class="btn btn-white-bg landing-custom-button btn-anim">
                                 <span class="btn__text">
                                   Explore Now
                                 </span>
@@ -849,7 +1077,7 @@
                                 </div>
                               </div>
                               <div class="mt-4 pt-2">
-                                <a href="about.html" class="btn btn-primary-gradient landing-custom-button btn-anim">
+                                <a href="{{ route('about') }}" class="btn btn-primary-gradient landing-custom-button btn-anim">
                                   <span class="btn__text">
                                     Know More Us
                                   </span>
@@ -1102,7 +1330,7 @@
                             </div>
                             <!-- BUTTON -->
                             <div class="choose04-us-section__action mt-5">
-                              <a href="services-01.html" class="btn btn-black-bg landing-custom-button btn-anim">
+                              <a href="{{ route('service') }}" class="btn btn-black-bg landing-custom-button btn-anim">
                                 <span class="btn__text">
                                   Read More
                                 </span>
@@ -1258,102 +1486,69 @@
 
 
 
-                  <section class="section proccess-section">
-                  <div class="container position-relative">
-                    <div class="row justify-content-center">
-                      <div class="col-xl-6">
-                        <div class="heading-section text-center">
-                          <span class="heading-subtitle justify-content-center rounded-pill text-gradient-1">
-                            // Our Approach
-                          </span>
-                          <h2 class="heading-title mb-4 text-animated-slider">
-                            How We Deliver IT Solutions
-                          </h2>
-                          <p class="op-7">
-                            From initial concept to final launch, we manage every project with precision, ensuring each solution delivers meaningful results and real impact.
-                          </p>
-                        </div>
-                      </div>
+                  <section class="section process-dark-section">
+                  <div class="container">
+                    <svg width="0" height="0" style="position:absolute;">
+                      <defs>
+                        <marker id="processArrowHead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                          <path d="M0,0 L8,4 L0,8 Z" style="fill:var(--primary-color);"></path>
+                        </marker>
+                      </defs>
+                    </svg>
+                    <div class="process-dark-header">
+                      <span class="process-dark-eyebrow wow fadeInUp" data-wow-delay=".1s">Our Process</span>
+                      <h2 class="process-dark-title wow fadeInUp" data-wow-delay=".2s">How We Deliver <span>IT Solutions</span></h2>
+                      <p class="process-dark-desc wow fadeInUp" data-wow-delay=".3s">
+                        From initial concept to final launch, we follow a proven process that ensures smart solutions, measurable results, and long-term impact.
+                      </p>
                     </div>
-                    <div>
-                      <div class="workflow-steps">
-                        <div class="workflow-line-art">
-                          <img src="{{ asset('FrontendAssets/images/shapes/61.png')}}" class="img-fluid" alt="Decorative line">
+                    <div class="process-dark-steps">
+                      <div class="process-dark-step wow fadeInUp" data-wow-delay=".1s">
+                        <div class="process-dark-step__badge">
+                          <i class="ri-search-eye-line"></i>
+                          <span class="process-dark-step__num">01</span>
                         </div>
-                        <article class="workflow-step" style="--accent:#3b6fe0;">
-                          <div class="workflow-step__badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53" id="partnership">
-                              <path d="M8.75 29.17a1 1 0 0 0 .7.32 1 1 0 0 0 .68-.27l.27-.25 2.75 2.93a2.9 2.9 0 0 0 .14 3.92 2.84 2.84 0 0 0 1.86.83 2.9 2.9 0 0 0 .85 1.86 2.86 2.86 0 0 0 1.86.83 2.9 2.9 0 0 0 .83 1.86 2.86 2.86 0 0 0 1.86.83 2.9 2.9 0 0 0 4.94 1.86l.35-.35.33.34a2.93 2.93 0 0 0 4.15 0 2.88 2.88 0 0 0 .85-1.88 2.9 2.9 0 0 0 1.9-.85 2.86 2.86 0 0 0 .84-1.89 2.93 2.93 0 0 0 1.9-.84 3 3 0 0 0 .84-1.9 2.91 2.91 0 0 0 2.75-2.92 2.9 2.9 0 0 0-.51-1.6l2.93-2.84.32.37a1 1 0 0 0 .75.34 1 1 0 0 0 .66-.25l6.61-5.81a1 1 0 0 0 .09-1.41L38.17 8.6a1 1 0 0 0-1.42-.09l-6.6 5.8a1 1 0 0 0-.34.69 1 1 0 0 0 .25.72l.52.6h-.38a11.62 11.62 0 0 0-5.39 2.13L23.35 17l.23-.21a1 1 0 0 0 .06-1.42l-6-6.44a1 1 0 0 0-.64-.34 1 1 0 0 0-.72.26L2.82 21.31a1 1 0 0 0 0 1.41Zm6 4 1.38-1.38a.9.9 0 0 1 1.54.63.9.9 0 0 1-.26.64L16 34.41a.9.9 0 0 1-1.27 0 .91.91 0 0 1 .01-1.28Zm2.42 3.33a.91.91 0 0 1 .27-.64l1.38-1.38a.89.89 0 0 1 1.28 0 .88.88 0 0 1 .26.63.9.9 0 0 1-.26.64l-1.4 1.35a.91.91 0 0 1-1.54-.64Zm2.69 2.69a.91.91 0 0 1 .27-.64l1.38-1.38a.89.89 0 0 1 1.28 0 .88.88 0 0 1 .26.63.9.9 0 0 1-.26.64l-1.39 1.39a.9.9 0 0 1-1.27 0 .91.91 0 0 1-.28-.68Zm3 3.33a.89.89 0 0 1 0-1.28l1.38-1.38a.89.89 0 0 1 1.28 0 .91.91 0 0 1 0 1.27l-.33.33-1.06 1.06a.9.9 0 0 1-1.32-.04Zm14.46-31.85 10.77 12.25L43 27.41 32.22 15.16Zm-6.88 7.68 1.33-.16a.9.9 0 0 0 .28-.08h.08l8.36 9.52-3 2.88-8.12-8.54a1 1 0 0 0-1.25-.16L26 23.16a4.86 4.86 0 0 1-4.42.36l4.19-3.25a9.55 9.55 0 0 1 4.67-1.92ZM23.2 19.7l-3.08 2.39a1.82 1.82 0 0 0-.71 1.65 1.85 1.85 0 0 0 1 1.48 6.9 6.9 0 0 0 6.59-.37l1.51-.94 8.25 8.68.33.33a.9.9 0 0 1 .27.66.91.91 0 0 1-.27.66.94.94 0 0 1-1.32 0 1 1 0 0 0-1.42 1.41.93.93 0 0 1-1.28 1.35 1 1 0 0 0-1.42 1.42.93.93 0 0 1 0 1.32 1 1 0 0 1-1.33 0 1 1 0 0 0-1.41 1.41.94.94 0 0 1-1.32 1.33l-.38-.38a2.89 2.89 0 0 0-.34-3.69 2.91 2.91 0 0 0-1.87-.84 2.87 2.87 0 0 0-2.7-2.69 2.79 2.79 0 0 0-2.68-2.66 2.89 2.89 0 0 0-.84-1.89 3 3 0 0 0-4.1 0l-.14.14-2.64-2.86 10-9.27ZM16.87 11l4.62 5L9.8 26.83l-.25.24-4.63-5Z">
-                              </path>
-                            </svg>
-                          </div>
-                          <div class="workflow-step__body">
-                            <h3 class="workflow-step__title">
-                              Business Analysis
-                            </h3>
-                            <p class="workflow-step__text">
-                              We analyze business goals, user needs, and technical requirements to build a strong solution.
-                            </p>
-                          </div>
-                        </article>
-                        <article class="workflow-step" style="--accent:#1f9d63;">
-                          <div class="workflow-step__badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53" id="analytics1">
-                              <path d="M47.57 7.68H29.14V4.07a1 1 0 0 0-1-1h-3.28a1 1 0 0 0-1 1v3.61H5.43a2.93 2.93 0 0 0 0 5.86h.48v22.62H4.57a1 1 0 0 0 0 2h19.29v9.77h-3.32a1 1 0 0 0 0 2h11.92a1 1 0 0 0 0-2h-3.32v-9.77h19.29a1 1 0 1 0 0-2h-1.34V13.54h.48a2.93 2.93 0 0 0 0-5.86ZM25.86 5.07h1.28v2.61h-1.28Zm1.28 42.86h-1.28v-9.77h1.28Zm18-11.77H7.91V13.54h37.18Zm2.48-24.62H5.43a.93.93 0 0 1 0-1.86h42.14a.93.93 0 0 1 0 1.86Z">
-                              </path>
-                              <path d="M17.64 34.32h20.24a1 1 0 0 0 0-2H18.64V17.09a1 1 0 0 0-2 0v16.23a1 1 0 0 0 1 1Z">
-                              </path>
-                              <path d="M20.84 23.65a25.17 25.17 0 0 1 7.61 1.2 26.41 26.41 0 0 1-7.8 2.78 1 1 0 0 0 .18 2h.19a27.79 27.79 0 0 0 9.75-3.83 19 19 0 0 1 3.92 2.45h-1.32a1 1 0 0 0 0 2h3.85a1 1 0 0 0 .75-.33 1 1 0 0 0 .25-.79l-.46-3.79a1 1 0 1 0-2 .24l.13 1.08a20.37 20.37 0 0 0-3.31-2.19 17.75 17.75 0 0 0 3.29-3.5l.13 1.12a1 1 0 0 0 1 .91h.11a1 1 0 0 0 .89-1.1l-.46-4.22a.85.85 0 0 0-.11-.34.59.59 0 0 1 0-.08l-.06-.09a1.36 1.36 0 0 0-.17-.17h-.06a.89.89 0 0 0-.29-.15h-.08a1.33 1.33 0 0 0-.28 0h-.16l-4.13.87a1 1 0 0 0 .41 2l2-.43a15.9 15.9 0 0 1-4.1 4.33 26.82 26.82 0 0 0-9.72-1.85 1 1 0 0 0 0 2zm-7.62-4.36h1.24a1 1 0 0 0 0-2h-1.24a1 1 0 1 0 0 2zm0 4.37h1.24a1 1 0 1 0 0-2h-1.24a1 1 0 0 0 0 2zm0 4.34h1.24a1 1 0 0 0 0-2h-1.24a1 1 0 1 0 0 2zm0 4.42h1.24a1 1 0 0 0 0-2h-1.24a1 1 0 1 0 0 2z">
-                              </path>
-                            </svg>
-                          </div>
-                          <div class="workflow-step__body">
-                            <h3 class="workflow-step__title">
-                              System Design
-                            </h3>
-                            <p class="workflow-step__text">
-                              Our team designs scalable system architectures and intuitive interfaces to ensure performance.
-                            </p>
-                          </div>
-                        </article>
-                        <article class="workflow-step" style="--accent:#c98a12;">
-                          <div class="workflow-step__badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53" id="protection">
-                              <path d="M47 8.57C34.27 9 27.24 2.82 27.17 2.76a1 1 0 0 0-1.34 0C25.76 2.82 18.75 9 6 8.57a1 1 0 0 0-1 .81c-.07.34-6.18 33.89 21.26 41.09a1.06 1.06 0 0 0 .5 0C54.19 43.27 48.08 9.72 48 9.38a1 1 0 0 0-1-.81ZM26.5 48.46C3.17 42.15 6 15.73 6.81 10.59c11 .11 17.63-4.24 19.69-5.8 2.06 1.56 8.76 5.92 19.68 5.8.72 5.05 3.36 31.63-19.68 37.87Z">
-                              </path>
-                              <path d="M43.72 12.37A34.67 34.67 0 0 1 27 7.36a1 1 0 0 0-1.06 0 34.67 34.67 0 0 1-16.69 5 1 1 0 0 0-.95.9c-.76 8.14-.56 27.67 17.88 33.21a1.07 1.07 0 0 0 .58 0C45.2 40.93 45.4 21.4 44.64 13.26a1 1 0 0 0-.92-.89ZM26.5 44.47c-16.14-5-16.86-22.13-16.25-30.16A36.7 36.7 0 0 0 26.5 9.38a36.57 36.57 0 0 0 16.25 4.93c.61 8.03-.11 25.12-16.25 30.16Z">
-                              </path>
-                              <path d="m31.62 22.41-7.44 7.43-2.8-2.84A1 1 0 0 0 20 27a1 1 0 0 0 0 1.42l3.5 3.5a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l8.08-8.1a1 1 0 0 0 0-1.41 1 1 0 0 0-1.38 0Z">
-                              </path>
-                            </svg>
-                          </div>
-                          <div class="workflow-step__body">
-                            <h3 class="workflow-step__title">
-                              Testing & Validation
-                            </h3>
-                            <p class="workflow-step__text">
-                              We perform rigorous testing across functionality, performance, and security to deliver reliable.
-                            </p>
-                          </div>
-                        </article>
-                        <article class="workflow-step" style="--accent:#7b4fd1;">
-                          <div class="workflow-step__badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53" id="analytics">
-                              <path d="M49.5 44.74h-3.12v-27a1 1 0 0 0-1-1h-6.05a1 1 0 0 0-1 1v27H34V23.3a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v21.44h-4.3V30.86a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v13.88h-3.29V11.07a1 1 0 0 0-2 0v34.67a1 1 0 0 0 1 1H49.39a1 1 0 0 0 0-2zm-9.17-26h4.05v26h-4.05zM28 24.3h4v20.44h-4zm-12.35 7.56h4v12.88h-4zM3.5 14.89h1.8a1 1 0 1 0 0-2H3.5a1 1 0 0 0 0 2zm0 5.99h1.8a1 1 0 1 0 0-2H3.5a1 1 0 0 0 0 2zm0 5.98h1.8a1 1 0 1 0 0-2H3.5a1 1 0 0 0 0 2zm0 5.99h1.8a1 1 0 0 0 0-2H3.5a1 1 0 0 0 0 2zm0 5.99h1.8a1 1 0 0 0 0-2H3.5a1 1 0 0 0 0 2zm0 5.99h1.8a1 1 0 0 0 0-2H3.5a1 1 0 0 0 0 2z">
-                              </path>
-                              <path d="M15.12 21.88a1 1 0 0 0-.79 1.18 1 1 0 0 0 1 .81h.19c.63-.13 14.58-3 24.32-13.52l-.07.93a1 1 0 0 0 .93 1.06h.07a1 1 0 0 0 1-.94L42 7.31a1 1 0 0 0-1.16-1.06l-4 .66a1 1 0 1 0 .32 2l1.44-.23C29.31 19 15.27 21.86 15.12 21.88Z">
-                              </path>
-                            </svg>
-                          </div>
-                          <div class="workflow-step__body">
-                            <h3 class="workflow-step__title">
-                              Delivery & Growth
-                            </h3>
-                            <p class="workflow-step__text">
-                              We deploy, monitor, and continuously optimize your solution to ensure high performance, scalability.
-                            </p>
-                          </div>
-                        </article>
+                        <h3 class="process-dark-step__title">Business Analysis</h3>
+                        <p class="process-dark-step__text">We analyze your goals, market, and challenges to craft the right IT strategy and roadmap.</p>
+                      </div>
+                      <div class="process-dark-connector">
+                        <svg viewBox="0 0 70 30" preserveAspectRatio="none" aria-hidden="true">
+                          <path d="M2,26 C20,2 50,2 68,26"></path>
+                        </svg>
+                      </div>
+                      <div class="process-dark-step wow fadeInUp" data-wow-delay=".2s">
+                        <div class="process-dark-step__badge">
+                          <i class="ri-terminal-window-line"></i>
+                          <span class="process-dark-step__num">02</span>
+                        </div>
+                        <h3 class="process-dark-step__title">System Design</h3>
+                        <p class="process-dark-step__text">Our architects design scalable, secure, and user-focused systems tailored to your unique requirements.</p>
+                      </div>
+                      <div class="process-dark-connector">
+                        <svg viewBox="0 0 70 30" preserveAspectRatio="none" aria-hidden="true">
+                          <path d="M2,26 C20,2 50,2 68,26"></path>
+                        </svg>
+                      </div>
+                      <div class="process-dark-step wow fadeInUp" data-wow-delay=".3s">
+                        <div class="process-dark-step__badge">
+                          <i class="ri-shield-check-line"></i>
+                          <span class="process-dark-step__num">03</span>
+                        </div>
+                        <h3 class="process-dark-step__title">Testing & Validation</h3>
+                        <p class="process-dark-step__text">We perform rigorous testing to ensure performance, security, and reliability across all environments.</p>
+                      </div>
+                      <div class="process-dark-connector">
+                        <svg viewBox="0 0 70 30" preserveAspectRatio="none" aria-hidden="true">
+                          <path d="M2,26 C20,2 50,2 68,26"></path>
+                        </svg>
+                      </div>
+                      <div class="process-dark-step wow fadeInUp" data-wow-delay=".4s">
+                        <div class="process-dark-step__badge">
+                          <i class="ri-line-chart-line"></i>
+                          <span class="process-dark-step__num">04</span>
+                        </div>
+                        <h3 class="process-dark-step__title">Delivery & Growth</h3>
+                        <p class="process-dark-step__text">We deploy with precision and support your growth through continuous optimization and innovation.</p>
                       </div>
                     </div>
                   </div>
@@ -1362,14 +1557,18 @@
  <section class="section section-devider">
                 <div class="container">
                   <div class="row justify-content-center">
-                    <div class="col-xl-5">
-                      <div class="heading-section mb-5 pb-4 text-center">
-                        <span class="heading-subtitle rounded-pill wow fadeInUp" data-wow-delay=".3s">
+                    <div class="col-xl-6">
+                      <div class="heading-section home-testimonials-header mb-5 pb-2 text-center">
+                        <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex justify-content-center mx-auto wow fadeInUp" data-wow-delay=".1s">
+                          <i class="ri-double-quotes-l"></i>
                           Testimonials
                         </span>
-                        <h2 class="heading-title mt-4 text-animated-slider">
-                          What Our Partners Say About Us!
+                        <h2 class="heading-title mt-4 split-title">
+                          What Our <span class="text-primary">Partners Say</span> About Us!
                         </h2>
+                        <p class="mt-4 mb-0">
+                          Real feedback from the teams we've partnered with — on the results, the process, and what it's like to work with us.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -1377,7 +1576,15 @@
                     <div class="swiper-wrapper">
                       <div class="swiper-slide">
                         <div class="testimonial-card">
+                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
                           <div class="testimonial-content">
+                            <ul class="testimonial-stars">
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                            </ul>
                             <span class="testimonial-rating">
                               “Outstanding Experience!”
                             </span>
@@ -1388,6 +1595,7 @@
                               truly understood our product vision. Their engineering team shipped our MVP in record time and user engagement tripled in just three months!
                             </p>
                           </div>
+                          <div class="testimonial-divider"></div>
                           <div class="testimonial-author">
                             <div class="author-avatar">
                               <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Sarah Lee">
@@ -1405,7 +1613,15 @@
                       </div>
                       <div class="swiper-slide">
                         <div class="testimonial-card dark mt-4">
+                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
                           <div class="testimonial-content">
+                            <ul class="testimonial-stars">
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                            </ul>
                             <span class="testimonial-rating">
                               “Truly Transformative!”
                             </span>
@@ -1417,6 +1633,7 @@
                               after their strategy.
                             </p>
                           </div>
+                          <div class="testimonial-divider"></div>
                           <div class="testimonial-author">
                             <div class="author-avatar">
                               <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Raj Patel">
@@ -1434,7 +1651,15 @@
                       </div>
                       <div class="swiper-slide">
                         <div class="testimonial-card">
+                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
                           <div class="testimonial-content">
+                            <ul class="testimonial-stars">
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                            </ul>
                             <span class="testimonial-rating">
                               “Highly Recommended!”
                             </span>
@@ -1446,6 +1671,7 @@
                               increase in active users. Their approach is both practical and innovative.
                             </p>
                           </div>
+                          <div class="testimonial-divider"></div>
                           <div class="testimonial-author">
                             <div class="author-avatar">
                               <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Emily Wong">
@@ -1463,7 +1689,15 @@
                       </div>
                       <div class="swiper-slide">
                         <div class="testimonial-card dark mt-4">
+                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
                           <div class="testimonial-content">
+                            <ul class="testimonial-stars">
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                              <li><i class="ri-star-fill"></i></li>
+                            </ul>
                             <span class="testimonial-rating">
                               “Game Changer!”
                             </span>
@@ -1471,6 +1705,7 @@
                               Working with Deveon boosted our conversion rates tremendously. Their understanding of both engineering and growth is phenomenal.
                             </p>
                           </div>
+                          <div class="testimonial-divider"></div>
                           <div class="testimonial-author">
                             <div class="author-avatar">
                               <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Michael Turner">
