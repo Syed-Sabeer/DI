@@ -231,7 +231,7 @@ class WebsiteController extends Controller
 				'tags' => ['Blog Writing', 'Website Copy', 'SEO Content'],
 				'tagline' => 'Compelling Content That Converts',
 				'subheading' => 'Engage your audience with high-quality, SEO-optimized content that tells your story and builds trust.',
-				'intro' => "Words carry the weight of your brand online. We write website copy, blog content, and product descriptions that are clear, on-brand, and built to rank — content that reads well and works hard.",
+				'intro' => "Words carry the weight of your brand online. We write website copy, blog content, and product descriptions that are clear, on-brand, and built to rank content that reads well and works hard.",
 				'features' => [
 					['title' => 'Blog Writing', 'desc' => 'Engaging posts that drive traffic and establish thought leadership.'],
 					['title' => 'Website Copy', 'desc' => 'Persuasive content that converts visitors into customers.'],
@@ -276,6 +276,44 @@ class WebsiteController extends Controller
 	private function portfolios(): array
 	{
 		return [
+			[
+				'slug' => 'mcm-textile-erp-crm-platform',
+				'title' => 'Building a Textile ERP & CRM Platform for Metro Cotton Mill',
+				'category' => 'Textile ERP & CRM',
+				'accent' => '#a51c30',
+				'image' => 'FrontendAssets/images/projects/mcm/mcm-thumbnail.png',
+				'short' => 'A custom textile ERP and CRM that connects customers, quotations, billing, production orders, procurement, and inventory in one role-based platform.',
+				'client' => 'Metro Cotton Mill (Pvt) Ltd.',
+				'year' => '2026',
+				'timeline' => '4 Months',
+				'team' => ['Software Development', 'Business Analysis', 'UI/UX Design'],
+				'overview' => "Metro Cotton Mill needed more than a conventional CRM to run a textile manufacturing and export business. We built MCM, a custom ERP and CRM platform that brings customer relationships, quotations, proforma billing, manufacturing job orders, supplier purchasing, material inventory, and team activity into one connected workflow, so an order can be traced from the first customer conversation through quotation, payment, production, procurement, and final settlement.",
+				'challenge' => "Sales, production, and procurement each depended on information the others created, but the business ran on disconnected spreadsheets and messages. That meant repeated data entry, missing context between departments, and weak visibility into where any given order actually stood.",
+				'solution' => "We designed a centralized operations platform built around how a textile manufacturer and exporter actually works, combining CRM, sales, procurement, inventory, and light manufacturing execution in one system where every record connects: a quote becomes a proforma, a proforma becomes a factory job order, and received materials automatically update inventory and vendor payables.",
+				'highlights' => [
+					['title' => 'Customer 360° Workspace', 'desc' => 'A single view of every company: contacts, cases, quotes, invoices, files, and communication history in one timeline.'],
+					['title' => 'Quote-to-Cash Workflow', 'desc' => 'Quotations convert into proforma invoices, advance receipts, and final invoices without re-entering a single line item.'],
+					['title' => 'Manufacturing Job Orders', 'desc' => 'Confirmed orders generate requirement sheets and production job cards, exportable to PDF and CSV for the factory floor.'],
+					['title' => 'Procurement & Inventory Sync', 'desc' => 'Vendor purchase orders, goods receipts, and material stock levels stay connected end to end, down to vendor payables.'],
+				],
+				'results' => [
+					['value' => '30', 'label' => 'Connected Modules'],
+					['value' => '1000+', 'label' => 'Products Managed'],
+					['value' => '8', 'label' => 'Role-Based User Types'],
+				],
+				'gallery' => [
+					'FrontendAssets/images/projects/mcm/01-executive-dashboard.jpg',
+					'FrontendAssets/images/projects/mcm/02-customer-360-workspace.jpg',
+					'FrontendAssets/images/projects/mcm/03-product-bom-setup.jpg',
+					'FrontendAssets/images/projects/mcm/04-case-pipeline-kanban.jpg',
+					'FrontendAssets/images/projects/mcm/05-sales-quotation.jpg',
+					'FrontendAssets/images/projects/mcm/06-proforma-payment-tracking.jpg',
+					'FrontendAssets/images/projects/mcm/07-final-invoice-settlement.jpg',
+					'FrontendAssets/images/projects/mcm/08-manufacturing-job-order.jpg',
+					'FrontendAssets/images/projects/mcm/09-vendor-purchase-order.jpg',
+					'FrontendAssets/images/projects/mcm/10-material-inventory.jpg',
+				],
+			],
 			[
 				'slug' => 'saas-platform-scaling',
 				'title' => 'Scaling a SaaS Platform for Growth',

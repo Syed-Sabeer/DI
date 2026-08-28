@@ -1473,7 +1473,7 @@
                               <a href="{{ route('portfolio.detail', $item['slug']) }}">{{ $item['title'] }}</a>
                             </h3>
                             <p class="portfolio-card__desc">{{ $item['short'] }}</p>
-                            <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View Case Study <i class="ri-arrow-right-up-line"></i></a>
+                            <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View Project <i class="ri-arrow-right-up-line"></i></a>
                           </div>
                         </article>
                       </div>

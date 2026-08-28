@@ -197,6 +197,224 @@
         color: #111;
     }
 
+    /* ---------- Project gallery: compact grid ---------- */
+    .portfolio-gallery-hint {
+        margin: 0 0 18px;
+        font-size: 0.88rem;
+        opacity: 0.6;
+    }
+
+    .portfolio-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+    }
+
+    .portfolio-gallery-item {
+        display: block;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        padding: 0;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border);
+        background: var(--gray-100);
+        cursor: pointer;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portfolio-gallery-item:hover {
+        transform: translateY(-3px);
+        border-color: color-mix(in srgb, var(--accent, var(--primary-color)) 45%, var(--border));
+        box-shadow: 0 20px 40px -24px rgba(var(--dark-rgb), 0.4);
+    }
+
+    .portfolio-gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.4s ease;
+    }
+
+    .portfolio-gallery-item:hover img {
+        transform: scale(1.08);
+    }
+
+    .portfolio-gallery-item__num {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 2;
+        padding: 2px 8px;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
+    .portfolio-gallery-item__zoom {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0);
+        color: #fff;
+        font-size: 1.4rem;
+        opacity: 0;
+        transition: opacity 0.3s ease, background 0.3s ease;
+    }
+
+    .portfolio-gallery-item:hover .portfolio-gallery-item__zoom {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.35);
+    }
+
+    @media (max-width: 991px) {
+        .portfolio-gallery-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 575px) {
+        .portfolio-gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* ---------- Gallery lightbox ---------- */
+    .portfolio-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        background: rgba(5, 5, 8, 0.92);
+        backdrop-filter: blur(6px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .portfolio-lightbox.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .portfolio-lightbox__stage {
+        position: relative;
+        max-width: 1100px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .portfolio-lightbox__img {
+        max-width: 100%;
+        max-height: 82vh;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7);
+        transform: scale(0.96);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .portfolio-lightbox.is-open .portfolio-lightbox__img {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .portfolio-lightbox__counter {
+        display: block;
+        margin-top: 16px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+    }
+
+    .portfolio-lightbox__close {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 1.4rem;
+        cursor: pointer;
+        transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    }
+
+    .portfolio-lightbox__close:hover {
+        background: var(--primary-color);
+        color: #111;
+        transform: rotate(90deg);
+    }
+
+    .portfolio-lightbox__nav {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-size: 1.6rem;
+        cursor: pointer;
+        transform: translateY(-50%);
+        transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .portfolio-lightbox__nav:hover {
+        background: var(--primary-color);
+        color: #111;
+    }
+
+    .portfolio-lightbox__nav--prev {
+        left: 16px;
+    }
+
+    .portfolio-lightbox__nav--next {
+        right: 16px;
+    }
+
+    @media (max-width: 767px) {
+        .portfolio-lightbox {
+            padding: 20px;
+        }
+
+        .portfolio-lightbox__close {
+            top: 14px;
+            right: 14px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .portfolio-lightbox__nav {
+            width: 42px;
+            height: 42px;
+            font-size: 1.3rem;
+        }
+    }
+
     /* ---------- Sidebar ---------- */
     .services-nav__item--active a {
         color: var(--service-accent, var(--primary-color)) !important;
@@ -301,17 +519,16 @@
                             @endforeach
                         </div>
 
-                        <h3 class="section-title mb-4 wow fadeInUp" data-wow-delay=".3s">Project Gallery</h3>
-                        <div class="media-grid wow fadeInUp" data-wow-delay=".3s">
-                            <div class="row g-4">
-                                @foreach($portfolio['gallery'] as $image)
-                                <div class="col-sm-6">
-                                    <div class="media-card">
-                                        <img src="{{ asset($image) }}" alt="{{ $portfolio['title'] }} gallery image" class="img-fluid rounded">
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
+                        <h3 class="section-title mb-2 wow fadeInUp" data-wow-delay=".3s">Project Gallery</h3>
+                        <p class="portfolio-gallery-hint wow fadeInUp" data-wow-delay=".3s">Click any screenshot to view it full size.</p>
+                        <div class="portfolio-gallery-grid mb-4 wow fadeInUp" data-wow-delay=".3s">
+                            @foreach($portfolio['gallery'] as $image)
+                            <button type="button" class="portfolio-gallery-item" data-lightbox-src="{{ asset($image) }}">
+                                <img src="{{ asset($image) }}" alt="{{ $portfolio['title'] }} screenshot {{ $loop->iteration }}" loading="lazy">
+                                <span class="portfolio-gallery-item__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="portfolio-gallery-item__zoom"><i class="ri-zoom-in-line"></i></span>
+                            </button>
+                            @endforeach
                         </div>
 
                         <div class="service-inline-cta wow fadeInUp" data-wow-delay=".2s" style="--accent:{{ $portfolio['accent'] }};">
@@ -420,7 +637,83 @@
     </div>
 </section>
 
+
+<!-- Gallery lightbox -->
+<div class="portfolio-lightbox" id="portfolioLightbox" aria-hidden="true">
+    <button type="button" class="portfolio-lightbox__close" aria-label="Close"><i class="ri-close-line"></i></button>
+    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--prev" aria-label="Previous screenshot"><i class="ri-arrow-left-s-line"></i></button>
+    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--next" aria-label="Next screenshot"><i class="ri-arrow-right-s-line"></i></button>
+    <div class="portfolio-lightbox__stage">
+        <img src="" alt="" class="portfolio-lightbox__img">
+        <span class="portfolio-lightbox__counter"></span>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var items = Array.prototype.slice.call(document.querySelectorAll('.portfolio-gallery-item'));
+    var lightbox = document.getElementById('portfolioLightbox');
+    if (!items.length || !lightbox) return;
+
+    // The page content sits inside a GSAP ScrollSmoother wrapper, which applies
+    // a transform for the smooth-scroll effect. A `transform` on any ancestor
+    // turns that ancestor into the containing block for `position: fixed`
+    // descendants, so the lightbox would otherwise be trapped inside the
+    // scroll container instead of covering the real viewport. Moving it to
+    // <body> escapes that (same fix already used for the career apply modal).
+    if (lightbox.parentElement !== document.body) {
+        document.body.appendChild(lightbox);
+    }
+
+    var img = lightbox.querySelector('.portfolio-lightbox__img');
+    var counter = lightbox.querySelector('.portfolio-lightbox__counter');
+    var closeBtn = lightbox.querySelector('.portfolio-lightbox__close');
+    var prevBtn = lightbox.querySelector('.portfolio-lightbox__nav--prev');
+    var nextBtn = lightbox.querySelector('.portfolio-lightbox__nav--next');
+    var currentIndex = 0;
+
+    function show(index) {
+        currentIndex = (index + items.length) % items.length;
+        var item = items[currentIndex];
+        img.src = item.getAttribute('data-lightbox-src');
+        img.alt = item.querySelector('img').alt;
+        counter.textContent = (currentIndex + 1) + ' / ' + items.length;
+    }
+
+    function open(index) {
+        show(index);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    items.forEach(function (item, index) {
+        item.addEventListener('click', function () { open(index); });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { show(currentIndex - 1); });
+    nextBtn.addEventListener('click', function () { show(currentIndex + 1); });
+
+    lightbox.addEventListener('click', function (event) {
+        if (event.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (event.key === 'Escape') close();
+        if (event.key === 'ArrowLeft') show(currentIndex - 1);
+        if (event.key === 'ArrowRight') show(currentIndex + 1);
+    });
+});
+</script>
 @endsection

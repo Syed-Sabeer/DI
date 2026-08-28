@@ -219,7 +219,7 @@
                 <div class="heading-section text-center">
                     <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp" data-wow-delay=".1s">
                         <i class="ri-checkbox-blank-circle-fill"></i>
-                        Case Studies
+                        Our Projects
                     </span>
                     <h2 class="heading-title mt-4 split-title">
                         Real Projects, <span class="text-primary">Real Results</span>
@@ -256,7 +256,7 @@
                             <a href="{{ route('portfolio.detail', $item['slug']) }}">{{ $item['title'] }}</a>
                         </h3>
                         <p class="portfolio-card__desc">{{ $item['short'] }}</p>
-                        <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View Case Study <i class="ri-arrow-right-up-line"></i></a>
+                        <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View Project <i class="ri-arrow-right-up-line"></i></a>
                     </div>
                 </article>
             </div>

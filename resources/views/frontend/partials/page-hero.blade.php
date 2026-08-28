@@ -6,11 +6,12 @@
     <i class="{{ $heroWatermarkIcon ?? 'ri-terminal-box-line' }} page-hero-dark__watermark"></i>
     <div class="container">
         <div class="page-hero-dark__content text-center">
-            @if(!empty($heroIconBadge))
-            <div class="page-hero-dark__badge-icon"><i class="{{ $heroIconBadge }}"></i></div>
-            @endif
-            <span class="page-hero-dark__eyebrow">
+            <span class="page-hero-dark__eyebrow @if(!empty($heroIconBadge)) page-hero-dark__eyebrow--icon @endif">
+                @if(!empty($heroIconBadge))
+                <span class="page-hero-dark__eyebrow-icon"><i class="{{ $heroIconBadge }}"></i></span>
+                @else
                 <span class="dot"></span>
+                @endif
                 {{ $heroEyebrow }}
             </span>
             <h1 class="page-hero-dark__title">{!! $heroTitle !!}</h1>
@@ -87,20 +88,6 @@
         z-index: 1;
     }
 
-    .page-hero-dark__badge-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 64px;
-        height: 64px;
-        margin-bottom: 20px;
-        border-radius: 18px;
-        background: color-mix(in srgb, var(--hero-accent, var(--primary-color)) 18%, transparent);
-        color: var(--hero-accent, var(--primary-color));
-        font-size: 1.7rem;
-        border: 1px solid color-mix(in srgb, var(--hero-accent, var(--primary-color)) 35%, transparent);
-    }
-
     .page-hero-dark__eyebrow {
         display: inline-flex;
         align-items: center;
@@ -115,6 +102,28 @@
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Variant used when a per-page icon (e.g. a service's own icon) is
+       passed in — the icon sits inline with the eyebrow text instead of as
+       a separate badge floating above it, so the two elements read as one
+       unit rather than colliding. */
+    .page-hero-dark__eyebrow--icon {
+        gap: 12px;
+        padding: 6px 22px 6px 6px;
+    }
+
+    .page-hero-dark__eyebrow-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        background: var(--hero-accent, var(--primary-color));
+        color: #0a0a0d;
+        font-size: 0.95rem;
     }
 
     .page-hero-dark__eyebrow .dot {
