@@ -1,4 +1,7 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'contact software development company, hire software developers USA, software company Ottawa Canada, app development enquiry UK Australia, Deveon Inc contact')
+@section('meta_description', 'Talk to Deveon Inc about custom software, mobile apps or AI automation. Offices in Ottawa, Canada and Karachi, Pakistan. Serving the USA, Canada, UK and Australia.')
+@section('title', 'Contact Deveon Inc | Software Development USA, Canada, UK')
 
 
 
@@ -992,10 +995,10 @@
                                         <div class="message-card-social">
                                             <span>Connect with us:</span>
                                             <ul class="footer-social-list">
-                                                <li><a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-fill"></i></a></li>
-                                                <li><a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ri-instagram-line"></i></a></li>
-                                                <li><a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
-                                                <li><a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter"><i class="ri-twitter-x-line"></i></a></li>
+                                                <li><a href="{{ config('seo.social.facebook') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Facebook"><i class="ri-facebook-fill"></i></a></li>
+                                                <li><a href="{{ config('seo.social.instagram') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Instagram"><i class="ri-instagram-line"></i></a></li>
+                                                <li><a href="{{ config('seo.social.linkedin') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
+                                                <li><a href="{{ config('seo.social.x') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on X"><i class="ri-twitter-x-line"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1130,5 +1133,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        ['@type' => 'ContactPage', '@id' => url('/contact') . '#contactpage',
+         'url' => url('/contact'), 'name' => 'Contact Deveon Inc',
+         'about' => ['@id' => url('/') . '#organization']],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Contact', 'item' => url('/contact')]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

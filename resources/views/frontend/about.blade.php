@@ -1,4 +1,7 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'about Deveon Inc, Syed Sabeer Faisal, Deveon founder CEO, software development company Ottawa, software company Canada, IT company Karachi')
+@section('meta_description', 'Meet Deveon Inc — a software company powering intelligent systems for clients in the USA, Canada, UK and Australia. Founded and led by CEO Syed Sabeer Faisal.')
+@section('title', 'About Deveon Inc | Founded by Syed Sabeer Faisal')
 
 
 
@@ -572,9 +575,9 @@
                                                 </div>
                                             </div>
                                             <ul class="founder-social">
-                                                <li><a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-circle-fill"></i></a></li>
-                                                <li><a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter"><i class="ri-twitter-x-line"></i></a></li>
-                                                <li><a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
+                                                <li><a href="{{ config('seo.social.facebook') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Facebook"><i class="ri-facebook-circle-fill"></i></a></li>
+                                                <li><a href="{{ config('seo.social.x') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on X"><i class="ri-twitter-x-line"></i></a></li>
+                                                <li><a href="{{ config('seo.social.linkedin') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -635,4 +638,43 @@
 
 @section('script')
 
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'AboutPage',
+            '@id' => url('/about') . '#aboutpage',
+            'url' => url('/about'),
+            'name' => 'About Deveon Inc',
+            'mainEntity' => ['@id' => url('/') . '#organization'],
+        ],
+        [
+            '@type' => 'Person',
+            '@id' => url('/about') . '#founder',
+            'name' => 'Syed Sabeer Faisal',
+            'givenName' => 'Syed Sabeer',
+            'familyName' => 'Faisal',
+            'jobTitle' => 'Founder & Chief Executive Officer',
+            'description' => 'Founder and Chief Executive Officer of Deveon Inc, a software development company building custom software, mobile applications and AI automation for clients across North America, the United Kingdom and Australia.',
+            'image' => asset('FrontendAssets/images/profile/founder.png'),
+            'url' => url('/about'),
+            'worksFor' => ['@id' => url('/') . '#organization'],
+            'knowsAbout' => ['Software Development', 'Artificial Intelligence', 'Product Strategy', 'Enterprise Systems'],
+            'sameAs' => [config('seo.social.linkedin')],
+        ],
+        [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'About', 'item' => url('/about')],
+            ],
+        ],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

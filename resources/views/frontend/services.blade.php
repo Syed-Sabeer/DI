@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'software development services, mobile app development services, web development company, UI UX design services, AI ML development services, SEO marketing agency, branding agency, USA Canada UK Australia')
 
-@section('title', 'Our Services | Deveon Inc')
-@section('meta_description', 'Explore Deveon Inc\'s full range of services — software development, web & mobile app development, UI/UX design, graphics design, branding, SEO & marketing, content writing, and AI/ML.')
+@section('title', 'Software Development & AI Services')
+@section('meta_description', 'Custom software, web and mobile app development, UI/UX design, branding, SEO and AI/ML services from Deveon Inc — delivered for clients in the USA, Canada, UK and Australia.')
 
 @section('css')
 <style>
@@ -222,4 +223,31 @@
 @endsection
 
 @section('script')
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'CollectionPage',
+            '@id' => url('/service') . '#collection',
+            'url' => url('/service'),
+            'name' => 'Services',
+            'mainEntity' => [
+                '@type' => 'ItemList',
+                'itemListElement' => collect($services ?? [])->values()->map(fn ($s, $i) => [
+                    '@type' => 'ListItem',
+                    'position' => $i + 1,
+                    'name' => $s['title'] ?? '',
+                    'url' => url('/service-detail/' . ($s['slug'] ?? '')),
+                ])->all(),
+            ],
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => url('/service')]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

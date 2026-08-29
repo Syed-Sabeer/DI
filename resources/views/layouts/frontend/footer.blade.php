@@ -63,25 +63,25 @@
                           </h3>
                           <ul class="social-links">
                             <li>
-                              <a href="javascript:void(0);" class="social-link">
+                              <a href="{{ config('seo.social.facebook') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Facebook" class="social-link">
                                 <i class="ri-facebook-circle-fill">
                                 </i>
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:void(0);" class="social-link">
+                              <a href="{{ config('seo.social.instagram') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Instagram" class="social-link">
                                 <i class="ri-instagram-fill">
                                 </i>
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:void(0);" class="social-link">
+                              <a href="{{ config('seo.social.x') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on X (Twitter)" class="social-link">
                                 <i class="ri-twitter-x-line">
                                 </i>
                               </a>
                             </li>
                             <li>
-                              <a href="javascript:void(0);" class="social-link">
+                              <a href="{{ config('seo.social.linkedin') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on LinkedIn" class="social-link">
                                 <i class="ri-linkedin-box-fill">
                                 </i>
                               </a>
@@ -196,7 +196,7 @@
                       <div class="footer-bottom-item">
                         <p class="copyright-text">
                           Copyright © 2026
-                          <a href="{{ route('home') }}">
+                          <a href="javascript:void(0);" target="_blank" rel="noopener">
                             Deveon Inc
                           </a>
                           All rights reserved.
@@ -206,17 +206,17 @@
                       <div class="footer-bottom-item">
                         <ul class="footer-bottom-menu">
                           <li>
-                            <a href="{{ route('privacy') }}">
+                            <a href="javascript:void(0);">
                               Policy &amp; Privacy
                             </a>
                           </li>
                           <li>
-                            <a href="{{ route('terms') }}">
+                            <a href="javascript:void(0);">
                               Terms &amp; Conditions
                             </a>
                           </li>
                           <li>
-                            <a href="{{ route('legal') }}">
+                            <a href="javascript:void(0);">
                               Legal
                             </a>
                           </li>

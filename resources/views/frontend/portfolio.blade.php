@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'software development portfolio, ERP case study, POS system case study, AI platform design, mobile app case study, custom software examples, Deveon Inc portfolio')
 
-@section('title', 'Our Portfolio | Deveon Inc')
-@section('meta_description', 'Explore Deveon Inc\'s portfolio of software platforms, mobile apps, e-commerce stores, and enterprise systems designed and built for ambitious teams.')
+@section('title', 'Portfolio | Software, ERP, AI & App Case Studies')
+@section('meta_description', 'See what Deveon Inc has built — textile ERP, retail POS, mobility marketplace, AI voice and document platforms. Custom software case studies for the USA, Canada, UK and Australia.')
 
 @section('css')
 <style>
@@ -310,5 +311,32 @@
             });
         });
     })();
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'CollectionPage',
+            '@id' => url('/portfolio') . '#collection',
+            'url' => url('/portfolio'),
+            'name' => 'Portfolio',
+            'mainEntity' => [
+                '@type' => 'ItemList',
+                'itemListElement' => collect($portfolios ?? [])->values()->map(fn ($p, $i) => [
+                    '@type' => 'ListItem',
+                    'position' => $i + 1,
+                    'name' => $p['title'] ?? '',
+                    'url' => url('/portfolio/' . ($p['slug'] ?? '')),
+                ])->all(),
+            ],
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Portfolio', 'item' => url('/portfolio')]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

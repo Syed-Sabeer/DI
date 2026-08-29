@@ -1,4 +1,7 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'custom software development company, AI automation company, mobile app development company USA, software development company Canada, app developers UK, software company Australia, ERP CRM development, UI UX design agency, Deveon Inc')
+@section('meta_description', 'Deveon Inc builds custom software, mobile apps, ERP/CRM platforms and AI automation for businesses in the USA, Canada, UK and Australia. 150+ clients, 5+ years, 4.9/5 rated.')
+@section('title', 'Custom Software, AI & App Development Company')
 
 @section('css')
 <style>
@@ -2770,5 +2773,61 @@
       });
     });
   })();
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'ProfessionalService',
+            '@id' => url('/') . '#business',
+            'name' => 'Deveon Inc',
+            'image' => asset(config('seo.defaultImage')),
+            'url' => url('/'),
+            'telephone' => config('seo.contact.phone'),
+            'email' => config('seo.contact.email'),
+            'priceRange' => '$$',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => config('seo.address.street'),
+                'addressLocality' => config('seo.address.city'),
+                'addressRegion' => config('seo.address.region'),
+                'postalCode' => config('seo.address.postal'),
+                'addressCountry' => config('seo.address.country'),
+            ],
+            'geo' => [
+                '@type' => 'GeoCoordinates',
+                'latitude' => config('seo.geo.lat'),
+                'longitude' => config('seo.geo.lng'),
+            ],
+            'aggregateRating' => [
+                '@type' => 'AggregateRating',
+                'ratingValue' => '4.9',
+                'bestRating' => '5',
+                'ratingCount' => '5',
+            ],
+        ],
+        [
+            '@type' => 'FAQPage',
+            '@id' => url('/') . '#faq',
+            'mainEntity' => collect([
+                ['What services does Deveon Inc offer?', 'Deveon Inc offers custom software development, web development, mobile app development, UI/UX design, graphic design, branding, SEO and marketing, content writing, and AI/ML development.'],
+                ['Which countries does Deveon Inc work with?', 'We work with clients across the United States, Canada, the United Kingdom and Australia, operating from our headquarters in Ottawa, Canada and an additional office in Karachi, Pakistan.'],
+                ['How much does custom software development cost?', 'Cost depends on scope, integrations and timeline. We provide a fixed written proposal after a discovery conversation, so you know the figure before any work begins.'],
+                ['How long does a typical project take?', 'A focused first release is commonly planned in phases. Timelines are confirmed in the statement of work after we scope the workflow together.'],
+                ['Do you build AI and automation systems?', 'Yes. We design and build AI automation, machine-learning features, document intelligence and conversational AI systems alongside conventional software.'],
+                ['Who owns the software you build?', 'Ownership of custom deliverables transfers to you on full payment for the engagement, as set out in the statement of work.'],
+            ])->map(fn ($q) => [
+                '@type' => 'Question',
+                'name' => $q[0],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $q[1]],
+            ])->all(),
+        ],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

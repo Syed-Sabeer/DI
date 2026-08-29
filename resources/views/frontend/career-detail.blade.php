@@ -1,7 +1,9 @@
 @extends('layouts.frontend.master')
+@php use Illuminate\Support\Str; @endphp
+@section('meta_keywords', strtolower($career->job_title).' job, '.strtolower($career->job_title).' vacancy, software careers, Deveon Inc hiring')
 
-@section('title', $career->job_title.' Career')
-@section('meta_description', \Illuminate\Support\Str::limit(strip_tags($career->description), 160))
+@section('title', $career->job_title.' | Careers at Deveon Inc')
+@section('meta_description', Str::limit(strip_tags($career->description), 155))
 
 @section('css')
 <style>
@@ -239,5 +241,41 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'JobPosting',
+            '@id' => url('/careers/' . $career->slug) . '#job',
+            'title' => $career->job_title,
+            'description' => $career->description,
+            'datePosted' => optional($career->created_at)->toDateString(),
+            'employmentType' => strtoupper(str_replace([' ', '-'], '_', $career->job_type ?? 'FULL_TIME')),
+            'hiringOrganization' => [
+                '@type' => 'Organization',
+                'name' => 'Deveon Inc',
+                'sameAs' => url('/'),
+                'logo' => asset('FrontendAssets/images/brand/deveon-mark-lime.png'),
+            ],
+            'jobLocation' => [
+                '@type' => 'Place',
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'addressLocality' => config('seo.branchAddress.city'),
+                    'addressRegion' => config('seo.branchAddress.region'),
+                    'addressCountry' => config('seo.branchAddress.country'),
+                ],
+            ],
+            'directApply' => true,
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/careers')], ['@type' => 'ListItem', 'position' => 3, 'name' => $career->job_title, 'item' => url('/careers/' . $career->slug)]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

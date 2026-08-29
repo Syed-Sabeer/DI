@@ -1,4 +1,9 @@
 @extends('layouts.frontend.master')
+@php use Illuminate\Support\Str; @endphp
+@section('modified_time', optional($blog->updated_at)->toAtomString())
+@section('published_time', optional($blog->created_at)->toAtomString())
+@section('meta_type', 'article')
+@section('meta_image', ($blog->image && file_exists(public_path('storage/'.$blog->image))) ? asset('storage/'.$blog->image) : asset(config('seo.defaultImage')))
 
 @section('title', $blog->meta_title ?: $blog->title)
 @section('meta_description', $blog->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($blog->content), 160))
@@ -103,4 +108,33 @@
     </div>
   </div></div>
 </section>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'BlogPosting',
+            '@id' => url('/blog/' . $blog->slug) . '#article',
+            'headline' => Str::limit($blog->title, 110, ''),
+            'description' => $blog->meta_description ?: Str::limit(strip_tags($blog->content), 160),
+            'url' => url('/blog/' . $blog->slug),
+            'datePublished' => optional($blog->created_at)->toAtomString(),
+            'dateModified' => optional($blog->updated_at ?: $blog->created_at)->toAtomString(),
+            'image' => ($blog->image && file_exists(public_path('storage/'.$blog->image)))
+                ? asset('storage/'.$blog->image) : asset(config('seo.defaultImage')),
+            'author' => ['@type' => 'Organization', '@id' => url('/') . '#organization', 'name' => 'Deveon Inc'],
+            'publisher' => ['@id' => url('/') . '#organization'],
+            'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => url('/blog/' . $blog->slug)],
+            'articleSection' => $blog->category,
+            'keywords' => $blog->meta_keywords ?: $blog->tags,
+            'inLanguage' => 'en',
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => url('/blog')], ['@type' => 'ListItem', 'position' => 3, 'name' => Str::limit($blog->title, 60), 'item' => url('/blog/' . $blog->slug)]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

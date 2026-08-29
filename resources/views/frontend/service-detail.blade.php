@@ -1,7 +1,9 @@
 @extends('layouts.frontend.master')
+@php use Illuminate\Support\Str; @endphp
+@section('meta_keywords', strtolower($service['title']).' services, '.strtolower($service['title']).' company USA, '.strtolower($service['title']).' agency Canada, hire '.strtolower($service['title']).' developers UK Australia, Deveon Inc')
 
-@section('title', $service['title'].' Services | Deveon Inc')
-@section('meta_description', $service['short'])
+@section('title', $service['title'].' Services in USA, Canada, UK & Australia')
+@section('meta_description', Str::limit($service['short'], 150).' Deveon Inc — Powering Intelligent Systems.')
 
 @section('css')
 <style>
@@ -383,4 +385,27 @@
 @endsection
 
 @section('script')
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'Service',
+            '@id' => url('/service-detail/' . $service['slug']) . '#service',
+            'name' => $service['title'],
+            'description' => strip_tags($service['short'] ?? ''),
+            'serviceType' => $service['title'],
+            'url' => url('/service-detail/' . $service['slug']),
+            'provider' => ['@id' => url('/') . '#organization'],
+            'areaServed' => array_map(fn ($m) => ['@type' => 'Country', 'name' => $m['name']], config('seo.targetMarkets')),
+            'audience' => ['@type' => 'BusinessAudience', 'name' => 'Businesses and startups'],
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Services', 'item' => url('/service')], ['@type' => 'ListItem', 'position' => 3, 'name' => $service['title'], 'item' => url('/service-detail/' . $service['slug'])]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

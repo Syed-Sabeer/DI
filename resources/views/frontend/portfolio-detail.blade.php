@@ -1,6 +1,9 @@
 @extends('layouts.frontend.master')
+@section('meta_type', 'article')
+@section('meta_image', asset($portfolio['image']))
+@section('meta_keywords', strtolower($portfolio['category']).', '.strtolower($portfolio['title']).', custom software case study, Deveon Inc portfolio')
 
-@section('title', $portfolio['title'].' | Deveon Inc Portfolio')
+@section('title', $portfolio['title'])
 @section('meta_description', $portfolio['short'])
 
 @section('css')
@@ -719,5 +722,30 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.key === 'ArrowRight') show(currentIndex + 1);
     });
 });
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'CreativeWork',
+            '@id' => url('/portfolio/' . $portfolio['slug']) . '#work',
+            'name' => $portfolio['title'],
+            'headline' => $portfolio['title'],
+            'description' => $portfolio['short'],
+            'url' => url('/portfolio/' . $portfolio['slug']),
+            'image' => asset($portfolio['image']),
+            'genre' => $portfolio['category'],
+            'creator' => ['@id' => url('/') . '#organization'],
+            'dateCreated' => $portfolio['year'] ?? null,
+            'keywords' => $portfolio['category'],
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Portfolio', 'item' => url('/portfolio')], ['@type' => 'ListItem', 'position' => 3, 'name' => $portfolio['title'], 'item' => url('/portfolio/' . $portfolio['slug'])]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

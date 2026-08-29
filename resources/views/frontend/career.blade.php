@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
+@section('meta_keywords', 'software developer jobs, AI engineer careers, UI UX designer jobs, remote software jobs, tech careers Karachi, Deveon Inc careers')
 
-@section('title', 'Careers')
-@section('meta_description', 'Explore current career opportunities and join the Deveon Inc team.')
+@section('title', 'Careers at Deveon Inc | Software & AI Jobs')
+@section('meta_description', 'Join Deveon Inc — we build custom software and AI systems for clients across North America, the UK and Australia. See our open engineering, design and product roles.')
 
 @section('css')
 <style>
@@ -268,4 +269,19 @@
         @endif
     </div>
 </section>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        ['@type' => 'CollectionPage', '@id' => url('/careers') . '#careers',
+         'url' => url('/careers'), 'name' => 'Careers at Deveon Inc',
+         'about' => ['@id' => url('/') . '#organization']],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/careers')]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection

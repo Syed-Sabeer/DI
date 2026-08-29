@@ -2,6 +2,7 @@
 
 @section('title', $document['title'] . ' | Deveon Inc')
 @section('meta_description', $document['lead'])
+@section('meta_keywords', strtolower($document['title']).', Deveon Inc '.strtolower($document['title']).', software company legal, privacy terms Deveon')
 
 @section('css')
 <style>
@@ -560,5 +561,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.legal-section').forEach(function (s) { observer.observe(s); });
 });
+</script>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'WebPage',
+            '@id' => url('/'.$document['slug']).'#legal',
+            'url' => url('/'.$document['slug']),
+            'name' => strip_tags($document['title']),
+            'description' => $document['lead'],
+            'dateModified' => $document['updated'],
+            'publisher' => ['@id' => url('/').'#organization'],
+        ],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => strip_tags($document['title']), 'item' => url('/'.$document['slug'])],
+        ]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
 </script>
 @endsection

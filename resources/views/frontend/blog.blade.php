@@ -1,8 +1,8 @@
 @extends('layouts.frontend.master')
 
-@section('title', 'Blog & Insights')
-@section('meta_description', 'Explore insights on software development, mobile apps, design, and digital growth from Deveon Inc.')
-@section('meta_keywords', 'software development blog, mobile apps, design, digital growth')
+@section('title', 'Blog | Software, AI & Product Development Insights')
+@section('meta_description', 'Practical articles on custom software, AI automation, mobile apps and product delivery from the Deveon Inc engineering and design team.')
+@section('meta_keywords', 'software development blog, AI automation insights, mobile app development articles, product design blog, technology insights, Deveon Inc blog')
 
 @section('css')
 <style>
@@ -181,4 +181,18 @@
     </div>
   </div></div>
 </section>
+@endsection
+
+@section('schema')
+<script type="application/ld+json">
+@php $ld = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        ['@type' => 'Blog', '@id' => url('/blog') . '#blog', 'url' => url('/blog'),
+         'name' => 'Deveon Inc Blog', 'publisher' => ['@id' => url('/') . '#organization']],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => url('/blog')]]],
+    ],
+]; @endphp
+{!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
+</script>
 @endsection
