@@ -183,7 +183,7 @@
                         <p class="text-fixed-white op-7">
                           Remote-first, serving clients
                           <br>
-                          across North America & worldwide
+                          across North America, Europe & worldwide
                         </p>
                       </div>
                     </div>
