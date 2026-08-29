@@ -54,6 +54,23 @@
     outline: 3px solid rgba(var(--primary-rgb), 0.25);
     outline-offset: 2px;
   }
+
+  /* ---------- Blog listing media: one ratio across the whole site ----------
+     The theme pins these to a fixed 230px height, which crops tall/short
+     uploads inconsistently. 16:10 matches the home cards and the detail
+     cover, so a single 1600x1000 source works everywhere. */
+  .blog-list .blog-card__media {
+      border-radius: 0.75rem;
+      background: var(--gray-100);
+  }
+
+  .blog-list .blog-card__media img {
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0.75rem;
+  }
 </style>
 @endsection
 
@@ -86,7 +103,7 @@
           <article class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".2s">
             <div class="post-media">
               <a href="{{ route('blog.detail', $blog->slug) }}">
-                <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}">
+                <img src="{{ ($blog->image && file_exists(public_path('storage/' . $blog->image))) ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}">
               </a>
             </div>
             <div class="post-overlay-content">
@@ -128,7 +145,7 @@
           @forelse($latestBlogs as $latest)
           <article class="mini-post">
             <a class="mini-post__media" href="{{ route('blog.detail', $latest->slug) }}" aria-label="Open: {{ $latest->title }}">
-              <img class="mini-post__img" src="{{ $latest->image ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
+              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
             </a>
             <div class="mini-post__body">
               <h3 class="mini-post__heading"><a class="mini-post__link" href="{{ route('blog.detail', $latest->slug) }}">{{ \Illuminate\Support\Str::limit($latest->title, 48) }}</a></h3>

@@ -16,12 +16,26 @@
 ])
 
 <section class="section team-page-section section-gap">
-  <div class="container"><div class="row gy-4">
+  <div class="container">
+
+    @php
+      // Fall back to a placeholder when the stored file is missing, so a broken
+      // upload never renders as a broken-image icon with sprawling alt text.
+      $blogCover = ($blog->image && file_exists(public_path('storage/' . $blog->image)))
+          ? asset('storage/' . $blog->image)
+          : asset('FrontendAssets/images/blog/blog17.png');
+    @endphp
+
+    @include('frontend.partials.detail-cover', [
+      'coverImage' => $blogCover,
+      'coverAlt'   => $blog->title,
+      'coverPath'  => '~/blog/<b>' . e(\Illuminate\Support\Str::limit($blog->slug, 40, '')) . '</b>',
+      'coverBadge' => optional($blog->created_at)->format('d M Y'),
+    ])
+
+    <div class="row gy-4">
     <div class="col-xl-8">
       <article class="article-shell article-details">
-        <figure class="article-hero wow fadeInUp" data-wow-delay=".1s">
-          <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog17.png') }}" alt="{{ $blog->title }}">
-        </figure>
         <header class="article-head"><h2 class="article-title split-title">{{ $blog->title }}</h2></header>
         <div class="post-facts wow fadeInUp" data-wow-delay=".3s">
           @if($blog->category)
@@ -59,7 +73,7 @@
           @forelse($latestBlogs as $latest)
           <article class="mini-post">
             <a class="mini-post__media" href="{{ route('blog.detail', $latest->slug) }}" aria-label="Open: {{ $latest->title }}">
-              <img class="mini-post__img" src="{{ $latest->image ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
+              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
             </a>
             <div class="mini-post__body"><h3 class="mini-post__heading"><a class="mini-post__link" href="{{ route('blog.detail', $latest->slug) }}">{{ \Illuminate\Support\Str::limit($latest->title, 48) }}</a></h3><time class="mini-post__date" datetime="{{ optional($latest->created_at)->toDateString() }}">{{ optional($latest->created_at)->format('d M, Y') }}</time></div>
           </article>

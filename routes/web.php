@@ -63,6 +63,11 @@ Route::get('/portfolio', [WebsiteController::class, 'portfolio'])->name('portfol
 Route::get('/portfolio/{slug}', [WebsiteController::class, 'portfolioDetail'])->name('portfolio.detail');
 Route::get('/service-detail/{slug?}', [WebsiteController::class, 'serviceDetail'])->name('service.detail');
 
+// Legal documents
+Route::get('/privacy-policy', [WebsiteController::class, 'privacyPolicy'])->name('privacy');
+Route::get('/terms-conditions', [WebsiteController::class, 'termsConditions'])->name('terms');
+Route::get('/legal', [WebsiteController::class, 'legal'])->name('legal');
+
 
 
 

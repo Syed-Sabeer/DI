@@ -625,73 +625,11 @@
                             </div>
                         </section>
                       
-                        <section class="section section-devider">
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-xl-6">
-                                        <div class="heading-section mb-5 pb-4 text-center"> <span class="heading-subtitle rounded-pill border px-3 py-1 d-inline-flex wow fadeInUp" data-wow-delay=".3s"> Testimonials </span>
-                                            <h2 class="heading-title mt-4 text-animated-slider"> What They Say! </h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper freelancer-testimonials-slider">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="testimonial-card">
-                                                <div class="testimonial-content"> <span class="testimonial-rating">“Outstanding Experience!”</span>
-                                                    <p class="testimonial-text"> <span>Aexora</span> truly gets the challenges startups face. Thanks to their guidance, our user engagement tripled in just three months! </p>
-                                                </div>
-                                                <div class="testimonial-author">
-                                                    <div class="author-avatar"> <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Sarah Lee"> </div>
-                                                    <div class="author-info">
-                                                        <h3 class="author-name">Sarah Lee</h3> <span class="author-role">Product Manager</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="testimonial-card dark mt-4">
-                                                <div class="testimonial-content"> <span class="testimonial-rating">“Truly Transformative!”</span>
-                                                    <p class="testimonial-text"> Their insight into scaling small businesses is unmatched. Our app downloads skyrocketed by <span>180%</span> after their strategy. </p>
-                                                </div>
-                                                <div class="testimonial-author">
-                                                    <div class="author-avatar"> <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Raj Patel"> </div>
-                                                    <div class="author-info">
-                                                        <h4 class="author-name">Raj Patel</h4> <span class="author-role">Software Engineer</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="testimonial-card">
-                                                <div class="testimonial-content"> <span class="testimonial-rating">“Highly Recommended!”</span>
-                                                    <p class="testimonial-text"> Aexora helped us refine our growth strategy, leading to a <span>2.5x </span>increase in active users. Their approach is both practical and innovative. </p>
-                                                </div>
-                                                <div class="testimonial-author">
-                                                    <div class="author-avatar"> <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Emily Wong"> </div>
-                                                    <div class="author-info">
-                                                        <h3 class="author-name">Emily Wong</h3> <span class="author-role">Marketing Lead</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="testimonial-card dark mt-4">
-                                                <div class="testimonial-content"> <span class="testimonial-rating">“Game Changer!”</span>
-                                                    <p class="testimonial-text"> Working with Aexora boosted our conversion rates tremendously. Their understanding of startup dynamics is phenomenal. </p>
-                                                </div>
-                                                <div class="testimonial-author">
-                                                    <div class="author-avatar"> <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Michael Turner"> </div>
-                                                    <div class="author-info">
-                                                        <h3 class="author-name">Michael Turner</h3> <span class="author-role">Founder & CEO</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+@include('frontend.partials.testimonials', [
+                            'tTitle'      => 'What They <span class="text-primary">Say</span> About Us!',
+                            'tIntro'      => 'Real feedback from the teams we have partnered with, in their own words.',
+                            'tTitleClass' => 'text-animated-slider',
+                        ])
 
 @endsection
 

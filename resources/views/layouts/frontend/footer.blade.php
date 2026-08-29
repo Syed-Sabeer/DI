@@ -196,7 +196,7 @@
                       <div class="footer-bottom-item">
                         <p class="copyright-text">
                           Copyright © 2026
-                          <a href="javascript:void(0);" target="_blank" rel="noopener">
+                          <a href="{{ route('home') }}">
                             Deveon Inc
                           </a>
                           All rights reserved.
@@ -206,17 +206,17 @@
                       <div class="footer-bottom-item">
                         <ul class="footer-bottom-menu">
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('privacy') }}">
                               Policy &amp; Privacy
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('terms') }}">
                               Terms &amp; Conditions
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('legal') }}">
                               Legal
                             </a>
                           </li>

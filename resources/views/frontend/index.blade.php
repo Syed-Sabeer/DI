@@ -229,8 +229,9 @@
   .home-blog-section .blog-card__media {
       position: relative;
       display: block;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;   /* house ratio: source images are 1600x1000 */
       overflow: hidden;
+      background: var(--gray-100);
   }
 
   .home-blog-section .blog-card__media-link {
@@ -726,81 +727,6 @@
       .process-dark-connector {
           display: none;
       }
-  }
-
-  /* ---------- Testimonials section ---------- */
-  .home-testimonials-header .heading-subtitle i {
-      font-size: 0.55rem;
-      color: var(--primary-color);
-  }
-
-  [data-theme-mode="light"] .home-testimonials-header .heading-subtitle i {
-      text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
-  }
-
-  .home-testimonials-header p {
-      font-size: 1.02rem;
-      opacity: 0.72;
-  }
-
-  .testimonial-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 1.5rem !important;
-      gap: 24px !important;
-      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
-  }
-
-  .testimonial-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 34px 64px -32px rgba(var(--dark-rgb), 0.35);
-  }
-
-  .testimonial-card .testimonial-content,
-  .testimonial-card .testimonial-author {
-      position: relative;
-      z-index: 1;
-  }
-
-  .testimonial-quote-icon {
-      position: absolute;
-      top: 26px;
-      inset-inline-end: 30px;
-      z-index: 0;
-      font-size: 3.2rem;
-      line-height: 1;
-      color: var(--primary-color);
-      opacity: 0.16;
-  }
-
-  .testimonial-stars {
-      display: flex;
-      gap: 4px;
-      margin: 0 0 16px;
-      padding: 0;
-      list-style: none;
-  }
-
-  .testimonial-stars i {
-      font-size: 0.85rem;
-      color: var(--primary-color);
-  }
-
-  [data-theme-mode="light"] .testimonial-stars i {
-      text-shadow: 0 0 1px rgba(17, 17, 17, 0.45), 0 1px 3px rgba(17, 17, 17, 0.3);
-  }
-
-  .testimonial-card .author-avatar img {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 35%, transparent);
-  }
-
-  .testimonial-divider {
-      margin: 0;
-      border-top: 1px solid color-mix(in srgb, rgb(var(--dark-rgb)) 12%, transparent);
-  }
-
-  .testimonial-card.dark .testimonial-divider {
-      border-top-color: color-mix(in srgb, var(--custom-white) 18%, transparent);
   }
 
   /* =====================================================================
@@ -2744,177 +2670,7 @@
                   </div>
                 </section>
 
- <section class="section section-devider">
-                <div class="container">
-                  <div class="row justify-content-center">
-                    <div class="col-xl-6">
-                      <div class="heading-section home-testimonials-header mb-5 pb-2 text-center">
-                        <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex justify-content-center mx-auto wow fadeInUp" data-wow-delay=".1s">
-                          <i class="ri-double-quotes-l"></i>
-                          Testimonials
-                        </span>
-                        <h2 class="heading-title mt-4 split-title">
-                          What Our <span class="text-primary">Partners Say</span> About Us!
-                        </h2>
-                        <p class="mt-4 mb-0">
-                          Real feedback from the teams we've partnered with — on the results, the process, and what it's like to work with us.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper freelancer-testimonials-slider">
-                    <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <div class="testimonial-card">
-                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
-                          <div class="testimonial-content">
-                            <ul class="testimonial-stars">
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                            </ul>
-                            <span class="testimonial-rating">
-                              “Outstanding Experience!”
-                            </span>
-                            <p class="testimonial-text">
-                              <span>
-                                Deveon
-                              </span>
-                              truly understood our product vision. Their engineering team shipped our MVP in record time and user engagement tripled in just three months!
-                            </p>
-                          </div>
-                          <div class="testimonial-divider"></div>
-                          <div class="testimonial-author">
-                            <div class="author-avatar">
-                              <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Sarah Lee">
-                            </div>
-                            <div class="author-info">
-                              <h3 class="author-name">
-                                Sarah Lee
-                              </h3>
-                              <span class="author-role">
-                                Product Manager
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div class="testimonial-card dark mt-4">
-                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
-                          <div class="testimonial-content">
-                            <ul class="testimonial-stars">
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                            </ul>
-                            <span class="testimonial-rating">
-                              “Truly Transformative!”
-                            </span>
-                            <p class="testimonial-text">
-                              Their insight into scaling small businesses is unmatched. Our app downloads skyrocketed by
-                              <span>
-                                180%
-                              </span>
-                              after their strategy.
-                            </p>
-                          </div>
-                          <div class="testimonial-divider"></div>
-                          <div class="testimonial-author">
-                            <div class="author-avatar">
-                              <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Raj Patel">
-                            </div>
-                            <div class="author-info">
-                              <h3 class="author-name">
-                                Raj Patel
-                              </h3>
-                              <span class="author-role">
-                                Software Engineer
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div class="testimonial-card">
-                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
-                          <div class="testimonial-content">
-                            <ul class="testimonial-stars">
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                            </ul>
-                            <span class="testimonial-rating">
-                              “Highly Recommended!”
-                            </span>
-                            <p class="testimonial-text">
-                              Deveon helped us rebuild our platform from the ground up, leading to a
-                              <span>
-                                2.5x
-                              </span>
-                              increase in active users. Their approach is both practical and innovative.
-                            </p>
-                          </div>
-                          <div class="testimonial-divider"></div>
-                          <div class="testimonial-author">
-                            <div class="author-avatar">
-                              <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="Emily Wong">
-                            </div>
-                            <div class="author-info">
-                              <h3 class="author-name">
-                                Emily Wong
-                              </h3>
-                              <span class="author-role">
-                                Marketing Lead
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="swiper-slide">
-                        <div class="testimonial-card dark mt-4">
-                          <i class="ri-double-quotes-r testimonial-quote-icon"></i>
-                          <div class="testimonial-content">
-                            <ul class="testimonial-stars">
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                              <li><i class="ri-star-fill"></i></li>
-                            </ul>
-                            <span class="testimonial-rating">
-                              “Game Changer!”
-                            </span>
-                            <p class="testimonial-text">
-                              Working with Deveon boosted our conversion rates tremendously. Their understanding of both engineering and growth is phenomenal.
-                            </p>
-                          </div>
-                          <div class="testimonial-divider"></div>
-                          <div class="testimonial-author">
-                            <div class="author-avatar">
-                              <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="Michael Turner">
-                            </div>
-                            <div class="author-info">
-                              <h3 class="author-name">
-                                Michael Turner
-                              </h3>
-                              <span class="author-role">
-                                Founder & CEO
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+@include('frontend.partials.testimonials')
 
 
                 <section class="section home-blog-section">
@@ -2949,7 +2705,7 @@
                         <article class="blog-card wow fadeInUp" data-wow-delay=".{{ $loop->iteration }}s">
                           <div class="blog-card__media">
                             <a href="{{ route('blog.detail', $blog->slug) }}" class="blog-card__media-link">
-                              <img src="{{ $blog->image ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}" loading="lazy">
+                              <img src="{{ ($blog->image && file_exists(public_path('storage/' . $blog->image))) ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}" loading="lazy">
                             </a>
                             <a href="{{ route('blog', ['category' => $blog->category]) }}" class="blog-card__category">
                               {{ $blog->category ?: 'News' }}
