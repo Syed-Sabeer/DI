@@ -14,6 +14,9 @@ return new class extends Migration
                 $table->string('title');
                 $table->string('slug')->unique();
                 $table->longText('content');
+                $table->string('meta_title')->nullable();
+                $table->string('meta_description', 320)->nullable();
+                $table->string('meta_keywords')->nullable();
                 $table->string('category')->nullable()->index();
                 $table->string('image')->nullable();
                 $table->string('tags')->nullable();
@@ -23,10 +26,21 @@ return new class extends Migration
             });
         }
 
+        if (!Schema::hasTable('comments')) {
+            Schema::create('comments', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
+                $table->string('name');
+                $table->string('email')->index();
+                $table->text('comment');
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('comments');
         Schema::dropIfExists('blogs');
     }
 };

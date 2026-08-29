@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('career_applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('career_id')->constrained()->cascadeOnDelete();
+            $table->uuid('submission_token')->nullable()->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->index();
