@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\Schema;
 use App\Models\Newsbar;
 use App\Models\SubscriptionPlan;
 use App\Models\Testimonial;
@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Schema::defaultStringLength(191);
         Paginator::useBootstrapFive();
 
         View::composer('layouts.frontend.footer', function ($view) {
