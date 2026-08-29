@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ContactController extends Controller
@@ -24,6 +25,7 @@ class ContactController extends Controller
     {
         try {
             $validated = $request->validate([
+                'submission_token' => 'required|uuid',
                 'fullname' => 'required|string|max:255',
                 'phone' => 'required|string|max:30',
                 'email' => 'required|email|max:255',
@@ -42,18 +44,30 @@ class ContactController extends Controller
             }
 
             $location = IpCountryResolver::resolve($request);
-            $contact = DB::transaction(fn () => ContactSubmission::create([
-                'fullname' => $validated['fullname'],
-                'phone' => $validated['phone'],
-                'email' => $validated['email'],
-                'subject' => $validated['subject'],
-                'message' => $validated['message'],
-                'ip_address' => $location['ip'],
-                'country' => $location['country'],
-                'state' => $location['state'],
-                'city' => $location['city'],
-                'area' => $location['area'],
-            ]));
+            $contact = DB::transaction(fn () => ContactSubmission::firstOrCreate(
+                ['submission_token' => $validated['submission_token']],
+                [
+                    'fullname' => $validated['fullname'],
+                    'phone' => $validated['phone'],
+                    'email' => $validated['email'],
+                    'subject' => $validated['subject'],
+                    'message' => $validated['message'],
+                    'ip_address' => $location['ip'],
+                    'country' => $location['country'],
+                    'state' => $location['state'],
+                    'city' => $location['city'],
+                    'area' => $location['area'],
+                ]
+            ));
+
+            if (! $contact->wasRecentlyCreated) {
+                return response()->json([
+                    'status' => 'warning',
+                    'title' => 'Already received',
+                    'message' => 'This message has already been received. No duplicate email was sent.',
+                    'icon' => 'warning',
+                ], 409);
+            }
 
             try {
                 Mail::send('emails.contact-admin', compact('contact'), function ($mail) use ($contact) {
@@ -66,7 +80,13 @@ class ContactController extends Controller
                 Log::error('Contact email delivery failed', ['contact_id' => $contact->id, 'message' => $mailError->getMessage()]);
             }
 
-            return response()->json(['status' => 'success', 'title' => 'Message received!', 'message' => 'Thank you for contacting Deveon Inc. A confirmation has been sent to your email, and our team will respond shortly.', 'icon' => 'success']);
+            return response()->json([
+                'status' => 'success',
+                'title' => 'Message received!',
+                'message' => 'Thank you for contacting Deveon Inc. A confirmation has been sent to your email, and our team will respond shortly.',
+                'icon' => 'success',
+                'next_token' => (string) Str::uuid(),
+            ]);
         } catch (ValidationException $e) {
             return response()->json(['status' => 'error', 'title' => 'Please check the form', 'message' => collect($e->errors())->flatten()->first() ?: 'Please check your details and try again.', 'errors' => $e->errors(), 'icon' => 'error'], 422);
         } catch (\Throwable $e) {

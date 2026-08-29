@@ -936,6 +936,7 @@
                         </div>
                         <form id="team-contact-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
                             @csrf
+                            <input type="hidden" name="submission_token" value="{{ (string) \Illuminate\Support\Str::uuid() }}">
                             <div class="row gy-3">
                                 <div class="col-sm-6">
                                     <label class="field-label" for="conName">Full Name *</label>
@@ -1073,6 +1074,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('team-contact-form');
     if (!form || typeof Swal === 'undefined') return;
+    if (form.dataset.submitHandlerBound === 'true') return;
+    form.dataset.submitHandlerBound = 'true';
 
     const button = form.querySelector('[data-contact-submit]');
     const icon = form.querySelector('[data-submit-icon]');
@@ -1096,9 +1099,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
+        if (form.dataset.submitting === 'true') return;
         form.querySelectorAll('.is-invalid').forEach(field => field.classList.remove('is-invalid'));
         if (!form.checkValidity()) { form.reportValidity(); return; }
 
+        form.dataset.submitting = 'true';
         setLoading(true);
         try {
             const response = await fetch(form.action, {
@@ -1122,6 +1127,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             form.reset();
+            const submissionToken = form.querySelector('[name="submission_token"]');
+            if (submissionToken && data.next_token) submissionToken.value = data.next_token;
             await Swal.fire({
                 ...alertTheme(), icon: 'success', title: data.title, text: data.message,
                 confirmButtonText: 'Done', timer: 6500, timerProgressBar: true
@@ -1129,6 +1136,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             await Swal.fire({ ...alertTheme(), icon: 'error', title: 'Connection problem', text: 'We could not reach the server. Please check your connection and try again.', confirmButtonText: 'Try again' });
         } finally {
+            form.dataset.submitting = 'false';
             setLoading(false);
         }
     });

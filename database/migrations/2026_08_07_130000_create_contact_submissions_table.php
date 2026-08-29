@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('contact_submissions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('submission_token')->unique();
             $table->string('fullname');
             $table->string('phone')->nullable();
             $table->string('email');

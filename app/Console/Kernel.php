@@ -12,7 +12,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Shared-hosting cron runs the scheduler every minute. Drain queued
+        // newsletter jobs briefly, then exit so no permanent worker is needed.
+        $schedule
+            ->command('queue:work database --queue=default --stop-when-empty --max-time=50 --tries=3 --timeout=120')
+            ->everyMinute()
+            ->withoutOverlapping(10);
     }
 
     /**

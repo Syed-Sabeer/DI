@@ -10,6 +10,7 @@ class ContactSubmission extends Model
     protected $table = 'contact_submissions';
 
     protected $fillable = [
+        'submission_token',
         'fullname',
         'phone',
         'email',
