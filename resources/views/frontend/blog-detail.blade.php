@@ -78,7 +78,7 @@
           @forelse($latestBlogs as $latest)
           <article class="mini-post">
             <a class="mini-post__media" href="{{ route('blog.detail', $latest->slug) }}" aria-label="Open: {{ $latest->title }}">
-              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
+              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}" loading="lazy" decoding="async">
             </a>
             <div class="mini-post__body"><h3 class="mini-post__heading"><a class="mini-post__link" href="{{ route('blog.detail', $latest->slug) }}">{{ \Illuminate\Support\Str::limit($latest->title, 48) }}</a></h3><time class="mini-post__date" datetime="{{ optional($latest->created_at)->toDateString() }}">{{ optional($latest->created_at)->format('d M, Y') }}</time></div>
           </article>

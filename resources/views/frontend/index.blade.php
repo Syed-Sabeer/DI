@@ -768,7 +768,6 @@
       background:
           radial-gradient(50% 50% at 50% 50%, rgba(var(--primary-rgb), 0.13), transparent 62%),
           radial-gradient(38% 38% at 46% 46%, rgba(150, 210, 255, 0.05), transparent 70%);
-      filter: blur(20px);
   }
 
   /* cool counter-light bottom left, keeps the frame from going flat */
@@ -781,7 +780,6 @@
       height: 52rem;
       border-radius: 50%;
       background: radial-gradient(50% 50% at 50% 50%, rgba(120, 160, 255, 0.07), transparent 65%);
-      filter: blur(24px);
   }
 
   .dv-bg__grid {
@@ -800,8 +798,7 @@
   .dv-bg__noise {
       position: absolute;
       inset: 0;
-      opacity: 0.035;
-      mix-blend-mode: overlay;
+      opacity: 0.05;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -1127,6 +1124,7 @@
 
   .dv-scene__halo {
       position: absolute;
+      contain: paint;
       inset: -14% -10% -20%;
       border-radius: 50%;
       background: radial-gradient(50% 50% at 52% 48%, rgba(var(--primary-rgb), 0.1), transparent 68%);
@@ -1154,6 +1152,8 @@
       transform-style: preserve-3d;
       transform: rotateY(-15deg) rotateX(6deg) rotateZ(-1deg);
       animation: dvFloat 9s ease-in-out infinite;
+      will-change: transform;
+      backface-visibility: hidden;
   }
 
   @keyframes dvFloat {
@@ -1853,10 +1853,10 @@
                         <div class="dv-proof wow fadeInUp" data-wow-delay=".3s">
                           <div class="dv-proof__group">
                             <ul class="dv-proof__avatars">
-                              <li><img src="{{ asset('FrontendAssets/images/profile/1.jpg') }}" alt="Client"></li>
-                              <li><img src="{{ asset('FrontendAssets/images/profile/2.jpg') }}" alt="Client"></li>
-                              <li><img src="{{ asset('FrontendAssets/images/profile/3.jpg') }}" alt="Client"></li>
-                              <li><img src="{{ asset('FrontendAssets/images/profile/4.jpg') }}" alt="Client"></li>
+                              <li><img src="{{ asset('FrontendAssets/images/profile/1.jpg') }}" alt="Client" decoding="async"></li>
+                              <li><img src="{{ asset('FrontendAssets/images/profile/2.jpg') }}" alt="Client" decoding="async"></li>
+                              <li><img src="{{ asset('FrontendAssets/images/profile/3.jpg') }}" alt="Client" decoding="async"></li>
+                              <li><img src="{{ asset('FrontendAssets/images/profile/4.jpg') }}" alt="Client" decoding="async"></li>
                             </ul>
                             <div>
                               <ul class="dv-proof__stars">
@@ -1914,7 +1914,7 @@
                                   <!-- sidebar -->
                                   <aside class="dv-ui__side">
                                     <div class="dv-ui__brand">
-                                      <img src="{{ asset('FrontendAssets/images/brand/deveon-mark-lime.png') }}" alt="Deveon">
+                                      <img src="{{ asset('FrontendAssets/images/brand/deveon-mark-lime.png') }}" alt="Deveon" decoding="async">
                                       <b>Deveon</b>
                                     </div>
                                     <div class="dv-ui__label">Workspace</div>
@@ -2102,7 +2102,7 @@
                               </svg>
                             </div>
                             <div class="dv-badge__mark">
-                              <img src="{{ asset('FrontendAssets/images/brand/deveon-mark-white.png') }}" alt="Deveon">
+                              <img src="{{ asset('FrontendAssets/images/brand/deveon-mark-white.png') }}" alt="Deveon" decoding="async">
                             </div>
                           </div>
 
@@ -2133,22 +2133,22 @@
                     <div class="swiper client-swiper">
                       <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/6.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/6.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;" loading="lazy" decoding="async">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/7.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/7.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;" loading="lazy" decoding="async">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/8.svg')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/8.svg')}}" alt="Brand" class="brand02-image rounded" loading="lazy" decoding="async">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/9.svg')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/9.svg')}}" alt="Brand" class="brand02-image rounded" loading="lazy" decoding="async">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/10.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/10.svg')}}" alt="Brand" class="brand02-image rounded" style="padding: 0rem;" loading="lazy" decoding="async">
                         </div>
                         <div class="swiper-slide">
-                          <img src="{{ asset('FrontendAssets/images/png/apps/11.svg')}}" alt="Brand" class="brand02-image rounded">
+                          <img src="{{ asset('FrontendAssets/images/png/apps/11.svg')}}" alt="Brand" class="brand02-image rounded" loading="lazy" decoding="async">
                         </div>
                       </div>
                     </div>
@@ -2164,7 +2164,7 @@
                           <img loading="lazy" class="abt-media__main anim-img" data-animate="true" src="{{ asset('FrontendAssets/images/shapes/6.png')}}" alt="about">
                         </div>
                         <div class="abt-media__svg">
-                          <img src="{{ asset('FrontendAssets/images/shapes/5.png')}}" alt="" class="img-fluid">
+                          <img src="{{ asset('FrontendAssets/images/shapes/5.png')}}" alt="" class="img-fluid" loading="lazy" decoding="async">
                         </div>
                       </div>
                       <!-- Right content -->
@@ -2211,16 +2211,16 @@
                               <div class="d-flex gap-3 flex-wrap mb-4">
                                 <div class="avatar-list-stacked me-3">
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/3.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/3.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/4.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/4.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                 </div>
                                 <div>
@@ -2366,7 +2366,7 @@
    <section class="section py-0 choose04-us-section">
                 <div class="choose-thumb-wrapper d-xl-block d-none z-index-1">
                   <div class="clip-anim">
-                    <img class="anim-img" data-animate="true" src="{{ asset('FrontendAssets/images/shapes/52.png')}}" alt="">
+                    <img class="anim-img" data-animate="true" src="{{ asset('FrontendAssets/images/shapes/52.png')}}" alt="" loading="lazy" decoding="async">
                   </div>
                 </div>
                 <div class="container">
@@ -2395,16 +2395,16 @@
                               <div class="choose04-us-section__review-box flex-wrap">
                                 <div class="avatar-list-stacked me-4 mb-3">
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/1.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/2.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/3.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/3.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                   <span class="avatar avatar-rounded">
-                                    <img src="{{ asset('FrontendAssets/images/profile/4.jpg')}}" alt="img">
+                                    <img src="{{ asset('FrontendAssets/images/profile/4.jpg')}}" alt="img" loading="lazy" decoding="async">
                                   </span>
                                 </div>
                                 <div>
@@ -2462,8 +2462,8 @@
                           </div>
                           <div class="col-md-5">
                             <div class="choose4-us-image">
-                              <img src="{{ asset('FrontendAssets/images/shapes/5.png')}}" alt="img" class="arrow-img d-lg-block d-none">
-                              <img src="{{ asset('FrontendAssets/images/shapes/51.png')}}" alt="" class="img-fluid rounded main-image">
+                              <img src="{{ asset('FrontendAssets/images/shapes/5.png')}}" alt="img" class="arrow-img d-lg-block d-none" loading="lazy" decoding="async">
+                              <img src="{{ asset('FrontendAssets/images/shapes/51.png')}}" alt="" class="img-fluid rounded main-image" loading="lazy" decoding="async">
                               <div class="choose4-us-img-content">
                                 <div class="compign-div d-flex gap-2">
                                   <span class="odometer compign-number" data-count="150">
@@ -2490,49 +2490,49 @@
                       <span class="marquee-text stroke">
                         Software Development
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text">
                         AI & ML Solutions
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text stroke">
                         Mobile App Development
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text">
                         Website Development
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text stroke">
                         SEO & Marketing
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text">
                         IT Solutions & Consulting
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text stroke">
                         UI/UX Design
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                     <div class="swiper-slide marquee-item">
                       <span class="marquee-text">
                         Digital Marketing
                       </span>
-                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="">
+                      <img class="marquee-icon" src="{{ asset('FrontendAssets/images/shapes/4.svg')}}" alt="" loading="lazy" decoding="async">
                     </div>
                   </div>
                 </div>

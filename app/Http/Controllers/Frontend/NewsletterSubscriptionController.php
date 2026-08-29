@@ -45,4 +45,12 @@ class NewsletterSubscriptionController extends Controller
             ], 422);
         }
     }
+
+    public function destroy(Request $request, NewNewsletter $subscriber)
+    {
+        $email = $subscriber->email;
+        $subscriber->delete();
+
+        return view('frontend.newsletter-unsubscribed', compact('email'));
+    }
 }

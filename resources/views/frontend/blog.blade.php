@@ -103,7 +103,7 @@
           <article class="post-card post-card-overlay wow fadeInUp" data-wow-delay=".2s">
             <div class="post-media">
               <a href="{{ route('blog.detail', $blog->slug) }}">
-                <img src="{{ ($blog->image && file_exists(public_path('storage/' . $blog->image))) ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}">
+                <img src="{{ ($blog->image && file_exists(public_path('storage/' . $blog->image))) ? asset('storage/' . $blog->image) : asset('FrontendAssets/images/blog/blog1.png') }}" alt="{{ $blog->title }}" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="post-overlay-content">
@@ -145,7 +145,7 @@
           @forelse($latestBlogs as $latest)
           <article class="mini-post">
             <a class="mini-post__media" href="{{ route('blog.detail', $latest->slug) }}" aria-label="Open: {{ $latest->title }}">
-              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}">
+              <img class="mini-post__img" src="{{ ($latest->image && file_exists(public_path('storage/' . $latest->image))) ? asset('storage/' . $latest->image) : asset('FrontendAssets/images/blog/blog8.png') }}" alt="{{ $latest->title }}" loading="lazy" decoding="async">
             </a>
             <div class="mini-post__body">
               <h3 class="mini-post__heading"><a class="mini-post__link" href="{{ route('blog.detail', $latest->slug) }}">{{ \Illuminate\Support\Str::limit($latest->title, 48) }}</a></h3>

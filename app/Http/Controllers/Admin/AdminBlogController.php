@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\QueueBlogNewsletter;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\NewNewsletter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -44,7 +46,9 @@ class AdminBlogController extends Controller
     public function add()
     {
         $categories = $this->categoryOptions();
-        return view('admin.crud.blogs.add', compact('categories'));
+        $subscriberCount = NewNewsletter::count();
+
+        return view('admin.crud.blogs.add', compact('categories', 'subscriberCount'));
     }
 
     public function store(Request $request)
@@ -62,6 +66,7 @@ class AdminBlogController extends Controller
                 'meta_title' => 'nullable|string|max:255',
                 'meta_description' => 'nullable|string|max:320',
                 'meta_keywords' => 'nullable|string|max:255',
+                'send_newsletter' => 'nullable|boolean',
             ]);
 
             $validatedData = $request->only(['title', 'slug', 'content',  'tags', 'min_read', 'visibility', 'category', 'meta_title', 'meta_description', 'meta_keywords']);
@@ -93,7 +98,26 @@ class AdminBlogController extends Controller
 
             Log::info('Blog created successfully:', ['id' => $blog->id]);
 
-            return redirect()->route('admin.blog.index')->with('success', 'Blog added successfully.');
+            $message = 'Blog added successfully.';
+
+            if ($request->boolean('send_newsletter')) {
+                try {
+                    QueueBlogNewsletter::dispatch($blog->id)
+                        ->onConnection('database');
+                    $message .= ' The subscriber newsletter has been queued for background delivery.';
+                } catch (\Throwable $queueException) {
+                    Log::error('Unable to queue blog newsletter:', [
+                        'blog_id' => $blog->id,
+                        'message' => $queueException->getMessage(),
+                    ]);
+
+                    return redirect()->route('admin.blog.index')
+                        ->with('success', $message)
+                        ->with('warning', 'The blog was saved, but its newsletter could not be queued. Please check the queue configuration.');
+                }
+            }
+
+            return redirect()->route('admin.blog.index')->with('success', $message);
         } catch (\Throwable $e) {
             Log::error('Error while creating blog:', ['message' => $e->getMessage()]);
             return redirect()->back()->withErrors($e->getMessage())->withInput();

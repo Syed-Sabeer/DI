@@ -651,7 +651,7 @@
     <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--prev" aria-label="Previous screenshot"><i class="ri-arrow-left-s-line"></i></button>
     <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--next" aria-label="Next screenshot"><i class="ri-arrow-right-s-line"></i></button>
     <div class="portfolio-lightbox__stage">
-        <img src="" alt="" class="portfolio-lightbox__img">
+        <img src="" alt="" class="portfolio-lightbox__img" loading="lazy" decoding="async">
         <span class="portfolio-lightbox__counter"></span>
     </div>
 </div>

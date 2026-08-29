@@ -95,11 +95,11 @@
                 <!-- End::header-element -->
                 <a href="{{ route('home') }}" class="brand-main">
                   <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
-                  <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
-                  <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
-                  <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark">
-                  <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
-                  <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark" decoding="async">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light" decoding="async">
+                  <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark" decoding="async">
+                  <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color" decoding="async">
+                  <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color" decoding="async">
                 </a>
               </div>
               <!-- Start::header-element -->
@@ -128,8 +128,8 @@
           <aside class="app-sidebar" id="sidebar">
             <div class="app-toggle-header">
               <a href="{{ route('home') }}" class="brand-main">
-                <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
-                <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
+                <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark" decoding="async">
+                <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-color" decoding="async">
               </a>
               <div class="header-element">
                 <!-- Start::header-link -->
@@ -164,12 +164,12 @@
                       </div>
                       <!-- End::header-element -->
                       <a href="{{ route('home') }}" class="brand-main">
-                        <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white">
-                        <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark">
-                        <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light">
-                        <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark">
-                        <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color">
-                        <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-white.png')}}" alt="Deveon Inc" class="desktop-logo logo-white" decoding="async">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-dark.png')}}" alt="Deveon Inc" class="desktop-logo logo-dark" decoding="async">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-light.png')}}" alt="Deveon Inc" class="desktop-logo logo-light" decoding="async">
+                        <img src="{{ asset('FrontendAssets/images/brand/toggle-dark.png')}}" alt="Deveon Inc" class="mobile-logo mobile-dark" decoding="async">
+                        <img src="{{ asset('FrontendAssets/images/brand/logo-color.png')}}" alt="Deveon Inc" class="desktop-logo logo-color" decoding="async">
+                        <img src="{{ asset('FrontendAssets/images/brand/toggle-color.png')}}" alt="Deveon Inc" class="mobile-logo mobile-color" decoding="async">
                       </a>
                     </div>
                   </div>

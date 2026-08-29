@@ -19,3 +19,85 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# ============================================================================
+# Performance: compression, caching and security headers
+# ============================================================================
+
+# ---------- Gzip / Brotli compression ----------
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/json application/xml application/rss+xml
+    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml application/x-font-ttf font/opentype
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/json application/xml application/rss+xml
+    AddOutputFilterByType DEFLATE image/svg+xml application/x-font-ttf font/opentype
+    # Old browsers that mishandle compression
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE\s7 !no-gzip !gzip-only-text/html
+    Header append Vary Accept-Encoding
+</IfModule>
+
+# ---------- Browser caching ----------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                          "access plus 1 month"
+
+    # Fingerprint-free assets: long cache, bump the filename when you change one
+    ExpiresByType text/css                  "access plus 1 year"
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType text/javascript           "access plus 1 year"
+
+    ExpiresByType image/webp                "access plus 1 year"
+    ExpiresByType image/png                 "access plus 1 year"
+    ExpiresByType image/jpeg                "access plus 1 year"
+    ExpiresByType image/gif                 "access plus 1 year"
+    ExpiresByType image/svg+xml             "access plus 1 year"
+    ExpiresByType image/x-icon              "access plus 1 year"
+
+    ExpiresByType font/woff2                "access plus 1 year"
+    ExpiresByType font/woff                 "access plus 1 year"
+    ExpiresByType application/font-woff2    "access plus 1 year"
+
+    # HTML and feeds must stay fresh
+    ExpiresByType text/html                 "access plus 0 seconds"
+    ExpiresByType application/xml           "access plus 1 hour"
+    ExpiresByType text/plain                "access plus 1 hour"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Immutable static assets
+    <FilesMatch "\.(css|js|webp|png|jpe?g|gif|svg|ico|woff2?|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    # Never cache the HTML itself
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+
+    # Security headers (also a small ranking signal)
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header unset X-Powered-By
+</IfModule>
+
+# ---------- Correct MIME types ----------
+<IfModule mod_mime.c>
+    AddType image/webp                  .webp
+    AddType font/woff2                  .woff2
+    AddType application/javascript      .js
+    AddType image/svg+xml               .svg
+</IfModule>
+
+# ---------- Keep-alive ----------
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>

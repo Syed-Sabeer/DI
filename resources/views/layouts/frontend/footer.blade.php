@@ -105,7 +105,7 @@
                               About Us
                             </a>
                           </li>
-                          
+
                           <li>
                             <a href="{{ route('careers') }}" class="footer-career-link">
                               Careers
@@ -206,17 +206,17 @@
                       <div class="footer-bottom-item">
                         <ul class="footer-bottom-menu">
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('privacy') }}">
                               Policy &amp; Privacy
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('terms') }}">
                               Terms &amp; Conditions
                             </a>
                           </li>
                           <li>
-                            <a href="javascript:void(0);">
+                            <a href="{{ route('legal') }}">
                               Legal
                             </a>
                           </li>

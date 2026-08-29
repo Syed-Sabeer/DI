@@ -1032,7 +1032,7 @@
                 <div class="col-md-6">
                     <div class="office-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#016937;">
                         <div class="office-flag">
-                            <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag">
+                            <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag" loading="lazy" decoding="async">
                         </div>
                         <div>
                             <span class="office-region">Offshore Development Center</span>
@@ -1048,7 +1048,7 @@
                 <div class="col-md-6">
                     <div class="office-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d52b1e;">
                         <div class="office-flag">
-                            <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag">
+                            <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag" loading="lazy" decoding="async">
                         </div>
                         <div>
                             <span class="office-region">Headquarters</span>

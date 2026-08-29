@@ -390,7 +390,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-xl-6">
-                                        <div class="chooseus-side-image-container"> <img src="{{ asset('FrontendAssets/images/shapes/45.png')}}" alt="" class="img-fluid"> <a href="javascript:void(0);" class="choose-play-btn"><i class="ri-play-mini-fill"></i></a> </div>
+                                        <div class="chooseus-side-image-container"> <img src="{{ asset('FrontendAssets/images/shapes/45.png')}}" alt="" class="img-fluid" loading="lazy" decoding="async"> <a href="javascript:void(0);" class="choose-play-btn"><i class="ri-play-mini-fill"></i></a> </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="heading-section text-start"> <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex wow fadeInUp mt-4 mt-sm-0" data-wow-delay=".3s"> About Our Agency </span>
@@ -566,7 +566,7 @@
                                     <div class="col-xl-5">
                                         <div class="founder-photo-card">
                                             <div class="founder-photo-frame">
-                                                <img src="{{ asset('FrontendAssets/images/profile/founder.png')}}" alt="Syed Sabeer Faisal — Founder & CEO of Deveon Inc" class="founder-photo">
+                                                <img src="{{ asset('FrontendAssets/images/profile/founder.webp')}}" alt="Syed Sabeer Faisal — Founder & CEO of Deveon Inc" class="founder-photo" loading="lazy" decoding="async">
                                                 <div class="founder-badge">
                                                     <div class="founder-badge__number-wrap">
                                                         <span class="odometer" data-count="10"></span><span class="suffix">+</span>
@@ -660,7 +660,7 @@
             'familyName' => 'Faisal',
             'jobTitle' => 'Founder & Chief Executive Officer',
             'description' => 'Founder and Chief Executive Officer of Deveon Inc, a software development company building custom software, mobile applications and AI automation for clients across North America, the United Kingdom and Australia.',
-            'image' => asset('FrontendAssets/images/profile/founder.png'),
+            'image' => asset('FrontendAssets/images/profile/founder.webp'),
             'url' => url('/about'),
             'worksFor' => ['@id' => url('/') . '#organization'],
             'knowsAbout' => ['Software Development', 'Artificial Intelligence', 'Product Strategy', 'Enterprise Systems'],

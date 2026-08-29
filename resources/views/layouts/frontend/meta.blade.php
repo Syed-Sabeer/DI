@@ -96,7 +96,7 @@
     <meta name="twitter:image:alt" content="{{ $seo['brand'] }} — {{ $seo['tagline'] }}">
 
     <!-- Icons -->
-    <link rel="icon" href="{{ asset('FrontendAssets/images/brand/favicon.ico') }}" sizes="any">
+    <link rel="icon" href="{{ asset('FrontendAssets/images/brand/favicon.png') }}" sizes="any">
     <link rel="apple-touch-icon" href="{{ asset('FrontendAssets/images/brand/deveon-mark-lime.png') }}">
 
     <!-- Performance hints -->
@@ -135,7 +135,7 @@
                     'name'     => 'Syed Sabeer Faisal',
                     'jobTitle' => 'Founder & Chief Executive Officer',
                     'worksFor' => ['@id' => url('/') . '#organization'],
-                    'image'    => asset('FrontendAssets/images/profile/founder.png'),
+                    'image'    => asset('FrontendAssets/images/profile/founder.webp'),
                 ],
                 'address' => [
                     '@type'           => 'PostalAddress',
