@@ -344,7 +344,7 @@
                 </div>
             </div>
 
-            <h2 class="error-404-title">Page Not <span>Found</span></h2>
+            {{-- <h2 class="error-404-title">Page Not <span>Found</span></h2> --}}
             <p class="error-404-desc">The page you're looking for doesn't exist, may have moved, or the URL might be mistyped.</p>
 
             <div class="error-404-actions">

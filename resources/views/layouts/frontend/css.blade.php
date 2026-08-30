@@ -1,5 +1,5 @@
  <!-- Favicon -->
-    <link rel="icon" href="{{ asset('FrontendAssets/images/brand/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('FrontendAssets/images/brand/favicon.png')}}" type="image/x-icon">
     <!-- Choices JS -->
     <script src="{{ asset('FrontendAssets/libs/choices.js/public/assets/scripts/choices.min.js')}}">
     </script>
