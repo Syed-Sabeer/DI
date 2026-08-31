@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ !empty($resubscribed) ? 'Subscribed again' : 'Unsubscribed' }} | Deveon Inc</title>
+  <title>Confirm unsubscribe | Deveon Inc</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #f2f3f0; color: #171a17; font-family: Arial, Helvetica, sans-serif; }
@@ -21,26 +21,16 @@
 <body>
   <main class="card">
     <img class="logo" src="{{ asset('FrontendAssets/images/brand/logo.png') }}" alt="Deveon Inc">
-    @if(!empty($resubscribed))
-      <div class="eyebrow">Welcome back</div>
-      <h1>You are subscribed again</h1>
-      <p><span class="email">{{ $email }}</span> will receive future Deveon Insights and blog announcements.</p>
-      <div class="actions">
-        <a class="button" href="{{ route('home') }}">Return to Deveon</a>
-      </div>
-    @else
-      <div class="eyebrow">Preferences updated</div>
-      <h1>You are unsubscribed</h1>
-      <p><span class="email">{{ $email }}</span> has been removed from Deveon Insights. You will not receive future blog announcements.</p>
-      <div class="actions">
-        <form method="POST" action="{{ route('newsletter.resubscribe') }}">
-          @csrf
-          <input type="hidden" name="email" value="{{ $email }}">
-          <button class="button" type="submit">Subscribe again</button>
-        </form>
-        <a class="button button-secondary" href="{{ route('home') }}">Return to Deveon</a>
-      </div>
-    @endif
+    <div class="eyebrow">Email preferences</div>
+    <h1>Leave the newsletter?</h1>
+    <p>Confirm that you want to stop receiving Deveon Insights at <span class="email">{{ $subscriber->email }}</span>.</p>
+    <div class="actions">
+      <form method="POST" action="{{ $confirmUrl }}">
+        @csrf
+        <button class="button" type="submit">Yes, unsubscribe me</button>
+      </form>
+      <a class="button button-secondary" href="{{ route('home') }}">Keep me subscribed</a>
+    </div>
   </main>
 </body>
 </html>

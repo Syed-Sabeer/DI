@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\NewNewsletter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 
 class NewsletterSubscriptionController extends Controller
@@ -46,15 +47,42 @@ class NewsletterSubscriptionController extends Controller
         }
     }
 
-    public function destroy(Request $request, NewNewsletter $subscriber)
+    public function confirmUnsubscribe(NewNewsletter $subscriber)
+    {
+        $confirmUrl = URL::signedRoute('newsletter.unsubscribe.confirm', [
+            'subscriber' => $subscriber->getKey(),
+        ]);
+
+        return view('frontend.newsletter-unsubscribe-confirm', compact('subscriber', 'confirmUrl'));
+    }
+
+    public function destroy(NewNewsletter $subscriber)
     {
         $email = $subscriber->email;
         $subscriber->delete();
 
-        if ($request->isMethod('post')) {
-            return response()->noContent();
-        }
-
         return view('frontend.newsletter-unsubscribed', compact('email'));
+    }
+
+    public function oneClickUnsubscribe(NewNewsletter $subscriber)
+    {
+        $subscriber->delete();
+
+        return response()->noContent();
+    }
+
+    public function resubscribe(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email:rfc|max:255',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        NewNewsletter::firstOrCreate(compact('email'));
+
+        return view('frontend.newsletter-unsubscribed', [
+            'email' => $email,
+            'resubscribed' => true,
+        ]);
     }
 }

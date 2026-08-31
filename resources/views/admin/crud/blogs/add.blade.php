@@ -154,7 +154,7 @@
                                             </div>
                                           </div>
                                           <div class="form-check form-switch m-0">
-                                            <input class="form-check-input" id="send-newsletter" name="send_newsletter" type="checkbox" value="1" role="switch" @checked(old('send_newsletter')) @disabled($subscriberCount === 0)>
+                                            <input class="form-check-input" id="send-newsletter" name="send_newsletter" type="checkbox" value="1" role="switch" @checked(old('send_newsletter', true)) @disabled($subscriberCount === 0)>
                                           </div>
                                         </div>
                                         <div class="newsletter-broadcast-meta mt-2">

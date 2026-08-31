@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class BlogNewsletterTest extends TestCase
@@ -87,5 +88,32 @@ class BlogNewsletterTest extends TestCase
         });
         $this->assertSame('sent', $delivery->fresh()->status);
         $this->assertNotNull($delivery->fresh()->sent_at);
+    }
+
+    public function test_visible_unsubscribe_link_requires_confirmation_and_allows_resubscribing(): void
+    {
+        $subscriber = NewNewsletter::create(['email' => uniqid().'@example.com']);
+        $confirmationPage = URL::signedRoute('newsletter.unsubscribe', [
+            'subscriber' => $subscriber->id,
+        ]);
+
+        $this->get($confirmationPage)
+            ->assertOk()
+            ->assertSee('Yes, unsubscribe me');
+        $this->assertDatabaseHas('new_newsletters', ['id' => $subscriber->id]);
+
+        $unsubscribeAction = URL::signedRoute('newsletter.unsubscribe.confirm', [
+            'subscriber' => $subscriber->id,
+        ]);
+
+        $this->post($unsubscribeAction)
+            ->assertOk()
+            ->assertSee('Subscribe again');
+        $this->assertDatabaseMissing('new_newsletters', ['id' => $subscriber->id]);
+
+        $this->post(route('newsletter.resubscribe'), ['email' => $subscriber->email])
+            ->assertOk()
+            ->assertSee('You are subscribed again');
+        $this->assertDatabaseHas('new_newsletters', ['email' => $subscriber->email]);
     }
 }

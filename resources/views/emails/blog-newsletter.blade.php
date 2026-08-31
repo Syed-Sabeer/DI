@@ -12,8 +12,12 @@
   </div>
 
   @php
-    $coverImage = $blog->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($blog->image)
-        ? asset('storage/'.$blog->image)
+    $publicDisk = \Illuminate\Support\Facades\Storage::disk('public');
+    $coverPath = $blog->image && $publicDisk->exists($blog->image)
+        ? $publicDisk->path($blog->image)
+        : public_path(config('seo.defaultImage'));
+    $coverImage = is_file($coverPath) && is_readable($coverPath)
+        ? $message->embed($coverPath)
         : asset(config('seo.defaultImage'));
     $summary = \Illuminate\Support\Str::limit(preg_replace('/\s+/', ' ', strip_tags($blog->content)), 300);
   @endphp
