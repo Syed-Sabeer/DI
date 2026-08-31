@@ -51,6 +51,10 @@ class NewsletterSubscriptionController extends Controller
         $email = $subscriber->email;
         $subscriber->delete();
 
+        if ($request->isMethod('post')) {
+            return response()->noContent();
+        }
+
         return view('frontend.newsletter-unsubscribed', compact('email'));
     }
 }

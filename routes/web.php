@@ -69,6 +69,7 @@ Route::get('/legal', [WebsiteController::class, 'legal'])->name('legal');
 Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:3,1')->name('contact.submit');
 Route::post('/newsletter/subscribe', [NewsletterSubscriptionController::class, 'store'])->middleware('throttle:5,1')->name('newsletter.subscribe');
 Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe');
+Route::post('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe.one-click');
 Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
 
 
