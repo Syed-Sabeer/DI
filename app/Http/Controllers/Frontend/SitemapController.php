@@ -39,7 +39,7 @@ class SitemapController extends Controller
         $add('/about',     $now, 'monthly', '0.8');
         $add('/contact',   $now, 'monthly', '0.8');
         $add('/blog',      $now, 'daily',   '0.8');
-        $add('/careers',   $now, 'weekly',  '0.7');
+        $add('/career',   $now, 'weekly',  '0.7');
 
         // ---------- services ----------
         foreach ($website->servicesForSitemap() as $service) {
@@ -72,7 +72,7 @@ class SitemapController extends Controller
         if (class_exists(Career::class)) {
             try {
                 foreach (Career::where('visibility', 1)->get(['slug', 'updated_at']) as $career) {
-                    $add('/careers/'.$career->slug, $career->updated_at ?? $now, 'weekly', '0.6');
+                    $add('/career/'.$career->slug, $career->updated_at ?? $now, 'weekly', '0.6');
                 }
             } catch (\Throwable $e) {
                 // A schema difference must never take the whole sitemap down.
@@ -228,7 +228,7 @@ class SitemapController extends Controller
         $out[] = '- [Portfolio]('.url('/portfolio').'): case studies and product design work';
         $out[] = '- [About]('.url('/about').'): company, team and founder';
         $out[] = '- [Blog]('.url('/blog').'): articles on software, AI and product delivery';
-        $out[] = '- [Careers]('.url('/careers').'): open roles';
+        $out[] = '- [Careers]('.url('/career').'): open roles';
         $out[] = '- [Contact]('.url('/contact').'): enquiries and office locations';
         $out[] = '';
         $out[] = '## Policies';

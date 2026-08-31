@@ -276,10 +276,10 @@
 @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
-        ['@type' => 'CollectionPage', '@id' => url('/careers') . '#careers',
-         'url' => url('/careers'), 'name' => 'Careers at Deveon Inc',
+        ['@type' => 'CollectionPage', '@id' => url('/career') . '#careers',
+         'url' => url('/career'), 'name' => 'Careers at Deveon Inc',
          'about' => ['@id' => url('/') . '#organization']],
-        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/careers')]]],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/career')]]],
     ],
 ]; @endphp
 {!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}

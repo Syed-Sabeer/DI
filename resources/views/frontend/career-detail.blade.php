@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
     '@graph' => [
         [
             '@type' => 'JobPosting',
-            '@id' => url('/careers/' . $career->slug) . '#job',
+            '@id' => url('/career/' . $career->slug) . '#job',
             'title' => $career->job_title,
             'description' => $career->description,
             'datePosted' => optional($career->created_at)->toDateString(),
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ],
             'directApply' => true,
         ],
-        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/careers')], ['@type' => 'ListItem', 'position' => 3, 'name' => $career->job_title, 'item' => url('/careers/' . $career->slug)]]],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Careers', 'item' => url('/career')], ['@type' => 'ListItem', 'position' => 3, 'name' => $career->job_title, 'item' => url('/career/' . $career->slug)]]],
     ],
 ]; @endphp
 {!! json_encode($ld, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}

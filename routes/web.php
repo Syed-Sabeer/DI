@@ -57,9 +57,9 @@ Route::post('/newsletter/subscribe', [NewsletterSubscriptionController::class, '
 Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
-Route::get('/careers', [CareerController::class, 'index'])->name('careers');
-Route::post('/careers/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
-Route::get('/careers/{slug}', [CareerController::class, 'show'])->name('careers.show');
+Route::get('/career', [CareerController::class, 'index'])->name('careers');
+Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
+Route::get('/career/{slug}', [CareerController::class, 'show'])->name('careers.show');
 Route::get('/service', [WebsiteController::class, 'service'])->name('service');
 Route::get('/portfolio', [WebsiteController::class, 'portfolio'])->name('portfolio');
 Route::get('/portfolio/{slug}', [WebsiteController::class, 'portfolioDetail'])->name('portfolio.detail');
