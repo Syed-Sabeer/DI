@@ -25,7 +25,7 @@ class IpCountryResolver
             return ['ip' => $ip, 'country' => $headerCountryName ?: 'Unknown', 'state' => 'Unknown', 'city' => 'Unknown', 'area' => 'Unknown'];
         }
 
-        $location = Cache::remember('ip-location-v2:'.$ip, now()->addDays(30), function () use ($ip) {
+        $location = Cache::remember('ip-location-v3:'.$ip, now()->addDays(30), function () use ($ip) {
             try {
                 $response = Http::connectTimeout(2)->timeout(3)->get(
                     'http://ip-api.com/json/'.urlencode($ip),
@@ -33,11 +33,19 @@ class IpCountryResolver
                 );
 
                 if (! $response->successful() || $response->json('status') !== 'success') return null;
+                $district = $response->json('district');
+                $postalCode = $response->json('zip');
+                $area = implode(' (', array_filter([$district, $postalCode]));
+
+                if ($district && $postalCode) {
+                    $area .= ')';
+                }
+
                 return [
                     'country' => $response->json('country') ?: 'Unknown',
                     'state' => $response->json('regionName') ?: 'Unknown',
                     'city' => $response->json('city') ?: 'Unknown',
-                    'area' => $response->json('district') ?: ($response->json('zip') ?: 'Unknown'),
+                    'area' => $area ?: 'Unknown',
                 ];
             } catch (\Throwable $error) {
                 Log::warning('IP country lookup failed', ['ip' => $ip, 'message' => $error->getMessage()]);

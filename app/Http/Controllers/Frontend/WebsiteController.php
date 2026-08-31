@@ -16,29 +16,14 @@ class WebsiteController extends Controller
 	{
 		$location = IpCountryResolver::resolve(request());
 
-		$visitor = Visitor::firstOrCreate([
+		Visitor::create([
 			'ip_address' => $location['ip'],
 			'visit_date' => Carbon::today()->toDateString(),
-		], [
 			'country' => $location['country'],
 			'state' => $location['state'],
 			'city' => $location['city'],
 			'area' => $location['area'],
 		]);
-
-		$needsLocationDetails = ! $visitor->country || $visitor->country === 'Unknown'
-			|| ! $visitor->state || $visitor->state === 'Unknown'
-			|| ! $visitor->city || $visitor->city === 'Unknown'
-			|| ! $visitor->area || $visitor->area === 'Unknown';
-
-		if ($needsLocationDetails && $location['country'] !== 'Unknown') {
-			$visitor->update([
-				'country' => $location['country'],
-				'state' => $location['state'],
-				'city' => $location['city'],
-				'area' => $location['area'],
-			]);
-		}
 
 		$latestBlogs = Blog::where('visibility', 1)->latest()->take(3)->get();
 		$portfolios = array_slice($this->portfolios(), 0, 5);
