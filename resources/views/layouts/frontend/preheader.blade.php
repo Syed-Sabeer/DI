@@ -188,7 +188,7 @@
       <!-- End Switcher-Icon -->
     </div>
     <!-- Start loader-Icon -->
-    <div class="page-loader">
+    {{-- <div class="page-loader">
       <div class="page-loader__wrapper">
         <div class="page-loader__spinner">
         </div>
@@ -196,7 +196,7 @@
           <img src="{{ asset('FrontendAssets/images/brand/loader.png')}}" alt="Loading">
         </div>
       </div>
-    </div>
+    </div> --}}
     <!-- End loader-Icon -->
     <!-- Back-to-top -->
     <a aria-label="anchor" href="#top" id="back-to-top" class="back-to-top rounded-circle shadow all-ease-03 fade-in">
