@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
-use App\Models\Visitor;
-use App\Support\IpCountryResolver;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,17 +11,6 @@ class WebsiteController extends Controller
 {
 	public function index()
 	{
-		$location = IpCountryResolver::resolve(request());
-
-		Visitor::create([
-			'ip_address' => $location['ip'],
-			'visit_date' => Carbon::today()->toDateString(),
-			'country' => $location['country'],
-			'state' => $location['state'],
-			'city' => $location['city'],
-			'area' => $location['area'],
-		]);
-
 		$latestBlogs = Blog::where('visibility', 1)->latest()->take(3)->get();
 		$portfolios = array_slice($this->portfolios(), 0, 5);
 		return view('frontend.index', compact('latestBlogs', 'portfolios'));

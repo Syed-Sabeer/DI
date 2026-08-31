@@ -49,26 +49,27 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap')
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/llms.txt', [SitemapController::class, 'llms'])->name('llms');
 
+Route::middleware('track.visitor')->group(function () {
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
 Route::get('/about', [WebsiteController::class, 'about'])->name('about');
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
-Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:3,1')->name('contact.submit');
-Route::post('/newsletter/subscribe', [NewsletterSubscriptionController::class, 'store'])->middleware('throttle:5,1')->name('newsletter.subscribe');
-Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [BlogController::class, 'detail'])->name('blog.detail');
 Route::get('/career', [CareerController::class, 'index'])->name('careers');
-Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
 Route::get('/career/{slug}', [CareerController::class, 'show'])->name('careers.show');
 Route::get('/service', [WebsiteController::class, 'service'])->name('service');
 Route::get('/portfolio', [WebsiteController::class, 'portfolio'])->name('portfolio');
 Route::get('/portfolio/{slug}', [WebsiteController::class, 'portfolioDetail'])->name('portfolio.detail');
 Route::get('/service-detail/{slug?}', [WebsiteController::class, 'serviceDetail'])->name('service.detail');
-
-// Legal documents
 Route::get('/privacy-policy', [WebsiteController::class, 'privacyPolicy'])->name('privacy');
 Route::get('/terms-conditions', [WebsiteController::class, 'termsConditions'])->name('terms');
 Route::get('/legal', [WebsiteController::class, 'legal'])->name('legal');
+});
+
+Route::post('/contact/submit', [ContactController::class, 'store'])->middleware('throttle:3,1')->name('contact.submit');
+Route::post('/newsletter/subscribe', [NewsletterSubscriptionController::class, 'store'])->middleware('throttle:5,1')->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe');
+Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
 
 
 
