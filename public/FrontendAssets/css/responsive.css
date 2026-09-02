@@ -145,7 +145,21 @@
     max-width: 165px;
   }
 
-  .main-header .main-brand-header .brand-main img.mobile-logo,
+  /* Below 575px the theme swaps the brand for the square "D" mark and hides
+     every wordmark. The compact bar has room to spare — the two controls sit
+     in the right ~100px — so the full DEVEON wordmark is used instead, which
+     keeps the phone header reading like the desktop one. The dark wordmark is
+     the correct variant here: the bar stays lime green in light mode, dark
+     mode and the pinned scroll state alike. */
+  .main-header .main-brand-header .brand-main .mobile-logo {
+    display: none !important;
+  }
+
+  .main-header .main-brand-header .brand-main .desktop-logo.logo-dark {
+    display: block !important;
+  }
+
+  /* Anywhere the square mark is still used, keep it square. */
   .app-toggle-header .brand-main img.mobile-logo {
     height: 34px;
     width: 34px;
@@ -498,11 +512,87 @@
     justify-content: center;
   }
 
+  /* The home page's "about" split — experience counter, CTA, client avatars
+     and lead paragraph — is a two-column flex row with a 100px gap. Once it
+     wraps on a narrow screen each half kept its desktop width and sat hard
+     left under the now-centred heading, with the big gap left behind as dead
+     space. Each half goes full width, centred, on a sane gap. */
+  .abt-copy .abt-split {
+    justify-content: center;
+    text-align: center;
+    gap: 36px;
+  }
+
+  .abt-copy .abt-split > div {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  /* Flex children again: the counter row and the avatar/clients row. */
+  .abt-copy .abt-split .experince-number,
+  .abt-copy .abt-split > div > .d-flex {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .abt-copy .abt-split .avatar-list-stacked {
+    margin-inline-end: 0 !important;
+  }
+
   /* The "years of experience" numeral is hard-coded to 230px with no
      responsive step, so on a phone it filled most of the screen on its own.
      Stepped down to keep the theme's overlapping-pill composition intact. */
   .aboutme-section .counter-box .profile-experince-number {
     font-size: 180px;
+  }
+}
+
+/* --- About page: the same modules, same treatment ------------------------ */
+@media (max-width: 991.98px) {
+
+  /* Experience counter: the numeral row and the rotated pill that overlaps it
+     are centred together, so the composition stays intact but sits on the
+     page's axis instead of hugging the left edge. */
+  .aboutme-section .profile-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .aboutme-section .profile-content > * {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .aboutme-section .counter-box .profile-experince-number {
+    justify-content: center;
+  }
+
+  .aboutme-section .counter-box .profile-experince-label {
+    left: 50%;
+    /* The theme's -6deg tilt has to be restated, since transform is replaced
+       wholesale rather than merged. */
+    transform: translateX(-50%) rotate(-6deg);
+    text-align: center;
+  }
+
+  /* The checklist is centred as a block rather than per item, so the ticks
+     still line up on a common left edge instead of going ragged. */
+  .about-feature-list {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-inline: auto;
+    text-align: start;
+  }
+
+  /* Founder stat cards and the signature line. */
+  .founder-stat {
+    justify-content: center;
+  }
+
+  .founder-signature {
+    justify-content: center;
+    text-align: center;
   }
 }
 
