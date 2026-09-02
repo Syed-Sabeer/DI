@@ -12,15 +12,23 @@
 */
 $seo = config('seo');
 
-$pageTitle = trim($__env->yieldContent('title'));
+$decodeSection = static fn (string $value): string => html_entity_decode(
+    trim($value),
+    ENT_QUOTES | ENT_HTML5,
+    'UTF-8'
+);
+
+// Inline Blade sections escape dynamic values while capturing them. Decode
+// once here, then let the HTML attributes below perform the final escaping.
+$pageTitle = $decodeSection($__env->yieldContent('title'));
 $metaTitle = $pageTitle !== ''
 ? (str_contains($pageTitle, $seo['titleSuffix']) ? $pageTitle : $pageTitle . ' | ' . $seo['titleSuffix'])
 : $seo['defaultTitle'];
 
-$metaDescription = trim($__env->yieldContent('meta_description')) ?: $seo['defaultDescription'];
+$metaDescription = $decodeSection($__env->yieldContent('meta_description')) ?: $seo['defaultDescription'];
 $metaDescription = \Illuminate\Support\Str::limit(preg_replace('/\s+/', ' ', strip_tags($metaDescription)), 300, '');
 
-$metaKeywords = trim($__env->yieldContent('meta_keywords')) ?: $seo['defaultKeywords'];
+$metaKeywords = $decodeSection($__env->yieldContent('meta_keywords')) ?: $seo['defaultKeywords'];
 
 $metaImageRaw = trim($__env->yieldContent('meta_image')) ?: $seo['defaultImage'];
 $metaImage = \Illuminate\Support\Str::startsWith($metaImageRaw, ['http://', 'https://'])
@@ -35,6 +43,8 @@ $metaType = trim($__env->yieldContent('meta_type')) ?: 'website';
 // Canonical: never carry query strings or pagination noise into the tag.
 $canonical = trim($__env->yieldContent('canonical')) ?: url(request()->getPathInfo());
 $canonical = rtrim($canonical, '/') ?: url('/');
+$currentUrl = rtrim(url()->full(), '/') ?: url('/');
+$hasSelfReferencingCanonical = $currentUrl === $canonical;
 @endphp
 <!-- ============================ META ============================ -->
 <meta charset="UTF-8">
@@ -53,11 +63,14 @@ $canonical = rtrim($canonical, '/') ?: url('/');
 
 <link rel="canonical" href="{{ $canonical }}">
 
-<!-- Target markets: one self-referencing alternate per English locale -->
+<!-- Only canonical pages publish language alternates. Faceted/query URLs point
+     to the canonical page instead of claiming a non-self-referencing locale. -->
+@if($hasSelfReferencingCanonical)
 @foreach($seo['languages'] as $lang)
 <link rel="alternate" hreflang="{{ $lang }}" href="{{ $canonical }}">
 @endforeach
 <link rel="alternate" hreflang="x-default" href="{{ $canonical }}">
+@endif
 
 <!-- Geo -->
 <meta name="geo.region" content="{{ $seo['geo']['region'] }}">

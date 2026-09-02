@@ -5,6 +5,9 @@
 from the Deveon Inc engineering and design team.')
 @section('meta_keywords', 'software development blog, AI automation insights, mobile app development articles, product
 design blog, technology insights, Deveon Inc blog')
+@section('meta_robots', request()->hasAny(['search', 'category', 'tag', 'page'])
+? 'noindex, follow'
+: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1')
 
 @section('css')
 <style>

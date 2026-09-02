@@ -12,13 +12,7 @@ company legal, privacy terms Deveon')
        Sticky contents rail on the left, readable measure on the right.
        ===================================================================== */
     .legal-page {
-        --accent: {
-                {
-                $document['accent']
-            }
-        }
-
-        ;
+        --accent: {{ $document['accent'] }};
     }
 
     /* ---------- meta bar under the hero ---------- */

@@ -376,7 +376,7 @@ class WebsiteController extends Controller
 				'slug'    => 'terms-conditions',
 				'route'   => 'terms',
 				'eyebrow' => 'Terms',
-				'title'   => 'Terms &amp; Conditions',
+				'title'   => 'Terms & Conditions',
 				'icon'    => 'ri-file-list-3-line',
 				'accent'  => '#4f8cff',
 				'lead'    => 'The terms that govern your use of this website and the basis on which Deveon Inc provides professional services.',
@@ -399,7 +399,7 @@ class WebsiteController extends Controller
 						<ul>
 							<li>copy, republish or redistribute our content for commercial purposes without written permission;</li>
 							<li>attempt to gain unauthorised access to the site, its server, or any connected system;</li>
-							<li>probe, scan or test the vulnerability of the site except under the responsible disclosure process described in our <a href="{{ route(\'legal\') }}">Legal Notice</a>;</li>
+							<li>probe, scan or test the vulnerability of the site except under the responsible disclosure process described in our <a href="'.route('legal').'">Legal Notice</a>;</li>
 							<li>introduce malicious code, or use automated means to scrape or overload the site;</li>
 							<li>submit false information, or another person&rsquo;s personal information without their permission; or</li>
 							<li>use the site in a way that breaches any applicable law.</li>
@@ -479,7 +479,7 @@ class WebsiteController extends Controller
 							<div class="legal-facts__row"><span>Website</span><b>deveoninc.com</b></div>
 							<div class="legal-facts__row"><span>Nature of business</span><b>Custom software development, mobile applications, AI automation and digital product design</b></div>
 						</div>
-						<p>This notice sets out information about Deveon Inc and the terms on which this website is made available. It should be read together with our <a href="{{ route(\'privacy\') }}">Privacy Policy</a> and <a href="{{ route(\'terms\') }}">Terms &amp; Conditions</a>.</p>
+						<p>This notice sets out information about Deveon Inc and the terms on which this website is made available. It should be read together with our <a href="'.route('privacy').'">Privacy Policy</a> and <a href="'.route('terms').'">Terms &amp; Conditions</a>.</p>
 					'],
 					['id' => 'website-content', 'heading' => 'Website content and accuracy', 'body' => '
 						<p>We take care to keep the information on this website accurate and current, but it is provided for general information only. It does not constitute professional, technical, financial or legal advice, and it should not be relied upon as the sole basis for a business decision.</p>
@@ -521,8 +521,8 @@ class WebsiteController extends Controller
 					['id' => 'related-documents', 'heading' => 'Related documents', 'body' => '
 						<p>This notice forms part of a set of three documents that together govern your relationship with Deveon Inc:</p>
 						<ul>
-							<li><a href="{{ route(\'privacy\') }}">Privacy Policy</a> &mdash; what personal information we handle, why, and the rights you hold over it.</li>
-							<li><a href="{{ route(\'terms\') }}">Terms &amp; Conditions</a> &mdash; the terms for using this website and the basis on which we provide services.</li>
+							<li><a href="'.route('privacy').'">Privacy Policy</a> &mdash; what personal information we handle, why, and the rights you hold over it.</li>
+							<li><a href="'.route('terms').'">Terms &amp; Conditions</a> &mdash; the terms for using this website and the basis on which we provide services.</li>
 							<li>Legal Notice &mdash; this document.</li>
 						</ul>
 					'],
