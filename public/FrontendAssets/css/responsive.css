@@ -458,6 +458,63 @@
 
 
 /* =========================================================================
+   6b. SECTION HEADERS AND BRAND STRIP — CENTRED ON MOBILE
+   -------------------------------------------------------------------------
+   Several section headers are set left with a paragraph or CTA in the
+   opposite column. That reads well across a wide two-column row, but once
+   the columns stack on a narrow screen the ragged left edge leaves the
+   header looking unanchored. Below lg the whole header block — eyebrow
+   pill, title, lead paragraph and its CTA — is centred so each section
+   opens on a clear axis. Body copy, lists and cards are untouched.
+   ========================================================================= */
+@media (max-width: 991.98px) {
+
+  .heading-section,
+  .services-header,
+  .section-header-cta,
+  .choose04-us-section__header {
+    text-align: center !important;
+  }
+
+  /* Flex children do not follow text-align, so they are centred explicitly.
+     Several eyebrow pills are block-level flex containers rather than
+     inline-flex, so they span the full width and would otherwise keep their
+     label pinned left even inside a centred header. */
+  .heading-section .heading-subtitle,
+  .services-header .heading-subtitle,
+  .section-header-cta .heading-subtitle,
+  .heading-section .btn-list,
+  .services-header .btn-list,
+  .section-header-cta .btn-list {
+    justify-content: center;
+  }
+
+  /* The partner logo strip shows one slide per view on a phone. The logo
+     card is narrower than the slide, so without this it sat hard against
+     the left edge under a centred heading. */
+  .client-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* The "years of experience" numeral is hard-coded to 230px with no
+     responsive step, so on a phone it filled most of the screen on its own.
+     Stepped down to keep the theme's overlapping-pill composition intact. */
+  .aboutme-section .counter-box .profile-experince-number {
+    font-size: 180px;
+  }
+}
+
+@media (max-width: 575.98px) {
+
+  .aboutme-section .counter-box .profile-experince-number {
+    font-size: 140px;
+  }
+}
+
+
+/* =========================================================================
    7. MODALS
    -------------------------------------------------------------------------
    On a phone a two-button footer reads far better stacked, with the primary
@@ -496,10 +553,11 @@
     padding-inline: 16px;
   }
 
-  /* The pill CTA runs edge to edge rather than overflowing its row. */
+  /* The pill CTA stays shrink-to-fit and centred under its header rather
+     than stretching edge to edge; it still fits a 320px screen. */
   .services-cta {
-    width: 100%;
-    justify-content: space-between;
+    max-width: 100%;
+    justify-content: center;
   }
 }
 
