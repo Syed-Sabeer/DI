@@ -1,0 +1,521 @@
+/* =========================================================================
+   responsive.css — Deveon Inc
+   -------------------------------------------------------------------------
+   Mobile and tablet refinements ONLY.
+
+   Ground rules for this file:
+     • Every rule lives inside a max-width media query, so the desktop and
+       laptop rendering stays exactly as it is today. Nothing here can leak
+       upwards past 1199.98px.
+     • No colours, fonts, borders, shadows or type scale are redefined — the
+       theme already ships its own mobile type sizes and they are respected.
+       This file only fixes what was actually broken: sizing, flow, stacking
+       and touch ergonomics.
+     • Loaded LAST in the <head>, after the theme stylesheet and after each
+       page's own @section('css') block, so these rules resolve predictably.
+
+   Breakpoints follow Bootstrap 5, which the theme is built on:
+     1199.98px  below xl  – the range where the desktop nav bar hid its links
+      991.98px  below lg  – the compact header + slide-out drawer take over
+      767.98px  below md  – large phones
+      575.98px  below sm  – phones
+      380px               – small phones (iPhone SE / mini)
+   ========================================================================= */
+
+
+/* =========================================================================
+   1. SAFETY NET
+   -------------------------------------------------------------------------
+   Cheap insurance so a long word, an oversized CMS image or a future section
+   can never introduce a sideways scroll. `overflow-x: clip` is preferred
+   where supported because, unlike `hidden`, it does not turn the element
+   into a scroll container and so leaves `position: sticky` working.
+   ========================================================================= */
+@media (max-width: 991.98px) {
+
+  body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  img,
+  svg,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+
+  /* Long URLs, emails and unbroken strings wrap instead of pushing wide. */
+  p,
+  li,
+  dd,
+  dt,
+  h1, h2, h3, h4, h5, h6,
+  .heading-title,
+  .heading-subtitle,
+  blockquote {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* A wide table scrolls inside its own rail rather than stretching the page. */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@supports (overflow: clip) {
+  @media (max-width: 991.98px) {
+    body { overflow-x: clip; }
+  }
+}
+
+
+/* =========================================================================
+   2. COMPACT HEADER AND BRAND MARK
+   -------------------------------------------------------------------------
+   The theme only constrains the logo *inside* `.app-sidebar`. The compact
+   header that replaces the desktop bar below lg had no height rule at all,
+   so the brand image rendered at its intrinsic 1080px and covered the entire
+   phone screen. Constraining it here restores the intended compact bar.
+   ========================================================================= */
+@media (max-width: 991.98px) {
+
+  .main-header .main-brand-header .brand-main,
+  .app-toggle-header .brand-main {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .main-header .main-brand-header .brand-main img,
+  .app-toggle-header .brand-main img {
+    height: 38px;
+    width: auto;
+    max-width: 190px;
+    object-fit: contain;
+  }
+
+  /* The square "toggle" mark is a 1:1 icon — keep it square and small. */
+  .main-header .main-brand-header .brand-main img.mobile-logo,
+  .app-toggle-header .brand-main img.mobile-logo {
+    height: 38px;
+    width: 38px;
+    max-width: 38px;
+  }
+
+  .main-header .main-brand-header {
+    width: 100%;
+  }
+
+  .main-header .brand-header-container {
+    padding-block: 10px;
+    gap: 12px;
+  }
+
+  /* Both header controls become proper 44px touch targets. */
+  .main-header .sidemenu-toggle1.header-link,
+  .app-toggle-header .sidemenu-toggle.header-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .main-header .sidemenu-toggle1.header-link .open-toggle,
+  .app-toggle-header .sidemenu-toggle.header-link .close-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .main-header .sidemenu-toggle1.header-link .header-link-icon {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+
+  .main-header .main-brand-header .brand-main img,
+  .app-toggle-header .brand-main img {
+    height: 34px;
+    max-width: 165px;
+  }
+
+  .main-header .main-brand-header .brand-main img.mobile-logo,
+  .app-toggle-header .brand-main img.mobile-logo {
+    height: 34px;
+    width: 34px;
+    max-width: 34px;
+  }
+
+  .main-header .main-brand-header .ms-4 {
+    margin-inline-start: 1rem !important;
+  }
+
+  .main-header .main-brand-header .me-3 {
+    margin-inline-end: 1rem !important;
+  }
+
+  .header-theme-toggle {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+    flex: 0 0 2.4rem !important;
+  }
+}
+
+
+/* =========================================================================
+   3. SLIDE-OUT NAVIGATION DRAWER  (below lg only)
+   -------------------------------------------------------------------------
+   The nav items carry `d-xl-block d-none`, which is right for the desktop
+   bar but left the drawer completely empty below 1200px — there was no way
+   to reach another page from a phone at all. Inside the drawer the links are
+   restored and given a stacked, touch-sized treatment; the theme's own
+   colours and typography are left untouched.
+   ========================================================================= */
+@media (max-width: 991.98px) {
+
+  .app-sidebar {
+    width: min(19rem, 86vw);
+    max-width: 86vw;
+  }
+
+  .app-sidebar .main-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .app-sidebar .main-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding-block-end: 24px;
+  }
+
+  /* Restore the links the desktop bar hides. */
+  .app-sidebar .main-menu > li.slide {
+    display: block !important;
+    width: 100%;
+    margin: 0;
+    padding: 0 1.1rem;
+  }
+
+  .app-sidebar .main-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-block-start: 8px;
+    margin-block-end: 8px;
+  }
+
+  .app-sidebar .main-menu > li.slide + li.slide > .side-menu__item {
+    border-block-start: 1px solid var(--border);
+  }
+
+  .app-sidebar .main-menu .side-menu__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.95rem 0.4rem;
+    min-height: 52px;
+  }
+
+  .app-sidebar .main-menu .side-menu__label {
+    font-size: 1.02rem;
+    line-height: 1.3;
+  }
+
+  /* Theme toggle + primary CTA sit together at the foot of the list. */
+  .app-sidebar .header-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 18px 1.5rem 8px;
+    border-block-start: 1px solid var(--border);
+  }
+
+  .app-sidebar .header-actions > li:last-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .app-sidebar .header-actions .btn-list {
+    width: 100%;
+  }
+
+  .app-sidebar .header-actions .landing-custom-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .app-toggle-header {
+    gap: 12px;
+  }
+
+  /* Below 575px the theme hides every `.desktop-logo`, which on the drawer's
+     own header left nothing but a close button. The wordmark is restored so
+     the open menu is still branded. */
+  [toggled="open"] .app-toggle-header .brand-main .desktop-logo.logo-color {
+    display: block !important;
+  }
+
+  /* Dim the page behind the open drawer so it reads as a layer, and stop
+     the page underneath from scrolling while the drawer is open. */
+  [toggled="open"] .page::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    animation: dvDrawerFade 0.25s ease both;
+  }
+
+  [toggled="open"] body {
+    overflow: hidden;
+  }
+}
+
+@keyframes dvDrawerFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* =========================================================================
+   4. NAV LINKS ON SMALL LAPTOPS AND LANDSCAPE TABLETS  (992px – 1199.98px)
+   -------------------------------------------------------------------------
+   In this range the theme still renders the horizontal bar, but the same
+   `d-xl-block d-none` left it with no links. Only their visibility is
+   restored here — the bar keeps the theme's own horizontal layout.
+   ========================================================================= */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+  .app-sidebar .main-menu > li.slide {
+    display: block !important;
+  }
+
+  /* Brand, links and actions cannot share one line at this width, so the bar
+     is allowed to fall onto a second, right-aligned tier instead of
+     overflowing. Item padding is trimmed to keep that bar compact. */
+  .app-sidebar .main-menu-container {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .app-sidebar .main-menu {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
+  .app-sidebar .main-menu .side-menu__item {
+    padding-block: 1.35rem;
+    padding-inline: 0.7rem;
+  }
+
+  .app-sidebar .main-menu-container > div:last-child {
+    margin-inline-start: auto;
+    padding-block-end: 10px;
+  }
+}
+
+
+/* =========================================================================
+   5. FORMS
+   -------------------------------------------------------------------------
+   iOS zooms the whole viewport whenever a focused field is under 16px, which
+   is the single thing that makes a mobile form feel broken. 16px minimum on
+   every real input, and comfortable hit areas to go with it.
+   ========================================================================= */
+@media (max-width: 767.98px) {
+
+  .form-control,
+  .form-select,
+  .newsletter-input,
+  .choices__inner,
+  .choices__input,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .form-control,
+  .form-select,
+  .newsletter-input,
+  .choices__inner {
+    min-height: 48px;
+  }
+
+  textarea.form-control {
+    min-height: 120px;
+  }
+
+  .form-label {
+    margin-block-end: 6px;
+  }
+
+  .form-check-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.15em;
+  }
+
+  .form-check-label {
+    line-height: 1.5;
+  }
+
+  /* A search field the theme sizes for a wide bar must not exceed the screen. */
+  .search-form-input,
+  .headersearch_form .search-box,
+  .headersearch_input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Grouped controls wrap instead of squeezing to nothing. */
+  .input-group.flex-nowrap {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* =========================================================================
+   6. TOUCH ERGONOMICS
+   -------------------------------------------------------------------------
+   Small inline links get vertical padding so they are comfortably tappable
+   without changing how they look, and the floating back-to-top button is
+   moved clear of the iOS home indicator.
+   ========================================================================= */
+@media (max-width: 767.98px) {
+
+  .btn,
+  .landing-custom-button {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Side-by-side CTAs wrap rather than shrink. */
+  .btn-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cta-link,
+  .portfolio-card__link,
+  .tcard__source,
+  .footer-career-link,
+  .blog-card__category,
+  .logo-link {
+    min-height: 36px;
+    padding-block: 6px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  .back-to-top {
+    inset-block-end: calc(18px + env(safe-area-inset-bottom));
+    inset-inline-end: 16px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+/* =========================================================================
+   7. MODALS
+   -------------------------------------------------------------------------
+   On a phone a two-button footer reads far better stacked, with the primary
+   action full width under the thumb.
+   ========================================================================= */
+@media (max-width: 575.98px) {
+
+  .modal-dialog {
+    margin: 10px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .modal-footer > .btn {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+
+/* =========================================================================
+   8. SMALL PHONES (≤380px)
+   ========================================================================= */
+@media (max-width: 380px) {
+
+  .main-header .brand-header-container {
+    padding-inline: 2px;
+  }
+
+  .btn,
+  .landing-custom-button {
+    padding-inline: 16px;
+  }
+
+  /* The pill CTA runs edge to edge rather than overflowing its row. */
+  .services-cta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+
+/* =========================================================================
+   9. TOUCH DEVICES — hover-only affordances
+   -------------------------------------------------------------------------
+   A lift-on-hover never fires on a touch screen, so the transform is simply
+   neutralised rather than left as a state the user can never reach.
+   ========================================================================= */
+@media (hover: none) and (max-width: 991.98px) {
+
+  .services-card:hover,
+  .portfolio-card:hover,
+  .blog-card:hover,
+  .tcard:hover {
+    transform: none;
+  }
+}

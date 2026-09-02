@@ -15,6 +15,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     @include('layouts.frontend.meta')
     @include('layouts.frontend.css')
     @yield('css')
+
+    <!-- RESPONSIVE CSS - mobile / tablet refinements.
+         Deliberately the LAST stylesheet in the head so its media-query
+         scoped rules win over both the theme and per-page <style> blocks.
+         It contains no desktop rules, so laptop/desktop output is unchanged. -->
+    <link href="{{ asset('FrontendAssets/css/responsive.css') }}?v={{ @filemtime(public_path('FrontendAssets/css/responsive.css')) ?: 1 }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>

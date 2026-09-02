@@ -51,3 +51,7 @@
 
     
 <script src="{{ asset('AdminAssets/js/sweet-alert/sweetalert.min.js') }}"></script>
+
+    <!-- RESPONSIVE JS - mobile-only drawer behaviour (tap-outside / Escape to
+         close). No-ops at desktop widths. -->
+    <script src="{{ asset('FrontendAssets/js/responsive.js') }}?v={{ @filemtime(public_path('FrontendAssets/js/responsive.js')) ?: 1 }}"></script>
