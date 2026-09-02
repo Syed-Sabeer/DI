@@ -1,6 +1,8 @@
 @extends('layouts.frontend.master')
 @php use Illuminate\Support\Str; @endphp
-@section('meta_keywords', strtolower($service['title']).' services, '.strtolower($service['title']).' company USA, '.strtolower($service['title']).' agency Canada, hire '.strtolower($service['title']).' developers UK Australia, Deveon Inc')
+@section('meta_keywords', strtolower($service['title']).' services, '.strtolower($service['title']).' company USA,
+'.strtolower($service['title']).' agency Canada, hire '.strtolower($service['title']).' developers UK Australia, Deveon
+Inc')
 
 @section('title', $service['title'].' Services in USA, Canada, UK & Australia')
 @section('meta_description', Str::limit($service['short'], 150).' Deveon Inc — Powering Intelligent Systems.')
@@ -246,13 +248,13 @@
 <div class="section-spacer"></div>
 <!-- Hero -->
 @include('frontend.partials.page-hero', [
-    'heroEyebrow' => $service['tagline'],
-    'heroTitle' => e($service['title']),
-    'heroIconBadge' => $service['icon'],
-    'heroWatermarkIcon' => $service['icon'],
-    'heroAccent' => $service['accent'],
-    'heroCrumbMiddle' => ['label' => 'services', 'route' => route('service')],
-    'heroCrumbCurrent' => $service['slug'],
+'heroEyebrow' => $service['tagline'],
+'heroTitle' => e($service['title']),
+'heroIconBadge' => $service['icon'],
+'heroWatermarkIcon' => $service['icon'],
+'heroAccent' => $service['accent'],
+'heroCrumbMiddle' => ['label' => 'services', 'route' => route('service')],
+'heroCrumbCurrent' => $service['slug'],
 ])
 <!-- /Hero -->
 
@@ -278,7 +280,8 @@
                             @foreach($service['features'] as $feature)
                             <div class="col-sm-6">
                                 <div class="feature-tile">
-                                    <span class="feature-tile__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <span class="feature-tile__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT)
+                                        }}</span>
                                     <div>
                                         <h4 class="feature-tile__title">{{ $feature['title'] }}</h4>
                                         <p class="feature-tile__desc">{{ $feature['desc'] }}</p>
@@ -289,31 +292,37 @@
                         </div>
 
                         <h3 class="section-title wow fadeInUp" data-wow-delay=".5s">How We Work</h3>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">A simple, transparent process that keeps you informed from kickoff to launch — and after.</p>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">A simple, transparent process that keeps you
+                            informed from kickoff to launch — and after.</p>
                         <div class="process-steps mb-4 wow fadeInUp" data-wow-delay=".6s">
                             <div class="process-step">
                                 <div class="process-step__num">01</div>
                                 <h4 class="process-step__title">Discover</h4>
-                                <p class="process-step__desc">We dig into your goals, users, and constraints to scope the right solution.</p>
+                                <p class="process-step__desc">We dig into your goals, users, and constraints to scope
+                                    the right solution.</p>
                             </div>
                             <div class="process-step">
                                 <div class="process-step__num">02</div>
                                 <h4 class="process-step__title">Plan</h4>
-                                <p class="process-step__desc">We map the approach — architecture, design, or strategy — before execution begins.</p>
+                                <p class="process-step__desc">We map the approach — architecture, design, or strategy —
+                                    before execution begins.</p>
                             </div>
                             <div class="process-step">
                                 <div class="process-step__num">03</div>
                                 <h4 class="process-step__title">Build</h4>
-                                <p class="process-step__desc">We execute in focused sprints, with regular check-ins so you always know where things stand.</p>
+                                <p class="process-step__desc">We execute in focused sprints, with regular check-ins so
+                                    you always know where things stand.</p>
                             </div>
                             <div class="process-step">
                                 <div class="process-step__num">04</div>
                                 <h4 class="process-step__title">Grow</h4>
-                                <p class="process-step__desc">We launch, measure, and keep refining so the results compound over time.</p>
+                                <p class="process-step__desc">We launch, measure, and keep refining so the results
+                                    compound over time.</p>
                             </div>
                         </div>
 
-                        <div class="service-inline-cta wow fadeInUp" data-wow-delay=".2s" style="--accent:{{ $service['accent'] }};">
+                        <div class="service-inline-cta wow fadeInUp" data-wow-delay=".2s"
+                            style="--accent:{{ $service['accent'] }};">
                             <div>
                                 <h4>Ready to start your {{ $service['title'] }} project?</h4>
                                 <p>Tell us what you're building — we'll get back to you within a day.</p>
@@ -330,13 +339,17 @@
             <!-- SIDEBAR -->
             <div class="col-lg-4">
                 <aside class="aside-panel">
-                    <div class="side-card mb-4 side-nav wow fadeInUp" data-wow-delay=".1s" style="--service-accent:{{ $service['accent'] }};">
+                    <div class="side-card mb-4 side-nav wow fadeInUp" data-wow-delay=".1s"
+                        style="--service-accent:{{ $service['accent'] }};">
                         <h3 class="side-title">All Services</h3>
                         <nav class="services-nav">
                             <ul class="services-nav__list">
                                 @foreach($services as $other)
-                                <li class="services-nav__item @if($other['slug'] === $service['slug']) services-nav__item--active @endif">
-                                    <a href="{{ route('service.detail', $other['slug']) }}" class="services-nav__link d-flex justify-content-between" @if($other['slug'] === $service['slug']) aria-current="page" @endif>
+                                <li
+                                    class="services-nav__item @if($other['slug'] === $service['slug']) services-nav__item--active @endif">
+                                    <a href="{{ route('service.detail', $other['slug']) }}"
+                                        class="services-nav__link d-flex justify-content-between"
+                                        @if($other['slug']===$service['slug']) aria-current="page" @endif>
                                         <span>{{ $other['title'] }}</span>
                                         <span><i class="ri-arrow-right-up-long-line"></i></span>
                                     </a>
@@ -389,7 +402,7 @@
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         [

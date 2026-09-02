@@ -1,8 +1,10 @@
 @extends('layouts.frontend.master')
-@section('meta_keywords', 'software development services, mobile app development services, web development company, UI UX design services, AI ML development services, SEO marketing agency, branding agency, USA Canada UK Australia')
+@section('meta_keywords', 'software development services, mobile app development services, web development company, UI
+UX design services, AI ML development services, SEO marketing agency, branding agency, USA Canada UK Australia')
 
 @section('title', 'Software Development & AI Services')
-@section('meta_description', 'Custom software, web and mobile app development, UI/UX design, branding, SEO and AI/ML services from Deveon Inc — delivered for clients in the USA, Canada, UK and Australia.')
+@section('meta_description', 'Custom software, web and mobile app development, UI/UX design, branding, SEO and AI/ML
+services from Deveon Inc — delivered for clients in the USA, Canada, UK and Australia.')
 
 @section('css')
 <style>
@@ -149,10 +151,10 @@
 <div class="section-spacer"></div>
 <!-- Hero -->
 @include('frontend.partials.page-hero', [
-    'heroEyebrow' => 'What We Do',
-    'heroTitle' => 'Our <span>Services</span>',
-    'heroWatermarkIcon' => 'ri-terminal-box-line',
-    'heroCrumbCurrent' => 'services',
+'heroEyebrow' => 'What We Do',
+'heroTitle' => 'Our <span>Services</span>',
+'heroWatermarkIcon' => 'ri-terminal-box-line',
+'heroCrumbCurrent' => 'services',
 ])
 <!-- /Hero -->
 
@@ -162,7 +164,8 @@
         <div class="row justify-content-center">
             <div class="col-xl-7">
                 <div class="heading-section text-center">
-                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp" data-wow-delay=".1s">
+                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp"
+                        data-wow-delay=".1s">
                         <i class="ri-checkbox-blank-circle-fill"></i>
                         What We Do
                     </span>
@@ -170,7 +173,8 @@
                         Everything You Need To <span class="text-primary">Build, Launch</span> And Grow
                     </h2>
                     <p class="mt-4 mb-0">
-                        From the first line of code to the campaign that brings customers in the door, our team covers every discipline your product and brand need under one roof.
+                        From the first line of code to the campaign that brings customers in the door, our team covers
+                        every discipline your product and brand need under one roof.
                     </p>
                 </div>
             </div>
@@ -184,7 +188,8 @@
         <div class="row gy-4">
             @foreach($services as $service)
             <div class="col-sm-6 col-lg-4">
-                <div class="services-card wow fadeInUp" data-wow-delay=".{{ ($loop->index % 3) + 1 }}s" style="--accent:{{ $service['accent'] }};">
+                <div class="services-card wow fadeInUp" data-wow-delay=".{{ ($loop->index % 3) + 1 }}s"
+                    style="--accent:{{ $service['accent'] }};">
                     <span class="services-card__index">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                     <div class="services-card__icon">
                         <i class="{{ $service['icon'] }}"></i>
@@ -227,7 +232,7 @@
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         [

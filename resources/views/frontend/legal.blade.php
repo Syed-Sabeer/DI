@@ -2,7 +2,8 @@
 
 @section('title', $document['title'] . ' | Deveon Inc')
 @section('meta_description', $document['lead'])
-@section('meta_keywords', strtolower($document['title']).', Deveon Inc '.strtolower($document['title']).', software company legal, privacy terms Deveon')
+@section('meta_keywords', strtolower($document['title']).', Deveon Inc '.strtolower($document['title']).', software
+company legal, privacy terms Deveon')
 
 @section('css')
 <style>
@@ -11,7 +12,13 @@
        Sticky contents rail on the left, readable measure on the right.
        ===================================================================== */
     .legal-page {
-        --accent: {{ $document['accent'] }};
+        --accent: {
+                {
+                $document['accent']
+            }
+        }
+
+        ;
     }
 
     /* ---------- meta bar under the hero ---------- */
@@ -214,9 +221,14 @@
         opacity: 0.75;
     }
 
-    .legal-section__body p:last-child { margin-bottom: 0; }
+    .legal-section__body p:last-child {
+        margin-bottom: 0;
+    }
 
-    .legal-section__body b { opacity: 1; font-weight: 600; }
+    .legal-section__body b {
+        opacity: 1;
+        font-weight: 600;
+    }
 
     .legal-section__body a {
         color: rgb(var(--dark-rgb));
@@ -226,7 +238,9 @@
         transition: color 0.25s ease;
     }
 
-    .legal-section__body a:hover { color: var(--accent); }
+    .legal-section__body a:hover {
+        color: var(--accent);
+    }
 
     .legal-section__body ul {
         margin: 0 0 1rem;
@@ -276,8 +290,13 @@
         border-block-end: 1px solid var(--border);
     }
 
-    .legal-facts__row:last-child { border-block-end: 0; }
-    .legal-facts__row:nth-child(odd) { background: var(--gray-100); }
+    .legal-facts__row:last-child {
+        border-block-end: 0;
+    }
+
+    .legal-facts__row:nth-child(odd) {
+        background: var(--gray-100);
+    }
 
     .legal-facts__row span {
         color: rgb(var(--dark-rgb));
@@ -330,8 +349,14 @@
         transition: color 0.25s ease;
     }
 
-    .legal-contact__links a i { color: var(--accent); font-size: 1.05rem; }
-    .legal-contact__links a:hover { color: var(--accent); }
+    .legal-contact__links a i {
+        color: var(--accent);
+        font-size: 1.05rem;
+    }
+
+    .legal-contact__links a:hover {
+        color: var(--accent);
+    }
 
     .legal-related {
         margin-top: 40px;
@@ -405,7 +430,9 @@
 
     /* ---------- responsive ---------- */
     @media (max-width: 1199px) {
-        .legal-toc { position: static; }
+        .legal-toc {
+            position: static;
+        }
     }
 
     @media (max-width: 767px) {
@@ -415,23 +442,50 @@
             gap: 12px 18px;
         }
 
-        .legal-meta__sep { display: none; }
-        .legal-meta__print { margin-inline-start: 0; }
-        .legal-section__body { padding-inline-start: 0; }
-        .legal-section__title { font-size: 1.28rem; }
-        .legal-facts__row { grid-template-columns: 1fr; gap: 4px; }
-        .legal-related__grid { grid-template-columns: 1fr; }
+        .legal-meta__sep {
+            display: none;
+        }
+
+        .legal-meta__print {
+            margin-inline-start: 0;
+        }
+
+        .legal-section__body {
+            padding-inline-start: 0;
+        }
+
+        .legal-section__title {
+            font-size: 1.28rem;
+        }
+
+        .legal-facts__row {
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        .legal-related__grid {
+            grid-template-columns: 1fr;
+        }
     }
 
     /* ---------- print ---------- */
     @media print {
+
         .legal-meta__print,
         .legal-toc,
         .legal-related,
-        .page-hero-dark__wave { display: none !important; }
+        .page-hero-dark__wave {
+            display: none !important;
+        }
 
-        .legal-section { break-inside: avoid; border-color: #ddd; }
-        .legal-section__body { padding-inline-start: 0; }
+        .legal-section {
+            break-inside: avoid;
+            border-color: #ddd;
+        }
+
+        .legal-section__body {
+            padding-inline-start: 0;
+        }
     }
 </style>
 @endsection
@@ -440,11 +494,11 @@
 <div class="section-spacer"></div>
 
 @include('frontend.partials.page-hero', [
-    'heroEyebrow'      => $document['eyebrow'],
-    'heroTitle'        => $document['title'],
-    'heroWatermarkIcon'=> $document['icon'],
-    'heroAccent'       => $document['accent'],
-    'heroCrumbCurrent' => $document['slug'],
+'heroEyebrow' => $document['eyebrow'],
+'heroTitle' => $document['title'],
+'heroWatermarkIcon'=> $document['icon'],
+'heroAccent' => $document['accent'],
+'heroCrumbCurrent' => $document['slug'],
 ])
 
 <section class="section legal-page section-gap">
@@ -494,7 +548,8 @@
                     @foreach($document['sections'] as $section)
                     <section class="legal-section wow fadeInUp" data-wow-delay=".1s" id="{{ $section['id'] }}">
                         <div class="legal-section__head">
-                            <span class="legal-section__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            <span class="legal-section__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT)
+                                }}</span>
                             <h2 class="legal-section__title">{!! $section['heading'] !!}</h2>
                         </div>
                         <div class="legal-section__body">
@@ -506,7 +561,8 @@
                     <!-- contact -->
                     <div class="legal-contact wow fadeInUp" data-wow-delay=".1s">
                         <h3>Questions about this document?</h3>
-                        <p>If anything here is unclear, or you want to exercise a right described above, contact us and a member of the team will respond.</p>
+                        <p>If anything here is unclear, or you want to exercise a right described above, contact us and
+                            a member of the team will respond.</p>
                         <div class="legal-contact__links">
                             <a href="mailto:info@deveoninc.com"><i class="ri-mail-line"></i> info@deveoninc.com</a>
                             <a href="tel:+19055148474"><i class="ri-phone-line"></i> +1 905 514 8474</a>
@@ -539,7 +595,7 @@
 
 @section('script')
 <script>
-// Highlight the contents entry for whichever section is currently in view.
+    // Highlight the contents entry for whichever section is currently in view.
 document.addEventListener('DOMContentLoaded', function () {
     var links = document.querySelectorAll('[data-toc-link]');
     if (!links.length || !('IntersectionObserver' in window)) return;
@@ -566,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         [

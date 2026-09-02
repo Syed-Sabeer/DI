@@ -1,6 +1,8 @@
 @extends('layouts.frontend.master')
-@section('meta_keywords', 'contact software development company, hire software developers USA, software company Ottawa Canada, app development enquiry UK Australia, Deveon Inc contact')
-@section('meta_description', 'Talk to Deveon Inc about custom software, mobile apps or AI automation. Offices in Ottawa, Canada and Karachi, Pakistan. Serving the USA, Canada, UK and Australia.')
+@section('meta_keywords', 'contact software development company, hire software developers USA, software company Ottawa
+Canada, app development enquiry UK Australia, Deveon Inc contact')
+@section('meta_description', 'Talk to Deveon Inc about custom software, mobile apps or AI automation. Offices in Ottawa,
+Canada and Karachi, Pakistan. Serving the USA, Canada, UK and Australia.')
 @section('title', 'Contact Deveon Inc | Software Development USA, Canada, UK')
 
 
@@ -476,11 +478,34 @@
     .office-card .office-directions:hover i {
         transform: translate(2px, -2px);
     }
-    .contact-submit-btn:disabled { opacity: .72; cursor: wait; transform: none; }
-    .contact-submit-btn .contact-spinner { animation: contact-spin .75s linear infinite; }
-    @keyframes contact-spin { to { transform: rotate(360deg); } }
-    .contact-swal-popup { border: 1px solid rgba(184, 233, 0, .32); border-radius: 18px; }
-    .contact-swal-confirm { border-radius: 8px !important; padding: .75rem 1.5rem !important; color: #080b09 !important; font-weight: 700 !important; }
+
+    .contact-submit-btn:disabled {
+        opacity: .72;
+        cursor: wait;
+        transform: none;
+    }
+
+    .contact-submit-btn .contact-spinner {
+        animation: contact-spin .75s linear infinite;
+    }
+
+    @keyframes contact-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .contact-swal-popup {
+        border: 1px solid rgba(184, 233, 0, .32);
+        border-radius: 18px;
+    }
+
+    .contact-swal-confirm {
+        border-radius: 8px !important;
+        padding: .75rem 1.5rem !important;
+        color: #080b09 !important;
+        font-weight: 700 !important;
+    }
 
     /* ---------- Contact hero: dark, glowing, wave-divided ----------
        Always dark regardless of site theme, with a soft grid + radial glow,
@@ -732,346 +757,376 @@
 
 @section('content')
 
-    <div class="section-spacer"></div>
-    <!-- Hero -->
-    <section class="contact-hero-dark">
-        <i class="ri-send-plane-fill contact-hero-dark__watermark"></i>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="contact-hero-dark__content text-center">
-                        <span class="contact-hero-dark__eyebrow">
-                            <span class="dot"></span>
-                            Let's Start a Conversation
+<div class="section-spacer"></div>
+<!-- Hero -->
+<section class="contact-hero-dark">
+    <i class="ri-send-plane-fill contact-hero-dark__watermark"></i>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-hero-dark__content text-center">
+                    <span class="contact-hero-dark__eyebrow">
+                        <span class="dot"></span>
+                        Let's Start a Conversation
+                    </span>
+                    <h1 class="contact-hero-dark__title">
+                        Contact <span>Us</span>
+                    </h1>
+                    <div class="contact-hero-dark__crumb">
+                        <span class="contact-hero-dark__crumb-dots">
+                            <span></span><span></span><span></span>
                         </span>
-                        <h1 class="contact-hero-dark__title">
-                            Contact <span>Us</span>
-                        </h1>
-                        <div class="contact-hero-dark__crumb">
-                            <span class="contact-hero-dark__crumb-dots">
-                                <span></span><span></span><span></span>
-                            </span>
-                            <span class="contact-hero-dark__crumb-path">
-                                <a href="{{ route('home') }}">~</a><span>/</span><span class="current">contact</span><span class="contact-hero-dark__crumb-cursor"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <svg class="contact-hero-dark__wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-            <path class="contact-hero-dark__wave-fill" d="M0,100 C150,0 1290,0 1440,100 L1440,100 L0,100 Z"></path>
-            <path class="contact-hero-dark__wave-edge" d="M0,100 C150,0 1290,0 1440,100"></path>
-        </svg>
-    </section>
-    <!-- /Hero -->
-
-    <!-- Intro -->
-    <section class="section pb-0">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-8">
-                    <div class="heading-section text-center mb-0">
-                        <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp" data-wow-delay=".1s">
-                            Let's Collaborate
+                        <span class="contact-hero-dark__crumb-path">
+                            <a href="{{ route('home') }}">~</a><span>/</span><span class="current">contact</span><span
+                                class="contact-hero-dark__crumb-cursor"></span>
                         </span>
-                        <h2 class="heading-title mt-4">
-                            Get In Touch With <span class="text-primary">Deveon Inc</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <svg class="contact-hero-dark__wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+        <path class="contact-hero-dark__wave-fill" d="M0,100 C150,0 1290,0 1440,100 L1440,100 L0,100 Z"></path>
+        <path class="contact-hero-dark__wave-edge" d="M0,100 C150,0 1290,0 1440,100"></path>
+    </svg>
+</section>
+<!-- /Hero -->
+
+<!-- Intro -->
+<section class="section pb-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="heading-section text-center mb-0">
+                    <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp"
+                        data-wow-delay=".1s">
+                        Let's Collaborate
+                    </span>
+                    <h2 class="heading-title mt-4">
+                        Get In Touch With <span class="text-primary">Deveon Inc</span>
+                    </h2>
+                    <p>
+                        Have a software development project in mind? Let's discuss how we can help you achieve your
+                        goals.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Intro -->
+
+<!-- Contact methods -->
+<section class="section">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-md-4">
+                <div class="contact-method-card wow fadeInUp" data-wow-delay=".1s">
+                    <div class="contact-method-icon">
+                        <i class="ri-phone-line"></i>
+                    </div>
+                    <h3>Give us a Call</h3>
+                    <p>Speak with our team directly. We're available to assist you with any inquiries.</p>
+                    <a class="contact-method-link" href="tel:+19055148474">
+                        +1 (905) 514-8474 <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-method-card wow fadeInUp" data-wow-delay=".2s">
+                    <div class="contact-method-icon">
+                        <i class="ri-mail-line"></i>
+                    </div>
+                    <h3>Send us an Email</h3>
+                    <p>Drop us a line via email and we promise to get back to you within 24 hours.</p>
+                    <a class="contact-method-link" href="mailto:info@deveoninc.com">
+                        info@deveoninc.com <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-method-card wow fadeInUp" data-wow-delay=".3s">
+                    <div class="contact-method-icon">
+                        <i class="ri-map-pin-2-line"></i>
+                    </div>
+                    <h3>Visit an Office</h3>
+                    <p>We're remote-first with offices in Pakistan and Canada, serving clients worldwide.</p>
+                    <a class="contact-method-link" href="#offices">
+                        View Locations <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Contact methods -->
+
+<!-- Why Partner -->
+<section class="section pt-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7">
+                <div class="heading-section text-center">
+                    <h2 class="heading-title split-title">
+                        Why Partner With <span class="text-primary">Deveon Inc?</span>
+                    </h2>
+                    <p>
+                        Whether you're a startup building your first MVP or an established enterprise
+                        modernizing your tech stack, our team is here to help you succeed.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-4">
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#f2a90c;">
+                    <span class="value-number">01</span>
+                    <div class="value-icon">
+                        <i class="ri-flashlight-line"></i>
+                    </div>
+                    <h3>Rapid Response Time</h3>
+                    <span class="value-tag">Quick Turnaround</span>
+                    <p>We typically respond to inquiries within 1-2 hours during business hours, keeping your project
+                        moving.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#3b6fe0;">
+                    <span class="value-number">02</span>
+                    <div class="value-icon">
+                        <i class="ri-team-line"></i>
+                    </div>
+                    <h3>Expert Team</h3>
+                    <span class="value-tag">Skilled Professionals</span>
+                    <p>Certified professionals with expertise across multiple technologies, from Laravel and React to
+                        Flutter.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#1f9d63;">
+                    <span class="value-number">03</span>
+                    <div class="value-icon">
+                        <i class="ri-eye-line"></i>
+                    </div>
+                    <h3>Transparent Process</h3>
+                    <span class="value-tag">Clear Communication</span>
+                    <p>Regular status reports and full visibility into project scope, timelines, and pricing every step
+                        of the way.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#17a2a6;">
+                    <span class="value-number">04</span>
+                    <div class="value-icon">
+                        <i class="ri-settings-3-line"></i>
+                    </div>
+                    <h3>Comprehensive Services</h3>
+                    <span class="value-tag">End-to-End Solutions</span>
+                    <p>From consultation and design to development, testing, and ongoing maintenance — one point of
+                        contact.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d1483f;">
+                    <span class="value-number">05</span>
+                    <div class="value-icon">
+                        <i class="ri-global-line"></i>
+                    </div>
+                    <h3>Global Reach</h3>
+                    <span class="value-tag">International Experience</span>
+                    <p>Offices in Pakistan and Canada bring a global perspective with the personal touch of a boutique
+                        agency.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#7b4fd1;">
+                    <span class="value-number">06</span>
+                    <div class="value-icon">
+                        <i class="ri-trophy-line"></i>
+                    </div>
+                    <h3>Proven Track Record</h3>
+                    <span class="value-tag">Successful Projects</span>
+                    <p>Hundreds of successful projects delivered across industries, with measurable results and
+                        satisfied clients.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Why Partner -->
+
+<!-- Message form -->
+<section class="section pt-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="message-card wow fadeInUp" data-wow-delay=".1s">
+                    <div class="heading-section text-start mb-4">
+                        <span class="message-card-badge"><i class="ri-time-line"></i> We typically respond within 24
+                            hours</span>
+                        <h2 class="heading-title mb-2">
+                            Send us a <span class="text-primary">Message</span>
                         </h2>
-                        <p>
-                            Have a software development project in mind? Let's discuss how we can help you achieve your goals.
-                        </p>
+                        <p class="mb-0">Fill out the form below and our team will get back to you shortly.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Intro -->
-
-    <!-- Contact methods -->
-    <section class="section">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-md-4">
-                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".1s">
-                        <div class="contact-method-icon">
-                            <i class="ri-phone-line"></i>
-                        </div>
-                        <h3>Give us a Call</h3>
-                        <p>Speak with our team directly. We're available to assist you with any inquiries.</p>
-                        <a class="contact-method-link" href="tel:+19055148474">
-                            +1 (905) 514-8474 <i class="ri-arrow-right-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".2s">
-                        <div class="contact-method-icon">
-                            <i class="ri-mail-line"></i>
-                        </div>
-                        <h3>Send us an Email</h3>
-                        <p>Drop us a line via email and we promise to get back to you within 24 hours.</p>
-                        <a class="contact-method-link" href="mailto:info@deveoninc.com">
-                            info@deveoninc.com <i class="ri-arrow-right-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-method-card wow fadeInUp" data-wow-delay=".3s">
-                        <div class="contact-method-icon">
-                            <i class="ri-map-pin-2-line"></i>
-                        </div>
-                        <h3>Visit an Office</h3>
-                        <p>We're remote-first with offices in Pakistan and Canada, serving clients worldwide.</p>
-                        <a class="contact-method-link" href="#offices">
-                            View Locations <i class="ri-arrow-right-line"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Contact methods -->
-
-    <!-- Why Partner -->
-    <section class="section pt-0">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-7">
-                    <div class="heading-section text-center">
-                        <h2 class="heading-title split-title">
-                            Why Partner With <span class="text-primary">Deveon Inc?</span>
-                        </h2>
-                        <p>
-                            Whether you're a startup building your first MVP or an established enterprise
-                            modernizing your tech stack, our team is here to help you succeed.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row gy-4">
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#f2a90c;">
-                        <span class="value-number">01</span>
-                        <div class="value-icon">
-                            <i class="ri-flashlight-line"></i>
-                        </div>
-                        <h3>Rapid Response Time</h3>
-                        <span class="value-tag">Quick Turnaround</span>
-                        <p>We typically respond to inquiries within 1-2 hours during business hours, keeping your project moving.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#3b6fe0;">
-                        <span class="value-number">02</span>
-                        <div class="value-icon">
-                            <i class="ri-team-line"></i>
-                        </div>
-                        <h3>Expert Team</h3>
-                        <span class="value-tag">Skilled Professionals</span>
-                        <p>Certified professionals with expertise across multiple technologies, from Laravel and React to Flutter.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#1f9d63;">
-                        <span class="value-number">03</span>
-                        <div class="value-icon">
-                            <i class="ri-eye-line"></i>
-                        </div>
-                        <h3>Transparent Process</h3>
-                        <span class="value-tag">Clear Communication</span>
-                        <p>Regular status reports and full visibility into project scope, timelines, and pricing every step of the way.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#17a2a6;">
-                        <span class="value-number">04</span>
-                        <div class="value-icon">
-                            <i class="ri-settings-3-line"></i>
-                        </div>
-                        <h3>Comprehensive Services</h3>
-                        <span class="value-tag">End-to-End Solutions</span>
-                        <p>From consultation and design to development, testing, and ongoing maintenance — one point of contact.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d1483f;">
-                        <span class="value-number">05</span>
-                        <div class="value-icon">
-                            <i class="ri-global-line"></i>
-                        </div>
-                        <h3>Global Reach</h3>
-                        <span class="value-tag">International Experience</span>
-                        <p>Offices in Pakistan and Canada bring a global perspective with the personal touch of a boutique agency.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xl-4">
-                    <div class="value-card wow fadeInUp" data-wow-delay=".3s" style="--accent:#7b4fd1;">
-                        <span class="value-number">06</span>
-                        <div class="value-icon">
-                            <i class="ri-trophy-line"></i>
-                        </div>
-                        <h3>Proven Track Record</h3>
-                        <span class="value-tag">Successful Projects</span>
-                        <p>Hundreds of successful projects delivered across industries, with measurable results and satisfied clients.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Why Partner -->
-
-    <!-- Message form -->
-    <section class="section pt-0">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-10">
-                    <div class="message-card wow fadeInUp" data-wow-delay=".1s">
-                        <div class="heading-section text-start mb-4">
-                            <span class="message-card-badge"><i class="ri-time-line"></i> We typically respond within 24 hours</span>
-                            <h2 class="heading-title mb-2">
-                                Send us a <span class="text-primary">Message</span>
-                            </h2>
-                            <p class="mb-0">Fill out the form below and our team will get back to you shortly.</p>
-                        </div>
-                        <form id="team-contact-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
-                            @csrf
-                            <input type="hidden" name="submission_token" value="{{ (string) \Illuminate\Support\Str::uuid() }}">
-                            <div class="row gy-3">
-                                <div class="col-sm-6">
-                                    <label class="field-label" for="conName">Full Name *</label>
-                                    <div class="input-icon-group">
-                                        <i class="ri-user-3-line"></i>
-                                        <input type="text" class="form-control" name="fullname" id="conName"
-                                            placeholder="John Doe" required>
-                                    </div>
+                    <form id="team-contact-form" method="POST" action="{{ route('contact.submit') }}" novalidate>
+                        @csrf
+                        <input type="hidden" name="submission_token"
+                            value="{{ (string) \Illuminate\Support\Str::uuid() }}">
+                        <div class="row gy-3">
+                            <div class="col-sm-6">
+                                <label class="field-label" for="conName">Full Name *</label>
+                                <div class="input-icon-group">
+                                    <i class="ri-user-3-line"></i>
+                                    <input type="text" class="form-control" name="fullname" id="conName"
+                                        placeholder="John Doe" required>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-6">
-                                    <label class="field-label" for="conEmail">Email Address *</label>
-                                    <div class="input-icon-group">
-                                        <i class="ri-mail-line"></i>
-                                        <input type="email" class="form-control" name="email" id="conEmail"
-                                            placeholder="john@example.com" required>
-                                    </div>
+                            <div class="col-sm-6">
+                                <label class="field-label" for="conEmail">Email Address *</label>
+                                <div class="input-icon-group">
+                                    <i class="ri-mail-line"></i>
+                                    <input type="email" class="form-control" name="email" id="conEmail"
+                                        placeholder="john@example.com" required>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-6">
-                                    <label class="field-label" for="conPhone">Phone Number *</label>
-                                    <div class="input-icon-group">
-                                        <i class="ri-phone-line"></i>
-                                        <input class="form-control" type="text" name="phone" id="conPhone"
-                                            placeholder="+1 (905) 514-8474" required>
-                                    </div>
+                            <div class="col-sm-6">
+                                <label class="field-label" for="conPhone">Phone Number *</label>
+                                <div class="input-icon-group">
+                                    <i class="ri-phone-line"></i>
+                                    <input class="form-control" type="text" name="phone" id="conPhone"
+                                        placeholder="+1 (905) 514-8474" required>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-6">
-                                    <label class="field-label" for="conSubject">Subject *</label>
-                                    <div class="input-icon-group">
-                                        <i class="ri-chat-3-line"></i>
-                                        <input type="text" class="form-control" name="subject" id="conSubject"
-                                            value="{{ request('subject') }}" placeholder="How can we help?" required>
-                                    </div>
+                            <div class="col-sm-6">
+                                <label class="field-label" for="conSubject">Subject *</label>
+                                <div class="input-icon-group">
+                                    <i class="ri-chat-3-line"></i>
+                                    <input type="text" class="form-control" name="subject" id="conSubject"
+                                        value="{{ request('subject') }}" placeholder="How can we help?" required>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-12">
-                                    <label class="field-label" for="message">Your Message *</label>
-                                    <textarea class="form-control" rows="5" name="message" id="message"
-                                        placeholder="Tell us about your project..." required></textarea>
-                                </div>
+                            <div class="col-sm-12">
+                                <label class="field-label" for="message">Your Message *</label>
+                                <textarea class="form-control" rows="5" name="message" id="message"
+                                    placeholder="Tell us about your project..." required></textarea>
+                            </div>
 
-                                <div class="col-12">
-                                    <label class="contact-agree">
-                                        <input type="checkbox" name="privacy" value="1" required>
-                                        <span>I agree to the <a href="javascript:void(0);">Terms &amp; Conditions</a> and <a href="javascript:void(0);">Privacy Policy</a></span>
-                                    </label>
-                                </div>
+                            <div class="col-12">
+                                <label class="contact-agree">
+                                    <input type="checkbox" name="privacy" value="1" required>
+                                    <span>I agree to the <a href="javascript:void(0);">Terms &amp; Conditions</a> and <a
+                                            href="javascript:void(0);">Privacy Policy</a></span>
+                                </label>
+                            </div>
 
-                                <div class="col-12">
-                                    <div class="message-card-footer">
-                                        <button type="submit" class="contact-submit-btn" data-contact-submit>
-                                            <i class="ri-send-plane-2-line" data-submit-icon></i>
-                                            <span data-submit-text>Send Message</span>
-                                        </button>
-                                        <div class="message-card-social">
-                                            <span>Connect with us:</span>
-                                            <ul class="footer-social-list">
-                                                <li><a href="{{ config('seo.social.facebook') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Facebook"><i class="ri-facebook-fill"></i></a></li>
-                                                <li><a href="{{ config('seo.social.instagram') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on Instagram"><i class="ri-instagram-line"></i></a></li>
-                                                <li><a href="{{ config('seo.social.linkedin') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on LinkedIn"><i class="ri-linkedin-box-fill"></i></a></li>
-                                                <li><a href="{{ config('seo.social.x') }}" target="_blank" rel="noopener noreferrer" aria-label="Deveon Inc on X"><i class="ri-twitter-x-line"></i></a></li>
-                                            </ul>
-                                        </div>
+                            <div class="col-12">
+                                <div class="message-card-footer">
+                                    <button type="submit" class="contact-submit-btn" data-contact-submit>
+                                        <i class="ri-send-plane-2-line" data-submit-icon></i>
+                                        <span data-submit-text>Send Message</span>
+                                    </button>
+                                    <div class="message-card-social">
+                                        <span>Connect with us:</span>
+                                        <ul class="footer-social-list">
+                                            <li><a href="{{ config('seo.social.facebook') }}" target="_blank"
+                                                    rel="noopener noreferrer" aria-label="Deveon Inc on Facebook"><i
+                                                        class="ri-facebook-fill"></i></a></li>
+                                            <li><a href="{{ config('seo.social.instagram') }}" target="_blank"
+                                                    rel="noopener noreferrer" aria-label="Deveon Inc on Instagram"><i
+                                                        class="ri-instagram-line"></i></a></li>
+                                            <li><a href="{{ config('seo.social.linkedin') }}" target="_blank"
+                                                    rel="noopener noreferrer" aria-label="Deveon Inc on LinkedIn"><i
+                                                        class="ri-linkedin-box-fill"></i></a></li>
+                                            <li><a href="{{ config('seo.social.x') }}" target="_blank"
+                                                    rel="noopener noreferrer" aria-label="Deveon Inc on X"><i
+                                                        class="ri-twitter-x-line"></i></a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- /Message form -->
+    </div>
+</section>
+<!-- /Message form -->
 
-    <!-- Offices -->
-    <section class="section pt-0" id="offices">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-7">
-                    <div class="heading-section text-center">
-                        <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp" data-wow-delay=".1s">
-                            <i class="ri-map-pin-line"></i> Our Locations
-                        </span>
-                        <h2 class="heading-title mt-4">
-                            Find Our <span class="text-primary">Global Offices</span>
-                        </h2>
-                        <p>We're present across multiple regions to better serve our clients worldwide.</p>
+<!-- Offices -->
+<section class="section pt-0" id="offices">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7">
+                <div class="heading-section text-center">
+                    <span class="heading-subtitle mx-auto justify-content-center d-inline-flex wow fadeInUp"
+                        data-wow-delay=".1s">
+                        <i class="ri-map-pin-line"></i> Our Locations
+                    </span>
+                    <h2 class="heading-title mt-4">
+                        Find Our <span class="text-primary">Global Offices</span>
+                    </h2>
+                    <p>We're present across multiple regions to better serve our clients worldwide.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row gy-4 justify-content-center">
+            <div class="col-md-6">
+                <div class="office-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#016937;">
+                    <div class="office-flag">
+                        <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag"
+                            loading="lazy" decoding="async">
+                    </div>
+                    <div>
+                        <span class="office-region">Offshore Development Center</span>
+                        <h3>Pakistan Office</h3>
+                        <p>71A Street 3, Sindhi Muslim Cooperative Housing Society, Block A (SMCHS), Karachi, 75400,
+                            Pakistan</p>
+                        <div><span class="office-hours"><i class="ri-time-line"></i> Mon - Sat, 9 AM - 11:30 PM</span>
+                        </div>
+                        <a class="office-directions"
+                            href="https://www.google.com/maps/search/?api=1&query=71A%20Street%203%2C%20Sindhi%20Muslim%20Cooperative%20Housing%20Society%2C%20Block%20A%20%28SMCHS%29%2C%20Karachi%2C%2075400%2C%20Pakistan"
+                            target="_blank" rel="noopener">
+                            Get Directions <i class="ri-arrow-right-up-line"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="row gy-4 justify-content-center">
-                <div class="col-md-6">
-                    <div class="office-card wow fadeInUp" data-wow-delay=".1s" style="--accent:#016937;">
-                        <div class="office-flag">
-                            <img src="{{ asset('FrontendAssets/images/flags/pakistan.webp') }}" alt="Pakistan flag" loading="lazy" decoding="async">
-                        </div>
-                        <div>
-                            <span class="office-region">Offshore Development Center</span>
-                            <h3>Pakistan Office</h3>
-                            <p>71A Street 3, Sindhi Muslim Cooperative Housing Society, Block A (SMCHS), Karachi, 75400, Pakistan</p>
-                            <div><span class="office-hours"><i class="ri-time-line"></i> Mon - Sat, 9 AM - 11:30 PM</span></div>
-                            <a class="office-directions" href="https://www.google.com/maps/search/?api=1&query=71A%20Street%203%2C%20Sindhi%20Muslim%20Cooperative%20Housing%20Society%2C%20Block%20A%20%28SMCHS%29%2C%20Karachi%2C%2075400%2C%20Pakistan" target="_blank" rel="noopener">
-                                Get Directions <i class="ri-arrow-right-up-line"></i>
-                            </a>
-                        </div>
+            <div class="col-md-6">
+                <div class="office-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d52b1e;">
+                    <div class="office-flag">
+                        <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag"
+                            loading="lazy" decoding="async">
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="office-card wow fadeInUp" data-wow-delay=".2s" style="--accent:#d52b1e;">
-                        <div class="office-flag">
-                            <img src="{{ asset('FrontendAssets/images/flags/canada.png') }}" alt="Canada flag" loading="lazy" decoding="async">
+                    <div>
+                        <span class="office-region">Headquarters</span>
+                        <h3>Canada Office</h3>
+                        <p>Suite 391 - 1505 Laperriere Avenue, Ottawa, Ontario K1Z 7T1, Canada</p>
+                        <div><span class="office-hours"><i class="ri-time-line"></i> Sun - Fri, 9 AM - 11:30 PM</span>
                         </div>
-                        <div>
-                            <span class="office-region">Headquarters</span>
-                            <h3>Canada Office</h3>
-                            <p>Suite 391 - 1505 Laperriere Avenue, Ottawa, Ontario K1Z 7T1, Canada</p>
-                            <div><span class="office-hours"><i class="ri-time-line"></i> Sun - Fri, 9 AM - 11:30 PM</span></div>
-                            <a class="office-directions" href="https://www.google.com/maps/search/?api=1&query=Suite%20391%20-%201505%20Laperriere%20Avenue%2C%20Ottawa%2C%20Ontario%20K1Z%207T1%2C%20Canada" target="_blank" rel="noopener">
-                                Get Directions <i class="ri-arrow-right-up-line"></i>
-                            </a>
-                        </div>
+                        <a class="office-directions"
+                            href="https://www.google.com/maps/search/?api=1&query=Suite%20391%20-%201505%20Laperriere%20Avenue%2C%20Ottawa%2C%20Ontario%20K1Z%207T1%2C%20Canada"
+                            target="_blank" rel="noopener">
+                            Get Directions <i class="ri-arrow-right-up-line"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- /Offices -->
+    </div>
+</section>
+<!-- /Offices -->
 
 @endsection
 
 @section('script')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('team-contact-form');
     if (!form || typeof Swal === 'undefined') return;
     if (form.dataset.submitHandlerBound === 'true') return;
@@ -1146,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         ['@type' => 'ContactPage', '@id' => url('/contact') . '#contactpage',

@@ -1,8 +1,10 @@
 @extends('layouts.frontend.master')
-@section('meta_keywords', 'software developer jobs, AI engineer careers, UI UX designer jobs, remote software jobs, tech careers Karachi, Deveon Inc careers')
+@section('meta_keywords', 'software developer jobs, AI engineer careers, UI UX designer jobs, remote software jobs, tech
+careers Karachi, Deveon Inc careers')
 
 @section('title', 'Careers at Deveon Inc | Software & AI Jobs')
-@section('meta_description', 'Join Deveon Inc — we build custom software and AI systems for clients across North America, the UK and Australia. See our open engineering, design and product roles.')
+@section('meta_description', 'Join Deveon Inc — we build custom software and AI systems for clients across North
+America, the UK and Australia. See our open engineering, design and product roles.')
 
 @section('css')
 <style>
@@ -200,12 +202,12 @@
 @section('content')
 <div class="section-spacer"></div>
 @include('frontend.partials.page-hero', [
-    'heroEyebrow' => $careers->total() > 0
-        ? $careers->total() . ' Open ' . \Illuminate\Support\Str::plural('Position', $careers->total())
-        : 'Always Open To Great Talent',
-    'heroTitle' => 'Careers',
-    'heroWatermarkIcon' => 'ri-briefcase-4-line',
-    'heroCrumbCurrent' => 'careers',
+'heroEyebrow' => $careers->total() > 0
+? $careers->total() . ' Open ' . \Illuminate\Support\Str::plural('Position', $careers->total())
+: 'Always Open To Great Talent',
+'heroTitle' => 'Careers',
+'heroWatermarkIcon' => 'ri-briefcase-4-line',
+'heroCrumbCurrent' => 'careers',
 ])
 
 <section class="section section-gap">
@@ -213,7 +215,8 @@
         <div class="row justify-content-center">
             <div class="col-xl-7">
                 <div class="heading-section mb-5 text-center">
-                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp" data-wow-delay=".1s">
+                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp"
+                        data-wow-delay=".1s">
                         <i class="ri-checkbox-blank-circle-fill"></i>
                         Open Positions
                     </span>
@@ -236,19 +239,23 @@
                         <h3 class="job-listing-card__title">
                             <a href="{{ route('careers.show', $career->slug) }}">{{ $career->job_title }}</a>
                         </h3>
-                        @if($career->application_deadline && $career->application_deadline->isFuture() && now()->diffInDays($career->application_deadline) <= 7)
-                        <span class="job-listing-card__urgent"><i class="ri-time-line"></i> Closing Soon</span>
-                        @endif
+                        @if($career->application_deadline && $career->application_deadline->isFuture() &&
+                        now()->diffInDays($career->application_deadline) <= 7) <span class="job-listing-card__urgent"><i
+                                class="ri-time-line"></i> Closing Soon</span>
+                            @endif
                     </div>
                     <ul class="job-listing-card__meta">
                         @if($career->job_type)<li><i class="ri-briefcase-line"></i>{{ $career->job_type }}</li>@endif
                         @if($career->location)<li><i class="ri-map-pin-line"></i>{{ $career->location }}</li>@endif
-                        @if($career->experience)<li><i class="ri-user-star-line"></i>{{ $career->experience }}</li>@endif
-                        @if($career->salary_range)<li class="job-listing-card__salary"><i class="ri-money-dollar-circle-line"></i>{{ $career->salary_range }}</li>@endif
+                        @if($career->experience)<li><i class="ri-user-star-line"></i>{{ $career->experience }}</li>
+                        @endif
+                        @if($career->salary_range)<li class="job-listing-card__salary"><i
+                                class="ri-money-dollar-circle-line"></i>{{ $career->salary_range }}</li>@endif
                     </ul>
                     <div class="job-listing-card__footer">
                         <span>Posted {{ $career->created_at->diffForHumans() }}</span>
-                        @if($career->application_deadline)<span>Apply by {{ $career->application_deadline->format('M d, Y') }}</span>@endif
+                        @if($career->application_deadline)<span>Apply by {{ $career->application_deadline->format('M d,
+                            Y') }}</span>@endif
                     </div>
                 </div>
                 <a href="{{ route('careers.show', $career->slug) }}" class="job-listing-card__cta">
@@ -273,7 +280,7 @@
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         ['@type' => 'CollectionPage', '@id' => url('/career') . '#careers',

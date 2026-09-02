@@ -1,8 +1,10 @@
 @extends('layouts.frontend.master')
-@section('meta_keywords', 'software development portfolio, ERP case study, POS system case study, AI platform design, mobile app case study, custom software examples, Deveon Inc portfolio')
+@section('meta_keywords', 'software development portfolio, ERP case study, POS system case study, AI platform design,
+mobile app case study, custom software examples, Deveon Inc portfolio')
 
 @section('title', 'Portfolio | Software, ERP, AI & App Case Studies')
-@section('meta_description', 'See what Deveon Inc has built — textile ERP, retail POS, mobility marketplace, AI voice and document platforms. Custom software case studies for the USA, Canada, UK and Australia.')
+@section('meta_description', 'See what Deveon Inc has built — textile ERP, retail POS, mobility marketplace, AI voice
+and document platforms. Custom software case studies for the USA, Canada, UK and Australia.')
 
 @section('css')
 <style>
@@ -197,7 +199,6 @@
         align-items: center;
         gap: 12px;
     }
-
 </style>
 @endsection
 
@@ -205,10 +206,10 @@
 <div class="section-spacer"></div>
 <!-- Hero -->
 @include('frontend.partials.page-hero', [
-    'heroEyebrow' => 'Featured Projects',
-    'heroTitle' => 'Our <span>Portfolio</span>',
-    'heroWatermarkIcon' => 'ri-window-line',
-    'heroCrumbCurrent' => 'portfolio',
+'heroEyebrow' => 'Featured Projects',
+'heroTitle' => 'Our <span>Portfolio</span>',
+'heroWatermarkIcon' => 'ri-window-line',
+'heroCrumbCurrent' => 'portfolio',
 ])
 <!-- /Hero -->
 
@@ -218,7 +219,8 @@
         <div class="row justify-content-center">
             <div class="col-xl-7">
                 <div class="heading-section text-center">
-                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp" data-wow-delay=".1s">
+                    <span class="heading-subtitle rounded-pill border px-3 py-2 d-inline-flex mx-auto wow fadeInUp"
+                        data-wow-delay=".1s">
                         <i class="ri-checkbox-blank-circle-fill"></i>
                         Our Projects
                     </span>
@@ -226,7 +228,8 @@
                         Real Projects, <span class="text-primary">Real Results</span>
                     </h2>
                     <p class="mt-4 mb-0">
-                        A closer look at the platforms, apps, and systems we've designed, built, and shipped for teams across industries.
+                        A closer look at the platforms, apps, and systems we've designed, built, and shipped for teams
+                        across industries.
                     </p>
                 </div>
             </div>
@@ -240,7 +243,8 @@
         <div class="row gy-4">
             @foreach($portfolios as $item)
             <div class="col-md-6 col-lg-4">
-                <article class="portfolio-card wow fadeInUp" data-wow-delay=".{{ ($loop->index % 3) + 1 }}s" data-tilt style="--accent:{{ $item['accent'] }};">
+                <article class="portfolio-card wow fadeInUp" data-wow-delay=".{{ ($loop->index % 3) + 1 }}s" data-tilt
+                    style="--accent:{{ $item['accent'] }};">
                     <div class="portfolio-card__glow"></div>
                     <div class="portfolio-card__frame">
                         <div class="portfolio-card__bar">
@@ -257,7 +261,8 @@
                             <a href="{{ route('portfolio.detail', $item['slug']) }}">{{ $item['title'] }}</a>
                         </h3>
                         <p class="portfolio-card__desc">{{ $item['short'] }}</p>
-                        <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View Project <i class="ri-arrow-right-up-line"></i></a>
+                        <a class="portfolio-card__link" href="{{ route('portfolio.detail', $item['slug']) }}">View
+                            Project <i class="ri-arrow-right-up-line"></i></a>
                     </div>
                 </article>
             </div>
@@ -316,7 +321,7 @@
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         [

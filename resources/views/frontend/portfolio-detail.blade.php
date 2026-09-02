@@ -1,7 +1,8 @@
 @extends('layouts.frontend.master')
 @section('meta_type', 'article')
 @section('meta_image', asset($portfolio['image']))
-@section('meta_keywords', strtolower($portfolio['category']).', '.strtolower($portfolio['title']).', custom software case study, Deveon Inc portfolio')
+@section('meta_keywords', strtolower($portfolio['category']).', '.strtolower($portfolio['title']).', custom software
+case study, Deveon Inc portfolio')
 
 @section('title', $portfolio['title'])
 @section('meta_description', $portfolio['short'])
@@ -462,23 +463,23 @@
 <div class="section-spacer"></div>
 <!-- Hero -->
 @include('frontend.partials.page-hero', [
-    'heroEyebrow' => $portfolio['category'],
-    'heroTitle' => e($portfolio['title']),
-    'heroWatermarkIcon' => 'ri-window-line',
-    'heroAccent' => $portfolio['accent'],
-    'heroCrumbMiddle' => ['label' => 'portfolio', 'route' => route('portfolio')],
-    'heroCrumbCurrent' => $portfolio['slug'],
+'heroEyebrow' => $portfolio['category'],
+'heroTitle' => e($portfolio['title']),
+'heroWatermarkIcon' => 'ri-window-line',
+'heroAccent' => $portfolio['accent'],
+'heroCrumbMiddle' => ['label' => 'portfolio', 'route' => route('portfolio')],
+'heroCrumbCurrent' => $portfolio['slug'],
 ])
 <!-- /Hero -->
 
 <section class="section service-article section-gap">
     <div class="container">
         @include('frontend.partials.detail-cover', [
-            'coverImage'  => asset($portfolio['image']),
-            'coverAlt'    => $portfolio['title'],
-            'coverPath'   => '~/portfolio/<b>' . e($portfolio['slug']) . '</b>',
-            'coverBadge'  => $portfolio['year'] ?? null,
-            'coverAccent' => $portfolio['accent'],
+        'coverImage' => asset($portfolio['image']),
+        'coverAlt' => $portfolio['title'],
+        'coverPath' => '~/portfolio/<b>' . e($portfolio['slug']) . '</b>',
+        'coverBadge' => $portfolio['year'] ?? null,
+        'coverAccent' => $portfolio['accent'],
         ])
         <div class="row g-5">
             <!-- CONTENT -->
@@ -506,7 +507,8 @@
                             @foreach($portfolio['highlights'] as $highlight)
                             <div class="col-sm-6">
                                 <div class="feature-tile">
-                                    <span class="feature-tile__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <span class="feature-tile__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT)
+                                        }}</span>
                                     <div>
                                         <h4 class="feature-tile__title">{{ $highlight['title'] }}</h4>
                                         <p class="feature-tile__desc">{{ $highlight['desc'] }}</p>
@@ -527,18 +529,23 @@
                         </div>
 
                         <h3 class="section-title mb-2 wow fadeInUp" data-wow-delay=".3s">Project Gallery</h3>
-                        <p class="portfolio-gallery-hint wow fadeInUp" data-wow-delay=".3s">Click any screenshot to view it full size.</p>
+                        <p class="portfolio-gallery-hint wow fadeInUp" data-wow-delay=".3s">Click any screenshot to view
+                            it full size.</p>
                         <div class="portfolio-gallery-grid mb-4 wow fadeInUp" data-wow-delay=".3s">
                             @foreach($portfolio['gallery'] as $image)
-                            <button type="button" class="portfolio-gallery-item" data-lightbox-src="{{ asset($image) }}">
-                                <img src="{{ asset($image) }}" alt="{{ $portfolio['title'] }} screenshot {{ $loop->iteration }}" loading="lazy">
-                                <span class="portfolio-gallery-item__num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            <button type="button" class="portfolio-gallery-item"
+                                data-lightbox-src="{{ asset($image) }}">
+                                <img src="{{ asset($image) }}"
+                                    alt="{{ $portfolio['title'] }} screenshot {{ $loop->iteration }}" loading="lazy">
+                                <span class="portfolio-gallery-item__num">{{ str_pad($loop->iteration, 2, '0',
+                                    STR_PAD_LEFT) }}</span>
                                 <span class="portfolio-gallery-item__zoom"><i class="ri-zoom-in-line"></i></span>
                             </button>
                             @endforeach
                         </div>
 
-                        <div class="service-inline-cta wow fadeInUp" data-wow-delay=".2s" style="--accent:{{ $portfolio['accent'] }};">
+                        <div class="service-inline-cta wow fadeInUp" data-wow-delay=".2s"
+                            style="--accent:{{ $portfolio['accent'] }};">
                             <div>
                                 <h4>Have a similar project in mind?</h4>
                                 <p>Tell us what you're building — we'll get back to you within a day.</p>
@@ -592,13 +599,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="side-card mb-4 side-nav wow fadeInUp" data-wow-delay=".2s" style="--service-accent:{{ $portfolio['accent'] }};">
+                    <div class="side-card mb-4 side-nav wow fadeInUp" data-wow-delay=".2s"
+                        style="--service-accent:{{ $portfolio['accent'] }};">
                         <h3 class="side-title">More Projects</h3>
                         <nav class="services-nav">
                             <ul class="services-nav__list">
                                 @foreach($portfolios as $other)
-                                <li class="services-nav__item @if($other['slug'] === $portfolio['slug']) services-nav__item--active @endif">
-                                    <a href="{{ route('portfolio.detail', $other['slug']) }}" class="services-nav__link d-flex justify-content-between" @if($other['slug'] === $portfolio['slug']) aria-current="page" @endif>
+                                <li
+                                    class="services-nav__item @if($other['slug'] === $portfolio['slug']) services-nav__item--active @endif">
+                                    <a href="{{ route('portfolio.detail', $other['slug']) }}"
+                                        class="services-nav__link d-flex justify-content-between"
+                                        @if($other['slug']===$portfolio['slug']) aria-current="page" @endif>
                                         <span>{{ $other['title'] }}</span>
                                         <span><i class="ri-arrow-right-up-long-line"></i></span>
                                     </a>
@@ -648,8 +659,10 @@
 <!-- Gallery lightbox -->
 <div class="portfolio-lightbox" id="portfolioLightbox" aria-hidden="true">
     <button type="button" class="portfolio-lightbox__close" aria-label="Close"><i class="ri-close-line"></i></button>
-    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--prev" aria-label="Previous screenshot"><i class="ri-arrow-left-s-line"></i></button>
-    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--next" aria-label="Next screenshot"><i class="ri-arrow-right-s-line"></i></button>
+    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--prev"
+        aria-label="Previous screenshot"><i class="ri-arrow-left-s-line"></i></button>
+    <button type="button" class="portfolio-lightbox__nav portfolio-lightbox__nav--next" aria-label="Next screenshot"><i
+            class="ri-arrow-right-s-line"></i></button>
     <div class="portfolio-lightbox__stage">
         <img src="" alt="" class="portfolio-lightbox__img" loading="lazy" decoding="async">
         <span class="portfolio-lightbox__counter"></span>
@@ -660,7 +673,7 @@
 
 @section('script')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
     var items = Array.prototype.slice.call(document.querySelectorAll('.portfolio-gallery-item'));
     var lightbox = document.getElementById('portfolioLightbox');
     if (!items.length || !lightbox) return;
@@ -727,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 @section('schema')
 <script type="application/ld+json">
-@php $ld = [
+    @php $ld = [
     '@context' => 'https://schema.org',
     '@graph' => [
         [
