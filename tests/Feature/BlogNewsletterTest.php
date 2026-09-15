@@ -71,19 +71,15 @@ class BlogNewsletterTest extends TestCase
         Queue::assertPushed(SendBlogNewsletterEmail::class, 1);
     }
 
-    public function test_newsletter_contains_text_html_and_unsubscribe_headers(): void
+    public function test_newsletter_contains_original_template_and_unsubscribe_headers(): void
     {
         $blog = Blog::create(['title' => 'Readable '.uniqid(), 'content' => '<p>Tips &amp; ideas</p>', 'visibility' => 1]);
         $subscriber = NewNewsletter::create(['email' => uniqid().'@example.com']);
         $sent = Mail::mailer('array')->to($subscriber->email)->send(new BlogNewsletterMail($blog, $subscriber));
         $message = $sent->getSymfonySentMessage()->getOriginalMessage();
-        $this->assertStringContainsString('Tips & ideas', $message->getTextBody());
-        $greeting = 'Hi '.explode('@', $subscriber->email, 2)[0].',';
-        $this->assertStringContainsString($greeting, $message->getTextBody());
-        $this->assertStringContainsString($greeting, $message->getHtmlBody());
-        $this->assertStringContainsString('View the full story', $message->getHtmlBody());
-        $this->assertSame($blog->title, $message->getSubject());
-        $this->assertStringNotContainsString('Insights', $message->getHtmlBody());
+        $this->assertStringContainsString('Read the article', $message->getHtmlBody());
+        $this->assertSame($blog->title.' | Deveon Insights', $message->getSubject());
+        $this->assertStringContainsString('You are receiving this email because you subscribed to Deveon Insights.', $message->getHtmlBody());
         $this->assertStringContainsString('signature=', $message->getHeaders()->get('List-Unsubscribe')->getBodyAsString());
         $this->assertSame('List-Unsubscribe=One-Click', $message->getHeaders()->get('List-Unsubscribe-Post')->getBodyAsString());
     }

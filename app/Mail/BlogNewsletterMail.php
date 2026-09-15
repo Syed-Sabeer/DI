@@ -29,11 +29,9 @@ class BlogNewsletterMail extends Mailable
             'subscriber' => $this->subscriber->getKey(),
         ]);
 
-        return $this->subject($this->blog->title)
+        return $this->subject($this->blog->title.' | Deveon Insights')
             ->view('emails.blog-newsletter')
-            ->text('emails.blog-newsletter-text')
             ->with([
-                'recipientName' => explode('@', $this->subscriber->email, 2)[0],
                 'articleUrl' => route('blog.detail', $this->blog->slug),
                 'unsubscribeUrl' => $unsubscribeUrl,
             ])
