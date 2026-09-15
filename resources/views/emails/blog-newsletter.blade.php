@@ -89,11 +89,8 @@
 
           <tr>
             <td align="center" style="padding:22px 24px 4px;color:#777e77;font-size:12px;line-height:1.65;">
-              <div>You are receiving this email because you subscribed to Deveon Insights.</div>
               <div style="margin-top:7px;">
                 <a href="{{ route('privacy') }}" style="color:#454b45;text-decoration:underline;">Privacy policy</a>
-                <span style="color:#a5aaa5;">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span>
-                <a href="{{ $unsubscribeUrl }}" style="color:#454b45;text-decoration:underline;">Unsubscribe from this newsletter</a>
               </div>
               <div style="margin-top:8px;color:#969c96;">&copy; {{ now()->year }} Deveon Inc. All rights reserved.</div>
             </td>

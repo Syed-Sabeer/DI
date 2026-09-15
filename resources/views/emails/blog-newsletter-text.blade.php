@@ -10,5 +10,4 @@ Read the full article: {!! $articleUrl !!}
 
 Deveon Insights
 
-You received this email because you subscribed to Deveon Insights.
 Unsubscribe: {!! $unsubscribeUrl !!}
