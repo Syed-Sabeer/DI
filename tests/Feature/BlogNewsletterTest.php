@@ -81,7 +81,7 @@ class BlogNewsletterTest extends TestCase
         $greeting = 'Hi '.explode('@', $subscriber->email, 2)[0].',';
         $this->assertStringContainsString($greeting, $message->getTextBody());
         $this->assertStringContainsString($greeting, $message->getHtmlBody());
-        $this->assertStringContainsString('Continue reading', $message->getHtmlBody());
+        $this->assertStringContainsString('View the full story', $message->getHtmlBody());
         $this->assertSame($blog->title, $message->getSubject());
         $this->assertStringNotContainsString('Insights', $message->getHtmlBody());
         $this->assertStringContainsString('signature=', $message->getHeaders()->get('List-Unsubscribe')->getBodyAsString());
