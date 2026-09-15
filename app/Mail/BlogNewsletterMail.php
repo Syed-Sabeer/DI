@@ -29,7 +29,7 @@ class BlogNewsletterMail extends Mailable
             'subscriber' => $this->subscriber->getKey(),
         ]);
 
-        return $this->subject($this->blog->title.' | Deveon Insights')
+        return $this->subject($this->blog->title)
             ->view('emails.blog-newsletter')
             ->text('emails.blog-newsletter-text')
             ->with([

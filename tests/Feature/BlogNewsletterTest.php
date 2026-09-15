@@ -78,7 +78,9 @@ class BlogNewsletterTest extends TestCase
         $sent = Mail::mailer('array')->to($subscriber->email)->send(new BlogNewsletterMail($blog, $subscriber));
         $message = $sent->getSymfonySentMessage()->getOriginalMessage();
         $this->assertStringContainsString('Tips & ideas', $message->getTextBody());
-        $this->assertStringContainsString('Read the article', $message->getHtmlBody());
+        $this->assertStringContainsString('Continue reading', $message->getHtmlBody());
+        $this->assertSame($blog->title, $message->getSubject());
+        $this->assertStringNotContainsString('Insights', $message->getHtmlBody());
         $this->assertStringContainsString('signature=', $message->getHeaders()->get('List-Unsubscribe')->getBodyAsString());
         $this->assertSame('List-Unsubscribe=One-Click', $message->getHeaders()->get('List-Unsubscribe-Post')->getBodyAsString());
     }
