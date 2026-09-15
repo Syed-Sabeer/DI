@@ -129,6 +129,8 @@ class AdminBlogController extends Controller
             }
 
             return redirect()->route('admin.blog.index')->with('success', $message);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Throwable $e) {
             Log::error('Error while creating blog:', ['message' => $e->getMessage()]);
             return redirect()->back()->withErrors($e->getMessage())->withInput();

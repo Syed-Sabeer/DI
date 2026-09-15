@@ -33,9 +33,7 @@
     <script src="{{asset('AdminAssets/js/script.js')}}"></script>
     <script src="{{asset('AdminAssets/js/script1.js')}}"></script>
     <script src="{{asset('AdminAssets/js/theme-customizer/customizer.js')}}"></script>
-@yield('script')
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 

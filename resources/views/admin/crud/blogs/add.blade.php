@@ -219,7 +219,34 @@
         removePlugins: 'elementspath',
         resize_enabled: false
       });
-      document.querySelector('[data-category-form]')?.addEventListener('submit', async function (e) { e.preventDefault(); const form=e.target, error=form.querySelector('[data-category-error]'); error.textContent=''; const response=await fetch(form.action,{method:'POST',headers:{'X-CSRF-TOKEN':form.querySelector('input[name="_token"]').value,'Accept':'application/json'},body:new FormData(form)}); const data=await response.json(); if(!response.ok){error.textContent=data.message||'Unable to save category.';return;} $('.blog-category-select').append(new Option(data.name,data.name,true,true)).trigger('change'); bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal')).hide(); form.reset(); });
+      document.querySelector('[data-category-form]')?.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const error = form.querySelector('[data-category-error]');
+        const button = form.querySelector('button[type="submit"]');
+        error.textContent = '';
+        button.disabled = true;
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value, 'Accept': 'application/json' },
+            body: new FormData(form)
+          });
+          const data = await response.json().catch(() => null);
+          if (!response.ok || !data) {
+            const messages = data?.errors ? Object.values(data.errors).flat().join('\n') : null;
+            throw new Error(messages || data?.message || 'Unable to save category. Refresh the page and try again.');
+          }
+          $('.blog-category-select').append(new Option(data.name, data.name, true, true)).trigger('change');
+          bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal')).hide();
+          form.reset();
+        } catch (exception) {
+          error.textContent = exception.message || 'Unable to save category. Check your connection and try again.';
+          showBlogError(error.textContent, 'Unable to save category');
+        } finally {
+          button.disabled = false;
+        }
+      });
 
       $('.blog-category-select').select2({ width: '100%', placeholder: 'Search or choose a category', allowClear: true });
       $('#newsletter-subscriber-ids').select2({ width: '100%', placeholder: 'Search subscriber emails' });

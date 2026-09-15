@@ -50,6 +50,9 @@
 
     <!-- js -->
     @include('layouts.app.script')
+    @if(request()->routeIs('admin.blog.*'))
+        @include('admin.crud.blogs.alerts')
+    @endif
     @yield('script')
     @yield('js')
 
