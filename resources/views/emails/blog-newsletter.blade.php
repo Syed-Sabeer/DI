@@ -42,7 +42,7 @@
           </tr>
           <tr>
             <td class="content" style="padding:36px 40px 40px;background:#ffffff;border:1px solid #e0e5da;border-top:0;border-radius:0 0 16px 16px;">
-              <p style="margin:0 0 18px;font-size:16px;line-height:1.8;color:#263028;">Hello,</p>
+              <p style="margin:0 0 18px;font-size:16px;line-height:1.8;color:#263028;">Hi {{ $recipientName }},</p>
               <p style="margin:0 0 26px;font-size:16px;line-height:1.85;color:#4b574d;">{{ $summary }}</p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                 <tr>

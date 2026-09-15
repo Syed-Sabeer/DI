@@ -1,4 +1,4 @@
-Hello,
+Hi {!! $recipientName !!},
 
 {!! $blog->title !!}
 

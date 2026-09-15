@@ -33,6 +33,7 @@ class BlogNewsletterMail extends Mailable
             ->view('emails.blog-newsletter')
             ->text('emails.blog-newsletter-text')
             ->with([
+                'recipientName' => explode('@', $this->subscriber->email, 2)[0],
                 'articleUrl' => route('blog.detail', $this->blog->slug),
                 'unsubscribeUrl' => $unsubscribeUrl,
             ])

@@ -78,6 +78,9 @@ class BlogNewsletterTest extends TestCase
         $sent = Mail::mailer('array')->to($subscriber->email)->send(new BlogNewsletterMail($blog, $subscriber));
         $message = $sent->getSymfonySentMessage()->getOriginalMessage();
         $this->assertStringContainsString('Tips & ideas', $message->getTextBody());
+        $greeting = 'Hi '.explode('@', $subscriber->email, 2)[0].',';
+        $this->assertStringContainsString($greeting, $message->getTextBody());
+        $this->assertStringContainsString($greeting, $message->getHtmlBody());
         $this->assertStringContainsString('Continue reading', $message->getHtmlBody());
         $this->assertSame($blog->title, $message->getSubject());
         $this->assertStringNotContainsString('Insights', $message->getHtmlBody());
