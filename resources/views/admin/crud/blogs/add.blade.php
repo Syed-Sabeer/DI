@@ -149,12 +149,28 @@
                                           <div>
                                             <label class="form-label text-white fw-bold fs-6 mb-1" for="send-newsletter">Email this blog to newsletter subscribers</label>
                                             <div class="newsletter-broadcast-meta">
-                                              A branded announcement will be queued for
+                                              Available recipients:
                                               <span class="newsletter-broadcast-count">{{ number_format($subscriberCount) }} {{ \Illuminate\Support\Str::plural('subscriber', $subscriberCount) }}</span>.
                                             </div>
                                           </div>
                                           <div class="form-check form-switch m-0">
+                                            <input type="hidden" name="send_newsletter" value="0">
                                             <input class="form-check-input" id="send-newsletter" name="send_newsletter" type="checkbox" value="1" role="switch" @checked(old('send_newsletter', true)) @disabled($subscriberCount === 0)>
+                                          </div>
+                                        </div>
+                                        <div class="mt-3" id="newsletter-options">
+                                          <label for="newsletter-audience" class="form-label text-white">Send to</label>
+                                          <select name="newsletter_audience" id="newsletter-audience" class="form-select">
+                                            <option value="all" @selected(old('newsletter_audience', 'all') === 'all')>All subscribers</option>
+                                            <option value="selected" @selected(old('newsletter_audience') === 'selected')>Specific subscribers</option>
+                                          </select>
+                                          <div id="newsletter-recipients" class="mt-3" style="color:#212529">
+                                            <label for="newsletter-subscriber-ids" class="form-label text-white">Choose subscribers</label>
+                                            <select name="newsletter_subscriber_ids[]" id="newsletter-subscriber-ids" class="form-select" multiple>
+                                              @foreach($subscribers as $subscriber)
+                                                <option value="{{ $subscriber->id }}" @selected(in_array($subscriber->id, (array) old('newsletter_subscriber_ids', [])))>{{ $subscriber->email }}</option>
+                                              @endforeach
+                                            </select>
                                           </div>
                                         </div>
                                         <div class="newsletter-broadcast-meta mt-2">
@@ -206,6 +222,19 @@
       document.querySelector('[data-category-form]')?.addEventListener('submit', async function (e) { e.preventDefault(); const form=e.target, error=form.querySelector('[data-category-error]'); error.textContent=''; const response=await fetch(form.action,{method:'POST',headers:{'X-CSRF-TOKEN':form.querySelector('input[name="_token"]').value,'Accept':'application/json'},body:new FormData(form)}); const data=await response.json(); if(!response.ok){error.textContent=data.message||'Unable to save category.';return;} $('.blog-category-select').append(new Option(data.name,data.name,true,true)).trigger('change'); bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal')).hide(); form.reset(); });
 
       $('.blog-category-select').select2({ width: '100%', placeholder: 'Search or choose a category', allowClear: true });
+      $('#newsletter-subscriber-ids').select2({ width: '100%', placeholder: 'Search subscriber emails' });
+      function updateNewsletterOptions() {
+        const enabled = document.getElementById('send-newsletter').checked;
+        const selected = document.getElementById('newsletter-audience').value === 'selected';
+        document.getElementById('newsletter-options').hidden = !enabled;
+        document.getElementById('newsletter-audience').disabled = !enabled;
+        document.getElementById('newsletter-recipients').hidden = !selected;
+        const recipients = document.getElementById('newsletter-subscriber-ids');
+        recipients.disabled = !enabled || !selected;
+      }
+      document.getElementById('send-newsletter').addEventListener('change', updateNewsletterOptions);
+      document.getElementById('newsletter-audience').addEventListener('change', updateNewsletterOptions);
+      updateNewsletterOptions();
       document.querySelectorAll('[data-tags-input]').forEach(function (wrapper) {
         const hidden = wrapper.closest('form').querySelector('#blog-tags-value');
         const entry = wrapper.querySelector('[data-tag-entry]');

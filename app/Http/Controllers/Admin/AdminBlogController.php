@@ -46,9 +46,10 @@ class AdminBlogController extends Controller
     public function add()
     {
         $categories = $this->categoryOptions();
-        $subscriberCount = NewNewsletter::count();
+        $subscribers = NewNewsletter::orderBy('email')->get(['id', 'email']);
+        $subscriberCount = $subscribers->count();
 
-        return view('admin.crud.blogs.add', compact('categories', 'subscriberCount'));
+        return view('admin.crud.blogs.add', compact('categories', 'subscriberCount', 'subscribers'));
     }
 
     public function store(Request $request)
@@ -67,6 +68,13 @@ class AdminBlogController extends Controller
                 'meta_description' => 'nullable|string|max:320',
                 'meta_keywords' => 'nullable|string|max:255',
                 'send_newsletter' => 'nullable|boolean',
+                'newsletter_audience' => 'nullable|in:all,selected',
+                'newsletter_subscriber_ids' => [
+                    'exclude_unless:send_newsletter,1',
+                    'exclude_unless:newsletter_audience,selected',
+                    'required', 'array', 'min:1',
+                ],
+                'newsletter_subscriber_ids.*' => 'integer|distinct|exists:new_newsletters,id',
             ]);
 
             $validatedData = $request->only(['title', 'slug', 'content',  'tags', 'min_read', 'visibility', 'category', 'meta_title', 'meta_description', 'meta_keywords']);
@@ -102,7 +110,10 @@ class AdminBlogController extends Controller
 
             if ($request->boolean('send_newsletter')) {
                 try {
-                    QueueBlogNewsletter::dispatch($blog->id)
+                    $subscriberIds = $request->input('newsletter_audience') === 'selected'
+                        ? array_map('intval', $request->input('newsletter_subscriber_ids'))
+                        : null;
+                    QueueBlogNewsletter::dispatch($blog->id, $subscriberIds)
                         ->onConnection('database');
                     $message .= ' The subscriber newsletter has been queued for background delivery.';
                 } catch (\Throwable $queueException) {

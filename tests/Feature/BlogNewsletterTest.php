@@ -20,6 +20,69 @@ class BlogNewsletterTest extends TestCase
 {
     use DatabaseTransactions;
 
+    public function test_selected_subscribers_are_passed_to_the_coordinator(): void
+    {
+        Queue::fake();
+        $subscriber = NewNewsletter::create(['email' => uniqid().'@example.com']);
+        $request = Request::create('/admin/blog/store', 'POST', [
+            'title' => 'Selected newsletter '.uniqid(),
+            'content' => '<p>Article.</p>',
+            'send_newsletter' => '1',
+            'newsletter_audience' => 'selected',
+            'newsletter_subscriber_ids' => [(string) $subscriber->id],
+        ]);
+
+        app(AdminBlogController::class)->store($request);
+
+        Queue::assertPushed(QueueBlogNewsletter::class, fn ($job) => $job->subscriberIds === [$subscriber->id]);
+    }
+
+    public function test_invalid_selection_does_not_save_or_broadcast(): void
+    {
+        Queue::fake();
+        foreach ([[], [0]] as $ids) {
+            $title = 'Invalid recipients '.uniqid();
+            app(AdminBlogController::class)->store(Request::create('/admin/blog/store', 'POST', [
+                'title' => $title,
+                'content' => '<p>Article.</p>',
+                'send_newsletter' => '1',
+                'newsletter_audience' => 'selected',
+                'newsletter_subscriber_ids' => $ids,
+            ]));
+            $this->assertDatabaseMissing('blogs', ['title' => $title]);
+        }
+        Queue::assertNothingPushed();
+    }
+
+    public function test_selected_audience_never_delivers_to_other_subscribers(): void
+    {
+        Queue::fake();
+        $blog = Blog::create(['title' => 'Targeted '.uniqid(), 'content' => 'Article', 'visibility' => 1]);
+        $selected = NewNewsletter::create(['email' => uniqid().'@example.com']);
+        $other = NewNewsletter::create(['email' => uniqid().'@example.com']);
+
+        (new QueueBlogNewsletter($blog->id, []))->handle();
+        Queue::assertNothingPushed();
+        (new QueueBlogNewsletter($blog->id, [$selected->id]))->handle();
+        (new QueueBlogNewsletter($blog->id, [$selected->id]))->handle();
+
+        $this->assertDatabaseHas('blog_newsletter_deliveries', ['blog_id' => $blog->id, 'newsletter_subscriber_id' => $selected->id]);
+        $this->assertDatabaseMissing('blog_newsletter_deliveries', ['blog_id' => $blog->id, 'newsletter_subscriber_id' => $other->id]);
+        Queue::assertPushed(SendBlogNewsletterEmail::class, 1);
+    }
+
+    public function test_newsletter_contains_text_html_and_unsubscribe_headers(): void
+    {
+        $blog = Blog::create(['title' => 'Readable '.uniqid(), 'content' => '<p>Tips &amp; ideas</p>', 'visibility' => 1]);
+        $subscriber = NewNewsletter::create(['email' => uniqid().'@example.com']);
+        $sent = Mail::mailer('array')->to($subscriber->email)->send(new BlogNewsletterMail($blog, $subscriber));
+        $message = $sent->getSymfonySentMessage()->getOriginalMessage();
+        $this->assertStringContainsString('Tips & ideas', $message->getTextBody());
+        $this->assertStringContainsString('Read the full article', $message->getHtmlBody());
+        $this->assertStringContainsString('signature=', $message->getHeaders()->get('List-Unsubscribe')->getBodyAsString());
+        $this->assertSame('List-Unsubscribe=One-Click', $message->getHeaders()->get('List-Unsubscribe-Post')->getBodyAsString());
+    }
+
     public function test_checked_blog_form_queues_the_newsletter_coordinator(): void
     {
         Queue::fake();

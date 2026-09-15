@@ -19,8 +19,11 @@ class QueueBlogNewsletter implements ShouldQueue
 
     public int $timeout = 120;
 
-    public function __construct(public int $blogId)
+    public ?array $subscriberIds = null;
+
+    public function __construct(public int $blogId, ?array $subscriberIds = null)
     {
+        $this->subscriberIds = $subscriberIds;
     }
 
     public function handle(): void
@@ -32,6 +35,7 @@ class QueueBlogNewsletter implements ShouldQueue
         }
 
         NewNewsletter::query()
+            ->when($this->subscriberIds !== null, fn ($query) => $query->whereIn('id', $this->subscriberIds))
             ->select(['id', 'email'])
             ->orderBy('id')
             ->chunkById(250, function ($subscribers): void {
