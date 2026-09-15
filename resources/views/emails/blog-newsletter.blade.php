@@ -19,13 +19,6 @@
     $summary = \Illuminate\Support\Str::limit(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($blog->content), ENT_QUOTES | ENT_HTML5, 'UTF-8')), 600);
     $logoPath = public_path('FrontendAssets/images/brand/logo-dark.png');
     $logoUrl = is_readable($logoPath) ? $message->embed($logoPath) : asset('FrontendAssets/images/brand/logo-dark.png');
-    $publicDisk = \Illuminate\Support\Facades\Storage::disk('public');
-    $coverPath = $blog->image && $publicDisk->exists($blog->image)
-        ? $publicDisk->path($blog->image)
-        : public_path(config('seo.defaultImage'));
-    $coverUrl = is_file($coverPath) && is_readable($coverPath)
-        ? $message->embed($coverPath)
-        : asset(config('seo.defaultImage'));
   @endphp
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f4ef;">
     <tr>
@@ -48,11 +41,6 @@
               @if($blog->min_read)
                 <p style="margin:20px 0 0;color:#c4cec3;font-size:13px;">{{ $blog->min_read }}</p>
               @endif
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0;background:#ffffff;">
-              <a href="{{ $articleUrl }}" style="text-decoration:none;"><img src="{{ $coverUrl }}" width="600" alt="{{ $blog->title }}" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></a>
             </td>
           </tr>
           <tr>
