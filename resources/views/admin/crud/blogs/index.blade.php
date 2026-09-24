@@ -140,6 +140,8 @@
     <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.blog.newsletter-analytics', $blog) }}" title="Newsletter analytics">
       <i class="fa fa-line-chart me-1"></i> Analytics
     </a>
+  @endif
+  @if($blog->newsletter_resendable_count > 0)
     <button
       type="button"
       class="btn btn-sm btn-outline-warning"
@@ -147,7 +149,7 @@
       data-bs-target="#resendNewsletterModal"
       data-resend-action="{{ route('admin.blog.resend-newsletter', $blog) }}"
       data-blog-title="{{ $blog->title }}"
-      data-recipient-count="{{ $blog->newsletter_deliveries_count }}"
+      data-recipient-count="{{ $blog->newsletter_resendable_count }}"
       title="Resend this newsletter"
     >
       <i class="fa fa-paper-plane me-1"></i> Resend

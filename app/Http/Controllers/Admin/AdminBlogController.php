@@ -10,6 +10,7 @@ use App\Models\BlogNewsletterDelivery;
 use App\Models\NewNewsletter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
@@ -23,7 +24,12 @@ class AdminBlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::query()->withCount('newsletterDeliveries')->get();
+        $blogs = Blog::query()
+            ->withCount([
+                'newsletterDeliveries',
+                'newsletterDeliveries as newsletter_resendable_count' => fn ($query) => $query->whereIn('status', ['sent', 'failed', 'cancelled']),
+            ])
+            ->get();
         $categories = $this->categoryOptions();
         $managedCategories = BlogCategory::orderBy('name')->get();
         return view('admin.crud.blogs.index', compact('blogs', 'categories', 'managedCategories'));
@@ -40,7 +46,7 @@ class AdminBlogController extends Controller
         $summary = (clone $deliveryQuery)
             ->selectRaw("SUM(CASE WHEN status = 'sent' THEN 1 ELSE 0 END) as sent_count")
             ->selectRaw("SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count")
-            ->selectRaw("SUM(CASE WHEN status = 'queued' THEN 1 ELSE 0 END) as queued_count")
+            ->selectRaw("SUM(CASE WHEN status IN ('queued', 'resend_queued') THEN 1 ELSE 0 END) as queued_count")
             ->selectRaw('SUM(CASE WHEN opened_at IS NOT NULL THEN 1 ELSE 0 END) as opened_count')
             ->selectRaw('SUM(CASE WHEN viewed_at IS NOT NULL THEN 1 ELSE 0 END) as viewed_count')
             ->selectRaw('COALESCE(SUM(open_count), 0) as total_open_events')
@@ -85,14 +91,29 @@ class AdminBlogController extends Controller
             return back()->with('warning', 'This blog must be visible before its newsletter can be resent.');
         }
 
-        if (! $blog->newsletterDeliveries()->exists()) {
-            return back()->with('warning', 'This blog has no previous newsletter recipients to resend to.');
+        $resendCount = DB::transaction(function () use ($blog): int {
+            $count = BlogNewsletterDelivery::query()
+                ->where('blog_id', $blog->getKey())
+                ->whereIn('status', ['sent', 'failed', 'cancelled'])
+                ->update([
+                    'status' => 'resend_queued',
+                    'failure_message' => null,
+                    'updated_at' => now(),
+                ]);
+
+            if ($count > 0) {
+                ResendBlogNewsletter::dispatch($blog->getKey())
+                    ->onConnection('database');
+            }
+
+            return $count;
+        });
+
+        if ($resendCount === 0) {
+            return back()->with('warning', 'There are no sent or failed newsletter deliveries available to resend.');
         }
 
-        ResendBlogNewsletter::dispatch($blog->getKey())
-            ->onConnection('database');
-
-        return back()->with('success', 'The newsletter resend has been queued for the original recipients.');
+        return back()->with('success', number_format($resendCount).' newsletter '.str('recipient')->plural($resendCount).' queued for resend.');
     }
 
     public function categoryStore(Request $request)

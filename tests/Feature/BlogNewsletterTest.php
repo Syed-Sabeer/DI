@@ -310,6 +310,13 @@ class BlogNewsletterTest extends TestCase
             $delivery->blog
         );
         Queue::assertPushed(ResendBlogNewsletter::class, fn ($job) => $job->blogId === $delivery->blog_id && $job->connection === 'database');
+        $this->assertSame('resend_queued', $delivery->fresh()->status);
+
+        app(AdminBlogController::class)->resendNewsletter(
+            Request::create('/admin/blog/'.$delivery->blog_id.'/resend-newsletter', 'POST', ['password' => '619872']),
+            $delivery->blog
+        );
+        Queue::assertPushed(ResendBlogNewsletter::class, 1);
 
         Queue::fake();
         (new ResendBlogNewsletter($delivery->blog_id))->handle();

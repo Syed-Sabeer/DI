@@ -70,7 +70,7 @@
                       <span class="text-muted">Deleted blog</span>
                     @endif
                   </td>
-                  <td><span class="badge bg-{{ $delivery->status === 'sent' ? 'success' : ($delivery->status === 'failed' ? 'danger' : 'secondary') }}">{{ ucfirst($delivery->status) }}</span></td>
+                  <td><span class="badge bg-{{ $delivery->status === 'sent' ? 'success' : ($delivery->status === 'failed' ? 'danger' : 'secondary') }}">{{ \Illuminate\Support\Str::headline($delivery->status) }}</span></td>
                   <td>{{ optional($delivery->sent_at)->format('d M Y, h:i A') ?? '—' }}</td>
                   <td>{{ $delivery->opened_at ? 'Yes' : 'No' }}</td>
                   <td>{{ optional($delivery->opened_at)->format('d M Y, h:i A') ?? '—' }}</td>

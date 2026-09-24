@@ -15,7 +15,7 @@ class ResendBlogNewsletter implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries = 1;
+    public int $tries = 3;
 
     public int $timeout = 120;
 
@@ -27,13 +27,22 @@ class ResendBlogNewsletter implements ShouldQueue
     {
         $blog = Blog::query()->find($this->blogId);
 
-        if (! $blog || ! $blog->visibility) {
+        if (! $blog) {
+            return;
+        }
+
+        if (! $blog->visibility) {
+            BlogNewsletterDelivery::query()
+                ->where('blog_id', $this->blogId)
+                ->where('status', 'resend_queued')
+                ->update(['status' => 'cancelled', 'updated_at' => now()]);
+
             return;
         }
 
         BlogNewsletterDelivery::query()
             ->where('blog_id', $this->blogId)
-            ->whereIn('status', ['sent', 'failed', 'cancelled'])
+            ->where('status', 'resend_queued')
             ->select('id')
             ->orderBy('id')
             ->chunkById(250, function ($deliveries): void {
