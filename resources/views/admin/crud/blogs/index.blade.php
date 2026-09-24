@@ -213,8 +213,9 @@
                         id="resendNewsletterPassword"
                         name="password"
                         type="password"
-                        value="{{ config('newsletter.resend_password', '619872') }}"
-                        autocomplete="off"
+                        value=""
+                        placeholder="Enter resend password"
+                        autocomplete="current-password"
                         required
                       >
                       <button class="btn btn-outline-secondary" id="toggleResendPassword" type="button" aria-label="Show password" title="Show password"><i class="fa fa-eye"></i></button>
