@@ -285,6 +285,24 @@ class BlogNewsletterTest extends TestCase
         );
         $this->assertSame(0, $filteredView->getData()['deliveries']->total());
         $this->assertSame(1, (int) $filteredView->getData()['summary']->sent_count);
+
+        $openedView = app(AdminBlogController::class)->newsletterAnalytics(
+            Request::create('/admin/blog/'.$delivery->blog->id.'/newsletter-analytics', 'GET', [
+                'engagement' => 'opened',
+                'status' => 'sent',
+                'sort' => 'most_opens',
+            ]),
+            $delivery->blog
+        );
+        $this->assertSame(1, $openedView->getData()['deliveries']->total());
+
+        $notOpenedView = app(AdminBlogController::class)->newsletterAnalytics(
+            Request::create('/admin/blog/'.$delivery->blog->id.'/newsletter-analytics', 'GET', [
+                'engagement' => 'not_opened',
+            ]),
+            $delivery->blog
+        );
+        $this->assertSame(0, $notOpenedView->getData()['deliveries']->total());
     }
 
     public function test_resend_requires_password_and_requeues_existing_delivery_without_duplication(): void

@@ -41,6 +41,9 @@ class AdminBlogController extends Controller
     {
         $request->validate([
             'search' => 'nullable|string|max:255',
+            'engagement' => 'nullable|in:all,opened,not_opened,viewed,not_viewed,opened_not_viewed',
+            'status' => 'nullable|in:all,sent,failed,queued,selected,cancelled',
+            'sort' => 'nullable|in:latest,oldest,most_opens,most_views,email',
         ]);
 
         $deliveryQuery = BlogNewsletterDelivery::query()->where('blog_id', $blog->getKey());
@@ -64,7 +67,23 @@ class AdminBlogController extends Controller
             ->when($request->filled('search'), function ($query) use ($request) {
                 $query->where('email', 'like', '%'.trim($request->string('search')).'%');
             })
-            ->latest('updated_at')
+            ->when($request->input('engagement') === 'opened', fn ($query) => $query->whereNotNull('opened_at'))
+            ->when($request->input('engagement') === 'not_opened', fn ($query) => $query->whereNull('opened_at'))
+            ->when($request->input('engagement') === 'viewed', fn ($query) => $query->whereNotNull('viewed_at'))
+            ->when($request->input('engagement') === 'not_viewed', fn ($query) => $query->whereNull('viewed_at'))
+            ->when($request->input('engagement') === 'opened_not_viewed', fn ($query) => $query->whereNotNull('opened_at')->whereNull('viewed_at'))
+            ->when($request->filled('status') && $request->input('status') !== 'all', function ($query) use ($request) {
+                if ($request->input('status') === 'queued') {
+                    $query->whereIn('status', ['queued', 'resend_queued']);
+                } else {
+                    $query->where('status', $request->input('status'));
+                }
+            })
+            ->when($request->input('sort', 'latest') === 'latest', fn ($query) => $query->latest('updated_at'))
+            ->when($request->input('sort') === 'oldest', fn ($query) => $query->oldest('updated_at'))
+            ->when($request->input('sort') === 'most_opens', fn ($query) => $query->orderByDesc('open_count')->latest('updated_at'))
+            ->when($request->input('sort') === 'most_views', fn ($query) => $query->orderByDesc('view_count')->latest('updated_at'))
+            ->when($request->input('sort') === 'email', fn ($query) => $query->orderBy('email'))
             ->paginate(20)
             ->withQueryString();
 
