@@ -329,6 +329,55 @@ class BlogNewsletterTest extends TestCase
         Queue::assertPushed(SendBlogNewsletterEmail::class, fn ($job) => $job->deliveryId === $delivery->id && $job->connection === 'database');
     }
 
+    public function test_editing_blog_updates_resend_audience_without_sending_email(): void
+    {
+        Queue::fake();
+        $blog = Blog::create([
+            'title' => 'Editable audience '.uniqid(),
+            'content' => '<p>Original article.</p>',
+            'visibility' => 1,
+        ]);
+        $previousSubscriber = NewNewsletter::create(['email' => uniqid('previous-').'@example.com']);
+        $newSubscriber = NewNewsletter::create(['email' => uniqid('new-').'@example.com']);
+        $previousDelivery = BlogNewsletterDelivery::create([
+            'blog_id' => $blog->id,
+            'newsletter_subscriber_id' => $previousSubscriber->id,
+            'email' => $previousSubscriber->email,
+            'status' => 'sent',
+            'sent_at' => now(),
+            'open_count' => 2,
+            'view_count' => 1,
+            'resend_enabled' => true,
+        ]);
+
+        app(AdminBlogController::class)->update(
+            Request::create('/admin/blog/'.$blog->id, 'PUT', [
+                'title' => $blog->title,
+                'slug' => $blog->slug,
+                'content' => '<p>Updated article.</p>',
+                'visibility' => 1,
+                'newsletter_recipients_enabled' => 1,
+                'newsletter_audience' => 'selected',
+                'newsletter_subscriber_ids' => [$newSubscriber->id],
+            ]),
+            $blog->id
+        );
+
+        $previousDelivery->refresh();
+        $this->assertFalse($previousDelivery->resend_enabled);
+        $this->assertSame('sent', $previousDelivery->status);
+        $this->assertSame(2, $previousDelivery->open_count);
+        $this->assertSame(1, $previousDelivery->view_count);
+        $this->assertDatabaseHas('blog_newsletter_deliveries', [
+            'blog_id' => $blog->id,
+            'newsletter_subscriber_id' => $newSubscriber->id,
+            'status' => 'selected',
+            'resend_enabled' => 1,
+        ]);
+        $this->assertDatabaseCount('blog_newsletter_deliveries', 2);
+        Queue::assertNothingPushed();
+    }
+
     public function test_visible_unsubscribe_link_requires_confirmation_and_allows_resubscribing(): void
     {
         $subscriber = NewNewsletter::create(['email' => uniqid().'@example.com']);

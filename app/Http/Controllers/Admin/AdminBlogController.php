@@ -27,7 +27,9 @@ class AdminBlogController extends Controller
         $blogs = Blog::query()
             ->withCount([
                 'newsletterDeliveries',
-                'newsletterDeliveries as newsletter_resendable_count' => fn ($query) => $query->whereIn('status', ['sent', 'failed', 'cancelled']),
+                'newsletterDeliveries as newsletter_resendable_count' => fn ($query) => $query
+                    ->where('resend_enabled', true)
+                    ->whereIn('status', ['sent', 'failed', 'cancelled', 'selected']),
             ])
             ->get();
         $categories = $this->categoryOptions();
@@ -94,7 +96,8 @@ class AdminBlogController extends Controller
         $resendCount = DB::transaction(function () use ($blog): int {
             $count = BlogNewsletterDelivery::query()
                 ->where('blog_id', $blog->getKey())
-                ->whereIn('status', ['sent', 'failed', 'cancelled'])
+                ->where('resend_enabled', true)
+                ->whereIn('status', ['sent', 'failed', 'cancelled', 'selected'])
                 ->update([
                     'status' => 'resend_queued',
                     'failure_message' => null,
@@ -230,7 +233,27 @@ class AdminBlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
         $categories = $this->categoryOptions();
-        return view('admin.crud.blogs.edit', compact('blog', 'categories'));
+        $subscribers = NewNewsletter::query()->orderBy('email')->get(['id', 'email']);
+        $subscriberCount = $subscribers->count();
+        $selectedSubscriberIds = $blog->newsletterDeliveries()
+            ->where('resend_enabled', true)
+            ->pluck('newsletter_subscriber_id')
+            ->map(fn ($id) => (int) $id)
+            ->all();
+        $newsletterRecipientsEnabled = count($selectedSubscriberIds) > 0;
+        $newsletterAudience = $newsletterRecipientsEnabled && count($selectedSubscriberIds) === $subscriberCount
+            ? 'all'
+            : 'selected';
+
+        return view('admin.crud.blogs.edit', compact(
+            'blog',
+            'categories',
+            'subscribers',
+            'subscriberCount',
+            'selectedSubscriberIds',
+            'newsletterRecipientsEnabled',
+            'newsletterAudience'
+        ));
     }
 
     public function update(Request $request, $id)
@@ -248,6 +271,14 @@ class AdminBlogController extends Controller
                 'meta_title' => 'nullable|string|max:255',
                 'meta_description' => 'nullable|string|max:320',
                 'meta_keywords' => 'nullable|string|max:255',
+                'newsletter_recipients_enabled' => 'nullable|boolean',
+                'newsletter_audience' => 'nullable|in:all,selected',
+                'newsletter_subscriber_ids' => [
+                    'exclude_unless:newsletter_recipients_enabled,1',
+                    'exclude_unless:newsletter_audience,selected',
+                    'required', 'array', 'min:1',
+                ],
+                'newsletter_subscriber_ids.*' => 'integer|distinct|exists:new_newsletters,id',
             ]);
 
             $blog = Blog::findOrFail($id);
@@ -279,6 +310,13 @@ class AdminBlogController extends Controller
             }
 
             $blog->update($updateData);
+
+            $this->syncNewsletterResendAudience(
+                $blog,
+                $request->boolean('newsletter_recipients_enabled'),
+                $request->input('newsletter_audience', 'all'),
+                array_map('intval', $request->input('newsletter_subscriber_ids', []))
+            );
 
             return redirect()->route('admin.blog.index')->with('success', 'Blog updated successfully.');
         } catch (\Throwable $e) {
@@ -318,5 +356,41 @@ class AdminBlogController extends Controller
             Log::error('Blog visibility toggle error:', ['message' => $e->getMessage()]);
             return redirect()->back()->withErrors('Could not update blog visibility.');
         }
+    }
+
+    private function syncNewsletterResendAudience(Blog $blog, bool $enabled, string $audience, array $subscriberIds): void
+    {
+        DB::transaction(function () use ($blog, $enabled, $audience, $subscriberIds): void {
+            BlogNewsletterDelivery::query()
+                ->where('blog_id', $blog->getKey())
+                ->update(['resend_enabled' => false, 'updated_at' => now()]);
+
+            if (! $enabled) {
+                return;
+            }
+
+            NewNewsletter::query()
+                ->when($audience === 'selected', fn ($query) => $query->whereIn('id', $subscriberIds))
+                ->select(['id', 'email'])
+                ->orderBy('id')
+                ->chunkById(250, function ($subscribers) use ($blog): void {
+                    $now = now();
+                    $rows = $subscribers->map(fn ($subscriber) => [
+                        'blog_id' => $blog->getKey(),
+                        'newsletter_subscriber_id' => $subscriber->getKey(),
+                        'email' => $subscriber->email,
+                        'status' => 'selected',
+                        'resend_enabled' => true,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ])->all();
+
+                    BlogNewsletterDelivery::query()->upsert(
+                        $rows,
+                        ['blog_id', 'newsletter_subscriber_id'],
+                        ['email', 'resend_enabled', 'updated_at']
+                    );
+                });
+        });
     }
 }

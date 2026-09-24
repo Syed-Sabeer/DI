@@ -18,6 +18,7 @@ class BlogNewsletterDelivery extends Model
         'viewed_at',
         'last_viewed_at',
         'view_count',
+        'resend_enabled',
         'failure_message',
     ];
 
@@ -29,6 +30,7 @@ class BlogNewsletterDelivery extends Model
         'last_viewed_at' => 'datetime',
         'open_count' => 'integer',
         'view_count' => 'integer',
+        'resend_enabled' => 'boolean',
     ];
 
     public function blog()
