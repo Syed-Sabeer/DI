@@ -133,6 +133,12 @@
                               <td>
                           <div class="product-action">
 
+  @if($blog->newsletter_deliveries_count > 0)
+    <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.blog.newsletter-analytics', $blog) }}" title="Newsletter analytics">
+      <i class="fa fa-line-chart me-1"></i> Analytics
+    </a>
+  @endif
+
   <a class="square-white" href="{{ route('admin.blog.edit', $blog->id) }}">
     <svg>
       <use href="{{ asset('AdminAssets/svg/icon-sprite.svg#edit-content') }}"></use>

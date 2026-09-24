@@ -43,7 +43,7 @@ class SendBlogNewsletterEmail implements ShouldQueue
         }
 
         Mail::to($delivery->email)->send(
-            new BlogNewsletterMail($delivery->blog, $delivery->subscriber)
+            new BlogNewsletterMail($delivery)
         );
 
         $delivery->update([

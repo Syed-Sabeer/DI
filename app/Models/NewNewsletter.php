@@ -16,4 +16,9 @@ class NewNewsletter extends Model
     ];
 
     public $timestamps = true;
+
+    public function deliveries()
+    {
+        return $this->hasMany(BlogNewsletterDelivery::class, 'newsletter_subscriber_id');
+    }
 }

@@ -57,7 +57,10 @@
                             
                               <th> <span class="c-o-light f-w-600">Email</span></th>
                               <th> <span class="c-o-light f-w-600">Subscribed At</span></th>
-                             
+                              <th> <span class="c-o-light f-w-600">Emails Sent</span></th>
+                              <th> <span class="c-o-light f-w-600">Emails Opened</span></th>
+                              <th> <span class="c-o-light f-w-600">Blogs Viewed</span></th>
+                              <th> <span class="c-o-light f-w-600">Last Activity</span></th>
                               <th> <span class="c-o-light f-w-600">Actions</span></th>
 
                             </tr>
@@ -70,8 +73,25 @@
     
       <td><p class="c-o-light">{{ $newsletter->email }}</p></td>
       <td><p class="c-o-light">{{ optional($newsletter->created_at)->format('d M Y, h:i A') }}</p></td>
+      <td><span class="badge bg-light text-dark">{{ number_format($newsletter->emails_sent_count) }}</span></td>
+      <td><span class="badge bg-info">{{ number_format($newsletter->emails_opened_count) }}</span></td>
+      <td><span class="badge bg-success">{{ number_format($newsletter->blogs_viewed_count) }}</span></td>
       <td>
-        <div class="product-action">
+        @php
+          $lastActivity = collect([
+              $newsletter->deliveries_max_sent_at,
+              $newsletter->deliveries_max_last_opened_at,
+              $newsletter->deliveries_max_last_viewed_at,
+          ])->filter()->max();
+        @endphp
+        <p class="c-o-light mb-0">{{ $lastActivity ? \Illuminate\Support\Carbon::parse($lastActivity)->format('d M Y, h:i A') : '—' }}</p>
+      </td>
+      <td>
+        <div class="product-action d-flex align-items-center gap-2">
+
+          <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.newsletterlist.activity', $newsletter) }}" title="View newsletter activity">
+            <i class="fa fa-line-chart me-1"></i> Activity
+          </a>
 
           <!-- Delete Form -->
           <form action="{{ route('admin.newsletterlist.destroy', $newsletter->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this newsletter?');" style="display:inline;">
@@ -87,7 +107,7 @@
 
 
   @empty
-    <tr><td colspan="5" class="text-center py-4">No newsletter subscriptions yet.</td></tr>
+    <tr><td colspan="9" class="text-center py-4">No newsletter subscriptions yet.</td></tr>
   @endforelse
 </tbody>
 <!-- Bootstrap JS Bundle -->

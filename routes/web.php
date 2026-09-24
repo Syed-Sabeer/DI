@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\CareerApplicationController;
 use App\Http\Controllers\Frontend\NewsletterSubscriptionController;
+use App\Http\Controllers\Frontend\NewsletterTrackingController;
 
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\WebsiteController;
@@ -72,6 +73,8 @@ Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterSubscriptionContro
 Route::post('/newsletter/unsubscribe/{subscriber}/confirm', [NewsletterSubscriptionController::class, 'destroy'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe.confirm');
 Route::post('/newsletter/one-click-unsubscribe/{subscriber}', [NewsletterSubscriptionController::class, 'oneClickUnsubscribe'])->middleware(['signed', 'throttle:10,1'])->name('newsletter.unsubscribe.one-click');
 Route::post('/newsletter/resubscribe', [NewsletterSubscriptionController::class, 'resubscribe'])->middleware('throttle:5,1')->name('newsletter.resubscribe');
+Route::get('/newsletter/track/open/{delivery}', [NewsletterTrackingController::class, 'open'])->middleware('signed')->name('newsletter.track.open');
+Route::get('/newsletter/track/view/{delivery}', [NewsletterTrackingController::class, 'view'])->middleware('signed')->name('newsletter.track.view');
 Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
 
 
@@ -104,6 +107,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('blog/add', [AdminBlogController::class, 'add'])->name('blog.add');
     Route::post('blog/store', [AdminBlogController::class, 'store'])->name('blog.store');
     Route::get('blog/{id}/edit', [AdminBlogController::class, 'edit'])->name('blog.edit');
+    Route::get('blog/{blog}/newsletter-analytics', [AdminBlogController::class, 'newsletterAnalytics'])->name('blog.newsletter-analytics');
     Route::put('blog/{id}', [AdminBlogController::class, 'update'])->name('blog.update');
     Route::delete('blog/{id}', [AdminBlogController::class, 'destroy'])->name('blog.destroy');
     Route::post('blog/{id}/toggle-visibility', [AdminBlogController::class, 'toggleVisibility'])->name('blog.toggleVisibility');
@@ -131,6 +135,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('contacts', [AdminContactPageController::class, 'index'])->name('contactsubmission.index');
     Route::get('contactlist', [AdminContactController::class, 'index'])->name('contactlist');
     Route::get('newsletterlist', [AdminNewsletterSubmissionController::class, 'index'])->name('newsletterlist');
+    Route::get('newsletterlist/{subscriber}/activity', [AdminNewsletterSubmissionController::class, 'activity'])->name('newsletterlist.activity');
     Route::delete('newsletterlist/{id}', [AdminNewsletterSubmissionController::class, 'destroy'])->name('newsletterlist.destroy');
     Route::delete('contacts/{id}', [AdminContactController::class, 'destroy'])->name('contact.destroy');
     Route::get('career-applications', [AdminCareerApplicationController::class, 'index'])->name('career-applications.index');

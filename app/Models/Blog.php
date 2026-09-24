@@ -50,4 +50,9 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
+
+    public function newsletterDeliveries()
+    {
+        return $this->hasMany(BlogNewsletterDelivery::class);
+    }
 } 

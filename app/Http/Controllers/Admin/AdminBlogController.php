@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\QueueBlogNewsletter;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogNewsletterDelivery;
 use App\Models\NewNewsletter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -21,10 +22,42 @@ class AdminBlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::query()->withCount('newsletterDeliveries')->get();
         $categories = $this->categoryOptions();
         $managedCategories = BlogCategory::orderBy('name')->get();
         return view('admin.crud.blogs.index', compact('blogs', 'categories', 'managedCategories'));
+    }
+
+    public function newsletterAnalytics(Blog $blog)
+    {
+        $deliveryQuery = BlogNewsletterDelivery::query()->where('blog_id', $blog->getKey());
+
+        $summary = (clone $deliveryQuery)
+            ->selectRaw("SUM(CASE WHEN status = 'sent' THEN 1 ELSE 0 END) as sent_count")
+            ->selectRaw("SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count")
+            ->selectRaw("SUM(CASE WHEN status = 'queued' THEN 1 ELSE 0 END) as queued_count")
+            ->selectRaw('SUM(CASE WHEN opened_at IS NOT NULL THEN 1 ELSE 0 END) as opened_count')
+            ->selectRaw('SUM(CASE WHEN viewed_at IS NOT NULL THEN 1 ELSE 0 END) as viewed_count')
+            ->selectRaw('COALESCE(SUM(open_count), 0) as total_open_events')
+            ->selectRaw('COALESCE(SUM(view_count), 0) as total_view_events')
+            ->first();
+
+        $sentCount = (int) $summary->sent_count;
+        $openRate = $sentCount > 0 ? round(((int) $summary->opened_count / $sentCount) * 100, 1) : 0;
+        $viewRate = $sentCount > 0 ? round(((int) $summary->viewed_count / $sentCount) * 100, 1) : 0;
+
+        $deliveries = $deliveryQuery
+            ->with('subscriber:id,email')
+            ->latest('updated_at')
+            ->paginate(20);
+
+        return view('admin.crud.blogs.newsletter-analytics', compact(
+            'blog',
+            'summary',
+            'openRate',
+            'viewRate',
+            'deliveries'
+        ));
     }
 
     public function categoryStore(Request $request)

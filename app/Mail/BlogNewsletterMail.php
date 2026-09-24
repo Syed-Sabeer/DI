@@ -2,8 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Blog;
-use App\Models\NewNewsletter;
+use App\Models\BlogNewsletterDelivery;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -15,24 +14,35 @@ class BlogNewsletterMail extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public Blog $blog,
-        public NewNewsletter $subscriber
+        public BlogNewsletterDelivery $delivery
     ) {
+        $this->delivery->loadMissing(['blog', 'subscriber']);
     }
 
     public function build(): self
     {
+        $blog = $this->delivery->blog;
+        $subscriber = $this->delivery->subscriber;
+
         $unsubscribeUrl = URL::signedRoute('newsletter.unsubscribe', [
-            'subscriber' => $this->subscriber->getKey(),
+            'subscriber' => $subscriber->getKey(),
         ]);
         $oneClickUnsubscribeUrl = URL::signedRoute('newsletter.unsubscribe.one-click', [
-            'subscriber' => $this->subscriber->getKey(),
+            'subscriber' => $subscriber->getKey(),
+        ]);
+        $articleUrl = URL::signedRoute('newsletter.track.view', [
+            'delivery' => $this->delivery->getKey(),
+        ]);
+        $openTrackingUrl = URL::signedRoute('newsletter.track.open', [
+            'delivery' => $this->delivery->getKey(),
         ]);
 
-        return $this->subject($this->blog->title.' | Deveon Insights')
+        return $this->subject($blog->title.' | Deveon Insights')
             ->view('emails.blog-newsletter')
             ->with([
-                'articleUrl' => route('blog.detail', $this->blog->slug),
+                'blog' => $blog,
+                'articleUrl' => $articleUrl,
+                'openTrackingUrl' => $openTrackingUrl,
                 'unsubscribeUrl' => $unsubscribeUrl,
             ])
             ->withSymfonyMessage(function (Email $message) use ($oneClickUnsubscribeUrl): void {

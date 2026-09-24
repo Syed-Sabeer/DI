@@ -102,5 +102,6 @@
       </td>
     </tr>
   </table>
+  <img src="{{ $openTrackingUrl }}" width="1" height="1" alt="" style="display:block;width:1px;height:1px;opacity:0;overflow:hidden;border:0;">
 </body>
 </html>
