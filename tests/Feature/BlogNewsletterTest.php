@@ -266,12 +266,24 @@ class BlogNewsletterTest extends TestCase
         $this->assertSame(1, (int) $subscriberSummary->blogs_viewed);
         $this->assertSame(2, (int) $subscriberSummary->total_blog_views);
 
-        $blogView = app(AdminBlogController::class)->newsletterAnalytics($delivery->blog);
+        $blogView = app(AdminBlogController::class)->newsletterAnalytics(
+            Request::create('/admin/blog/'.$delivery->blog->id.'/newsletter-analytics', 'GET'),
+            $delivery->blog
+        );
         $blogData = $blogView->getData();
         $this->assertSame(1, (int) $blogData['summary']->sent_count);
         $this->assertSame(3, (int) $blogData['summary']->total_open_events);
         $this->assertSame(100.0, $blogData['openRate']);
         $this->assertSame(100.0, $blogData['viewRate']);
+
+        $filteredView = app(AdminBlogController::class)->newsletterAnalytics(
+            Request::create('/admin/blog/'.$delivery->blog->id.'/newsletter-analytics', 'GET', [
+                'search' => 'does-not-exist@example.com',
+            ]),
+            $delivery->blog
+        );
+        $this->assertSame(0, $filteredView->getData()['deliveries']->total());
+        $this->assertSame(1, (int) $filteredView->getData()['summary']->sent_count);
     }
 
     public function test_visible_unsubscribe_link_requires_confirmation_and_allows_resubscribing(): void

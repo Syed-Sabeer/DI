@@ -28,8 +28,12 @@ class AdminBlogController extends Controller
         return view('admin.crud.blogs.index', compact('blogs', 'categories', 'managedCategories'));
     }
 
-    public function newsletterAnalytics(Blog $blog)
+    public function newsletterAnalytics(Request $request, Blog $blog)
     {
+        $request->validate([
+            'search' => 'nullable|string|max:255',
+        ]);
+
         $deliveryQuery = BlogNewsletterDelivery::query()->where('blog_id', $blog->getKey());
 
         $summary = (clone $deliveryQuery)
@@ -48,8 +52,12 @@ class AdminBlogController extends Controller
 
         $deliveries = $deliveryQuery
             ->with('subscriber:id,email')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('email', 'like', '%'.trim($request->string('search')).'%');
+            })
             ->latest('updated_at')
-            ->paginate(20);
+            ->paginate(20)
+            ->withQueryString();
 
         return view('admin.crud.blogs.newsletter-analytics', compact(
             'blog',
