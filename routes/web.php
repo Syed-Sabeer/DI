@@ -108,6 +108,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('blog/store', [AdminBlogController::class, 'store'])->name('blog.store');
     Route::get('blog/{id}/edit', [AdminBlogController::class, 'edit'])->name('blog.edit');
     Route::get('blog/{blog}/newsletter-analytics', [AdminBlogController::class, 'newsletterAnalytics'])->name('blog.newsletter-analytics');
+    Route::post('blog/{blog}/resend-newsletter', [AdminBlogController::class, 'resendNewsletter'])->middleware('throttle:5,1')->name('blog.resend-newsletter');
     Route::put('blog/{id}', [AdminBlogController::class, 'update'])->name('blog.update');
     Route::delete('blog/{id}', [AdminBlogController::class, 'destroy'])->name('blog.destroy');
     Route::post('blog/{id}/toggle-visibility', [AdminBlogController::class, 'toggleVisibility'])->name('blog.toggleVisibility');

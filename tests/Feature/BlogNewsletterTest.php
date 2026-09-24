@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\AdminNewsletterSubmissionController;
 use App\Jobs\QueueBlogNewsletter;
+use App\Jobs\ResendBlogNewsletter;
 use App\Jobs\SendBlogNewsletterEmail;
 use App\Mail\BlogNewsletterMail;
 use App\Models\Blog;
@@ -284,6 +285,41 @@ class BlogNewsletterTest extends TestCase
         );
         $this->assertSame(0, $filteredView->getData()['deliveries']->total());
         $this->assertSame(1, (int) $filteredView->getData()['summary']->sent_count);
+    }
+
+    public function test_resend_requires_password_and_requeues_existing_delivery_without_duplication(): void
+    {
+        config(['newsletter.resend_password' => '619872']);
+        $delivery = $this->createDelivery();
+        $delivery->update([
+            'opened_at' => now(),
+            'open_count' => 2,
+            'viewed_at' => now(),
+            'view_count' => 1,
+        ]);
+
+        Queue::fake();
+        app(AdminBlogController::class)->resendNewsletter(
+            Request::create('/admin/blog/'.$delivery->blog_id.'/resend-newsletter', 'POST', ['password' => 'wrong']),
+            $delivery->blog
+        );
+        Queue::assertNotPushed(ResendBlogNewsletter::class);
+
+        app(AdminBlogController::class)->resendNewsletter(
+            Request::create('/admin/blog/'.$delivery->blog_id.'/resend-newsletter', 'POST', ['password' => '619872']),
+            $delivery->blog
+        );
+        Queue::assertPushed(ResendBlogNewsletter::class, fn ($job) => $job->blogId === $delivery->blog_id && $job->connection === 'database');
+
+        Queue::fake();
+        (new ResendBlogNewsletter($delivery->blog_id))->handle();
+
+        $requeued = $delivery->fresh();
+        $this->assertSame('queued', $requeued->status);
+        $this->assertSame(2, $requeued->open_count);
+        $this->assertSame(1, $requeued->view_count);
+        $this->assertSame(1, BlogNewsletterDelivery::query()->whereKey($delivery->id)->count());
+        Queue::assertPushed(SendBlogNewsletterEmail::class, fn ($job) => $job->deliveryId === $delivery->id && $job->connection === 'database');
     }
 
     public function test_visible_unsubscribe_link_requires_confirmation_and_allows_resubscribing(): void

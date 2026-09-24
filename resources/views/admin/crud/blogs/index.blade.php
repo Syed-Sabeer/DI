@@ -15,6 +15,9 @@
             @if(session('warning'))
               <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">{{ session('warning') }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
             @endif
+            @if($errors->has('password'))
+              <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">{{ $errors->first('password') }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+            @endif
             <div class="page-title">
               <div class="row">
                 <div class="col-sm-6">
@@ -137,6 +140,18 @@
     <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.blog.newsletter-analytics', $blog) }}" title="Newsletter analytics">
       <i class="fa fa-line-chart me-1"></i> Analytics
     </a>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-warning"
+      data-bs-toggle="modal"
+      data-bs-target="#resendNewsletterModal"
+      data-resend-action="{{ route('admin.blog.resend-newsletter', $blog) }}"
+      data-blog-title="{{ $blog->title }}"
+      data-recipient-count="{{ $blog->newsletter_deliveries_count }}"
+      title="Resend this newsletter"
+    >
+      <i class="fa fa-paper-plane me-1"></i> Resend
+    </button>
   @endif
 
   <a class="square-white" href="{{ route('admin.blog.edit', $blog->id) }}">
@@ -171,9 +186,87 @@
             </div>
           </div>
 
+          <div class="modal fade" id="resendNewsletterModal" tabindex="-1" aria-labelledby="resendNewsletterModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content border-0 shadow-lg">
+                <form id="resendNewsletterForm" method="POST" action="">
+                  @csrf
+                  <div class="modal-header">
+                    <div>
+                      <h5 class="modal-title" id="resendNewsletterModalLabel">Resend newsletter</h5>
+                      <p class="text-muted small mb-0">This will queue the same email for its original recipients.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-warning d-flex align-items-start" role="alert">
+                      <i class="fa fa-exclamation-triangle mt-1 me-2"></i>
+                      <div>
+                        <strong id="resendNewsletterBlogTitle">Selected blog</strong>
+                        <div class="small mt-1"><span id="resendNewsletterRecipientCount">0</span> original recipients will be considered. Recipients already queued will not be duplicated.</div>
+                      </div>
+                    </div>
+                    <label class="form-label" for="resendNewsletterPassword">Password</label>
+                    <div class="input-group">
+                      <input
+                        class="form-control"
+                        id="resendNewsletterPassword"
+                        name="password"
+                        type="password"
+                        value="{{ config('newsletter.resend_password', '619872') }}"
+                        autocomplete="off"
+                        required
+                      >
+                      <button class="btn btn-outline-secondary" id="toggleResendPassword" type="button" aria-label="Show password" title="Show password"><i class="fa fa-eye"></i></button>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning" id="confirmNewsletterResend"><i class="fa fa-paper-plane me-1"></i> Queue resend</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         @endsection
 
 @section('script')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('resendNewsletterModal');
+  const form = document.getElementById('resendNewsletterForm');
+  const password = document.getElementById('resendNewsletterPassword');
+  const togglePassword = document.getElementById('toggleResendPassword');
+  const submitButton = document.getElementById('confirmNewsletterResend');
+
+  modal?.addEventListener('show.bs.modal', function (event) {
+    const trigger = event.relatedTarget;
+    if (!trigger) return;
+
+    form.action = trigger.dataset.resendAction;
+    document.getElementById('resendNewsletterBlogTitle').textContent = trigger.dataset.blogTitle;
+    document.getElementById('resendNewsletterRecipientCount').textContent = Number(trigger.dataset.recipientCount).toLocaleString();
+    password.type = 'password';
+    togglePassword.innerHTML = '<i class="fa fa-eye"></i>';
+    togglePassword.setAttribute('aria-label', 'Show password');
+    togglePassword.setAttribute('title', 'Show password');
+  });
+
+  togglePassword?.addEventListener('click', function () {
+    const showPassword = password.type === 'password';
+    password.type = showPassword ? 'text' : 'password';
+    this.innerHTML = showPassword ? '<i class="fa fa-eye-slash"></i>' : '<i class="fa fa-eye"></i>';
+    this.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
+    this.setAttribute('title', showPassword ? 'Hide password' : 'Show password');
+  });
+
+  form?.addEventListener('submit', function () {
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i> Queuing...';
+  });
+});
+</script>
 @endsection 

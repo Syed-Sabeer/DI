@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\QueueBlogNewsletter;
+use App\Jobs\ResendBlogNewsletter;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogNewsletterDelivery;
@@ -66,6 +67,32 @@ class AdminBlogController extends Controller
             'viewRate',
             'deliveries'
         ));
+    }
+
+    public function resendNewsletter(Request $request, Blog $blog)
+    {
+        $validated = $request->validate([
+            'password' => 'required|string|max:255',
+        ]);
+
+        if (! hash_equals((string) config('newsletter.resend_password'), $validated['password'])) {
+            return back()->withErrors([
+                'password' => 'The newsletter resend password is incorrect.',
+            ]);
+        }
+
+        if (! $blog->visibility) {
+            return back()->with('warning', 'This blog must be visible before its newsletter can be resent.');
+        }
+
+        if (! $blog->newsletterDeliveries()->exists()) {
+            return back()->with('warning', 'This blog has no previous newsletter recipients to resend to.');
+        }
+
+        ResendBlogNewsletter::dispatch($blog->getKey())
+            ->onConnection('database');
+
+        return back()->with('success', 'The newsletter resend has been queued for the original recipients.');
     }
 
     public function categoryStore(Request $request)
