@@ -29,6 +29,17 @@
         ->filter(fn ($point) => trim((string) $point) !== '')
         ->take(3)
         ->values();
+
+    // Built here rather than inline: a Blade directive whose '@' follows a word
+    // character is skipped by the compiler, which silently breaks the template.
+    $metaParts = [];
+    if ($career->created_at) {
+        $metaParts[] = 'Posted '.e($career->created_at->format('F j, Y'));
+    }
+    if (trim((string) $career->experience) !== '') {
+        $metaParts[] = e($career->experience).' experience';
+    }
+    $metaLine = implode(' &nbsp;&middot;&nbsp; ', $metaParts);
   @endphp
 
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;background:#f2f3f0;">
@@ -73,7 +84,7 @@
                     @endif
                     <h1 style="margin:0 0 14px;color:#171a17;font-size:30px;line-height:1.2;letter-spacing:-.7px;font-weight:700;">{{ $career->job_title }}</h1>
                     <div style="margin-bottom:22px;color:#7a817a;font-size:13px;line-height:1.5;">
-                      Posted {{ optional($career->created_at)->format('F j, Y') }}@if($career->experience) &nbsp;&middot;&nbsp; {{ $career->experience }} experience@endif
+                      {!! $metaLine !!}
                     </div>
 
                     <p style="margin:0;color:#4e554f;font-size:16px;line-height:1.7;">{{ $summary }}</p>
