@@ -39,7 +39,7 @@
               Location
             </span>
             <div class="text-fixed-white fw-semibold">
-              Remote-first · Serving clients worldwide
+              · Serving clients worldwide
             </div>
           </div>
           <div class="contact-menu-item">

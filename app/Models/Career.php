@@ -45,4 +45,9 @@ class Career extends Model
     {
         return $this->hasMany(CareerApplication::class);
     }
+
+    public function alertDeliveries()
+    {
+        return $this->hasMany(CareerAlertDelivery::class);
+    }
 }

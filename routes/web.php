@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CareerController;
 use App\Http\Controllers\Frontend\CareerApplicationController;
 use App\Http\Controllers\Frontend\NewsletterSubscriptionController;
+use App\Http\Controllers\Frontend\CareerAlertTrackingController;
 use App\Http\Controllers\Frontend\NewsletterTrackingController;
 
 use App\Http\Controllers\Frontend\ContactController;
@@ -75,6 +76,8 @@ Route::post('/newsletter/one-click-unsubscribe/{subscriber}', [NewsletterSubscri
 Route::post('/newsletter/resubscribe', [NewsletterSubscriptionController::class, 'resubscribe'])->middleware('throttle:5,1')->name('newsletter.resubscribe');
 Route::get('/newsletter/track/open/{delivery}', [NewsletterTrackingController::class, 'open'])->middleware('signed')->name('newsletter.track.open');
 Route::get('/newsletter/track/view/{delivery}', [NewsletterTrackingController::class, 'view'])->middleware('signed')->name('newsletter.track.view');
+Route::get('/career-alert/track/open/{delivery}', [CareerAlertTrackingController::class, 'open'])->middleware('signed')->name('career-alert.track.open');
+Route::get('/career-alert/track/view/{delivery}', [CareerAlertTrackingController::class, 'view'])->middleware('signed')->name('career-alert.track.view');
 Route::post('/career/{career}/apply', [CareerApplicationController::class, 'store'])->middleware('throttle:3,10')->name('careers.apply');
 
 
@@ -122,6 +125,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('careers/{career}', [AdminCareerController::class, 'update'])->name('careers.update');
     Route::delete('careers/{career}', [AdminCareerController::class, 'destroy'])->name('careers.destroy');
     Route::post('careers/{career}/toggle-visibility', [AdminCareerController::class, 'toggleVisibility'])->name('careers.toggle-visibility');
+    Route::get('careers/{career}/alert-analytics', [AdminCareerController::class, 'alertAnalytics'])->name('careers.alert-analytics');
+    Route::post('careers/{career}/resend-alert', [AdminCareerController::class, 'resendAlert'])->middleware('throttle:5,1')->name('careers.resend-alert');
 
 
 

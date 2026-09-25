@@ -850,7 +850,7 @@ Canada and Karachi, Pakistan. Serving the USA, Canada, UK and Australia.')
                         <i class="ri-map-pin-2-line"></i>
                     </div>
                     <h3>Visit an Office</h3>
-                    <p>We're remote-first with offices in Pakistan and Canada, serving clients worldwide.</p>
+                    <p>We've offices in Pakistan, USA and Canada, serving clients worldwide.</p>
                     <a class="contact-method-link" href="#offices">
                         View Locations <i class="ri-arrow-right-line"></i>
                     </a>

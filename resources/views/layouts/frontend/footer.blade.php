@@ -209,7 +209,7 @@
           Availability
         </h3>
         <p class="text-fixed-white op-7">
-          Remote-first, serving clients
+          Serving clients
           <br>
           across North America, Europe & worldwide
         </p>

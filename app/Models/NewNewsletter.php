@@ -21,4 +21,9 @@ class NewNewsletter extends Model
     {
         return $this->hasMany(BlogNewsletterDelivery::class, 'newsletter_subscriber_id');
     }
+
+    public function careerDeliveries()
+    {
+        return $this->hasMany(CareerAlertDelivery::class, 'newsletter_subscriber_id');
+    }
 }
